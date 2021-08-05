@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { writeFile, unlink } from 'fs/promises';
-import { ConfigLoader } from "..";
-import { randomUUID } from "crypto";
+import { ConfigLoader } from '..';
+import { randomUUID } from 'crypto';
 
 type TestConfig = {
     arsonik: boolean;

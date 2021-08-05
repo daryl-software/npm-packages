@@ -1,6 +1,6 @@
-import {watch} from "chokidar";
-import {diff} from "deep-object-diff";
-import merge from "lodash.merge";
+import { watch } from 'chokidar';
+import { diff } from 'deep-object-diff';
+import merge from 'lodash.merge';
 
 type ConfigObserver<T = any> = (updatedConfig: T, diff: unknown) => void;
 type ConfigLoaderOptions = { verbose?: boolean };
@@ -9,10 +9,7 @@ export class ConfigLoader {
     private readonly configFiles: string[];
     private readonly options?: ConfigLoaderOptions;
     private config!: Record<string, unknown>;
-    private observers: Record<
-        number,
-        { rootKey: string; observer: ConfigObserver }
-        > = {};
+    private observers: Record<number, { rootKey: string; observer: ConfigObserver }> = {};
     private nRef = 0;
 
     constructor(paths: string[], options?: ConfigLoaderOptions) {
@@ -38,10 +35,7 @@ export class ConfigLoader {
     /**
      * Return id handle to unregister later
      */
-    addObserver<ExpectedResult = any>(
-        rootKey: string,
-        observer: ConfigObserver<ExpectedResult>
-    ): number {
+    addObserver<ExpectedResult = any>(rootKey: string, observer: ConfigObserver<ExpectedResult>): number {
         const id = this.nRef++;
         this.observers[id] = { rootKey, observer };
         return id;

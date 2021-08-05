@@ -4,13 +4,15 @@
   "license": "MIT",
   "repository": "github:ezweb/npm-packages",
   "scripts": {
+    "prettier-fix": "prettier --write .",
+    "prettier-check": "prettier --check ."
   },
   "engines": {
     "node": ">=16",
     "npm": "7.x"
   },
   "dependencies": {
-    "ts-config-loader": "file:packages/ts-config-loader"
+    "@ezweb/ts-config-loader": "file:packages/ts-config-loader"
   },
   "devDependencies": {
     "@types/chai": "^4.2.21",
@@ -27,5 +29,21 @@
     "prettier": "^2.1.2",
     "ts-node": "^10.1.0",
     "typescript": "^4.0.5"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "bracketSpacing": true,
+    "printWidth": 200,
+    "arrowParens": "always",
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
   }
 }

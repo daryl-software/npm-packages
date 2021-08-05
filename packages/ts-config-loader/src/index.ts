@@ -1,1 +1,1 @@
-export { ConfigLoader } from "./ConfigLoader";
+export { ConfigLoader } from './ConfigLoader';
