@@ -1,10 +1,14 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "version": "independent",
   "command": {
     "version": {
       "message": "Release",
-      "ignoreChanges": ["**/*.md"],
+      "ignoreChanges": [
+        "**/*.md"
+      ],
       "includeMergedTags": true
     }
   }

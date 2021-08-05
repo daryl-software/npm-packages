@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { writeFile, unlink } from 'fs/promises';
 import { ConfigLoader } from '..';
 import { randomUUID } from 'crypto';
@@ -15,7 +14,7 @@ describe('Config Loader', async () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 
-    before(async () => {
+    beforeAll(async () => {
         await writeFile(
             testFile,
             JSON.stringify({
@@ -25,9 +24,10 @@ describe('Config Loader', async () => {
             })
         );
         loader = new ConfigLoader([`${__dirname}/base.json`, testFile], { verbose: true });
+        loader.addObserver('db', () => {})
     });
 
-    after(async () => {
+    afterAll(async () => {
         await unlink(testFile).catch(() => {
             //
         });
@@ -35,9 +35,9 @@ describe('Config Loader', async () => {
 
     it('Config Simple load', async () => {
         const doge = loader.get<TestConfig['$DOGE']>('$DOGE');
-        expect(doge).to.eq('🚀 > 🌙');
+        expect(doge).toEqual('🚀 > 🌙');
         const cluster = loader.get<TestConfig['rediscluster']>('rediscluster');
-        expect(cluster.servers).to.length(2);
+        expect(cluster.servers.length).toEqual(2);
     });
 
     it('Config Watch for change', async () => {
@@ -58,9 +58,9 @@ describe('Config Loader', async () => {
                 })
             );
         }, 50);
-        expect(cluster.servers).to.length(2, 'Length before edit');
+        expect(cluster.servers.length).toEqual(2);
         await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 180));
-        expect(cluster.servers).to.length(3, 'Length after edit');
-        expect(observerCalled).to.be.true;
+        expect(cluster.servers.length).toEqual(3);
+        expect(observerCalled).toEqual(true);
     });
 });

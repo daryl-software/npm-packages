@@ -20,7 +20,6 @@
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.21",
     "@types/lodash.merge": "^4.6.6"
   }
 }

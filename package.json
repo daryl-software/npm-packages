@@ -4,6 +4,17 @@
   "license": "MIT",
   "repository": "github:ezweb/npm-packages",
   "scripts": {
+    "compile": "tsc --build tsconfig.build.json",
+    "compile:clean": "tsc --build tsconfig.build.json --clean",
+    "watch": "tsc --build tsconfig.build.json --watch",
+    "pretest": "tsc --build tsconfig.json",
+    "test": "jest --verbose",
+    "test:clean": "jest --clearCache",
+    "test:watch": "jest --verbose --watchAll",
+    "testonly": "npm test",
+    "test:ci": "npm run coverage -- --ci --maxWorkers=2  --reporters=default --reporters=jest-junit",
+    "coverage": "npm test -- --coverage",
+    "coverage:upload": "codecov",
     "prettier-fix": "prettier --write .",
     "prettier-check": "prettier --check ."
   },
@@ -15,17 +26,17 @@
     "@ezweb/ts-config-loader": "file:packages/ts-config-loader"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.21",
-    "@types/mocha": "^9.0.0",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.4.12",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
-    "chai": "^4.3.4",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "mocha": "^9.0.3",
+    "jest": "^27.0.6",
+    "jest-config": "^27.0.6",
+    "jest-junit": "^12.2.0",
     "prettier": "^2.1.2",
     "ts-node": "^10.1.0",
     "typescript": "^4.0.5"
@@ -44,6 +55,11 @@
           "tabWidth": 2
         }
       }
+    ]
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/packages/*"
     ]
   }
 }
