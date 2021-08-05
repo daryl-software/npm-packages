@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2019"],
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "*" : ["types/*"]
+    }
+  }
+}
