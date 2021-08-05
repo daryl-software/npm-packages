@@ -4,9 +4,11 @@
   "license": "MIT",
   "repository": "github:ezweb/npm-packages",
   "scripts": {
+    "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ **/tsconfig*tsbuildinfo",
     "compile": "tsc --build tsconfig.build.json",
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "watch": "tsc --build tsconfig.build.json --watch",
+    "postinstall": "lerna run prepare && npm run compile",
     "pretest": "tsc --build tsconfig.json",
     "test": "jest --verbose",
     "test:clean": "jest --clearCache",
@@ -15,7 +17,6 @@
     "test:ci": "npm run coverage -- --ci --maxWorkers=2  --reporters=default --reporters=jest-junit",
     "coverage": "npm test -- --coverage",
     "coverage:upload": "codecov",
-    "prettier-fix": "prettier --write .",
     "prettier-check": "prettier --check ."
   },
   "engines": {
@@ -38,6 +39,7 @@
     "jest-config": "^27.0.6",
     "jest-junit": "^12.2.0",
     "prettier": "^2.1.2",
+    "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0",
     "typescript": "^4.0.5"
   },

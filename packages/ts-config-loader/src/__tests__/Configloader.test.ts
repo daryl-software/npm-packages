@@ -1,5 +1,5 @@
-import { writeFile, unlink } from 'fs/promises';
-import { ConfigLoader } from '..';
+import { unlink, writeFile } from 'fs/promises';
+import { ConfigLoader } from '../index';
 import { randomUUID } from 'crypto';
 
 type TestConfig = {
@@ -10,27 +10,20 @@ type TestConfig = {
     };
 };
 
-describe('Config Loader', async () => {
+describe('Config Loader',  () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 
     beforeAll(async () => {
         await writeFile(
             testFile,
-            JSON.stringify({
-                rediscluster: {
-                    servers: ['redis-cluster:7000', 'redis-cluster:7001'],
-                },
-            })
+            '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}'
         );
-        loader = new ConfigLoader([`${__dirname}/base.json`, testFile], { verbose: true });
-        loader.addObserver('db', () => {})
+        loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: false });
     });
 
     afterAll(async () => {
-        await unlink(testFile).catch(() => {
-            //
-        });
+        await unlink(testFile);
     });
 
     it('Config Simple load', async () => {
@@ -48,19 +41,15 @@ describe('Config Loader', async () => {
             observerCalled = true;
         });
 
-        setTimeout(() => {
-            writeFile(
+        expect(cluster.servers.length).toEqual(2);
+        setTimeout(async () => {
+            await writeFile(
                 testFile,
-                JSON.stringify({
-                    rediscluster: {
-                        servers: ['redis-cluster:7000', 'redis-cluster:7001', 'redis-cluster:7003'],
-                    },
-                })
+                '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}'
             );
         }, 50);
-        expect(cluster.servers.length).toEqual(2);
-        await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 180));
-        expect(cluster.servers.length).toEqual(3);
+        await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 280));
         expect(observerCalled).toEqual(true);
+        expect(cluster.servers.length).toEqual(3);
     });
 });
