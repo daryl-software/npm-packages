@@ -1,0 +1,26 @@
+{
+  "name": "@ezweb/ts-config-loader",
+  "version": "1.0.2",
+  "author": "Florian Morello",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ez-web/npm-packages",
+    "directory": "packages/ts-config-loader"
+  },
+  "homepage": "https://github.com/ez-web/npm-packages",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=16.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.2",
+    "deep-object-diff": "^1.1.0",
+    "lodash.merge": "^4.6.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/lodash.merge": "^4.6.6"
+  }
+}
