@@ -49,8 +49,7 @@ describe('Config Loader',  () => {
                 '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}'
             );
         }, 50);
-        // Jest caches files
-        //             jest.resetModules();
+        // Jest caches files so it fails ! jest.resetModules();
         expect(observerCalled).toEqual(false);
         expect(cluster.servers.length).toEqual(2);
     });

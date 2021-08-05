@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['<rootDir>/../../jest.setup.js'],
   preset: 'ts-jest',
+  forcExit: true,
   testMatch: null,
   testRegex: '/__tests__/.*\\.test\\.(js|ts)$',
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
