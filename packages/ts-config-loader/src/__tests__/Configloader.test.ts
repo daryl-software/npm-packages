@@ -12,16 +12,16 @@ type TestConfig = {
     };
 };
 
-describe('Config Loader',  () => {
+describe('Config Loader', () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 
     before(async () => {
-        await writeFile(
-            testFile,
-            '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}'
-        );
+        await writeFile(testFile, '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}');
         loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: true });
+    });
+    after(async () => {
+        loader.close();
     });
 
     after(async () => {
@@ -46,10 +46,7 @@ describe('Config Loader',  () => {
 
         expect(cluster.servers.length).to.eq(2);
         setTimeout(async () => {
-            await writeFile(
-                testFile,
-                '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}'
-            );
+            await writeFile(testFile, '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}');
         }, 50);
         await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 180));
 

@@ -1,7 +1,7 @@
 import { watch } from 'chokidar';
 import { diff } from 'deep-object-diff';
 import merge from 'lodash.merge';
-import {FSWatcher} from "fs";
+import { FSWatcher } from 'fs';
 
 type ConfigObserver<T = any> = (updatedConfig: T, diff: unknown) => void;
 type ConfigLoaderOptions = { verbose?: boolean };
@@ -53,8 +53,7 @@ export class ConfigLoader {
 
     private static requireUncached(path: string) {
         delete require.cache[require.resolve(path)];
-        let require1 = require(path);
-        return require1;
+        return require(path);
     }
 
     log(...args: any[]) {
