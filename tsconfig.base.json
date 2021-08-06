@@ -22,8 +22,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"],
-      "@ezweb/*": ["packages/*/src"]
+      "*": ["types/*"]
     }
   }
 }

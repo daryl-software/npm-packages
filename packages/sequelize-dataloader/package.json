@@ -1,0 +1,35 @@
+{
+  "name": "@ezweb/sequelize-dataloader",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "keywords": [
+    "sequelize",
+    "redis",
+    "dataloader"
+  ],
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezweb/npm-packages.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ezweb/npm-packages/issues"
+  },
+  "dependencies": {
+    "@ezweb/db": "file:../db",
+    "@ezweb/redis-dataloader": "file:../redis-dataloader",
+    "dataloader": "^2.0.0",
+    "ioredis": "^4.27.7",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.26.6"
+  }
+}

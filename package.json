@@ -22,9 +22,10 @@
     "npm": "7.x"
   },
   "dependencies": {
-    "@ezweb/ts-config-loader": "file:packages/ts-config-loader",
     "@ezweb/db": "file:packages/db",
-    "@ezweb/redis-dataloader": "file:packages/redis-dataloader"
+    "@ezweb/redis-dataloader": "file:packages/redis-dataloader",
+    "@ezweb/sequelize-dataloader": "file:packages/sequelize-dataloader",
+    "@ezweb/ts-config-loader": "file:packages/ts-config-loader"
   },
   "devDependencies": {
     "@types/chai": "^4.2.21",

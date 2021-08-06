@@ -8,5 +8,6 @@
     { "path": "./packages/ts-config-loader/__tests__/" },
     { "path": "./packages/db/__tests__/" },
     { "path": "./packages/redis-dataloader/__tests__/" },
+    { "path": "./packages/sequelize-dataloader/__tests__/" },
   ]
 }

@@ -8,5 +8,6 @@
     { "path": "./packages/ts-config-loader" },
     { "path": "./packages/db" },
     { "path": "./packages/redis-dataloader" },
+    { "path": "./packages/sequelize-dataloader" },
   ]
 }
