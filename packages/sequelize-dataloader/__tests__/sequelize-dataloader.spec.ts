@@ -6,7 +6,7 @@ import { Op, QueryTypes } from 'sequelize';
 import { NotFoundError, RedisDataLoader } from "@ezweb/redis-dataloader";
 import { BatchLoader, BatchLoaderMultiColumns, ModelNotFoundError, MultipleDataloader } from "@ezweb/sequelize-dataloader";
 
-describe('Dataloaders', async () => {
+describe('sequelize-dataloader', async () => {
     before(async () => {
         model(sequelize);
         await sequelize.sync();

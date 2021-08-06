@@ -12,7 +12,7 @@ type TestConfig = {
     };
 };
 
-describe('Config Loader', () => {
+describe('ts-config-loader', () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 

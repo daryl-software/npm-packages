@@ -4,7 +4,7 @@ import { Db } from '@ezweb/db';
 import { Sequelize } from 'sequelize';
 import { initModel, User } from './UserModel';
 
-describe('Db', () => {
+describe('db', () => {
     it('Configuration MySQL with slave', () => {
         try {
             new Db({
@@ -82,7 +82,7 @@ describe('Db', () => {
     it('Configuration change over time', async () => {
         // eslint-disable-next-line no-console
         const logging = console.log;
-        const dbA = new Sequelize({ dialect: 'sqlite', storage: 'memory', logging });
+        const dbA = new Sequelize({ dialect: 'sqlite', storage: 'test-db.sqlite', logging });
         const dbB = new Sequelize({
             dialect: 'sqlite',
             storage: 'temp.sqlite',
@@ -90,7 +90,6 @@ describe('Db', () => {
         });
 
         initModel(dbA);
-        await dbA.sync({ force: true });
         await User.bulkCreate([
             { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
@@ -99,7 +98,6 @@ describe('Db', () => {
         expect(userDbA?.name).to.eq('arsonik');
 
         initModel(dbB);
-        await dbB.sync({ force: true });
 
         await User.bulkCreate([
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
@@ -107,5 +105,8 @@ describe('Db', () => {
         ]);
         const userDbB = await User.findByPk(1);
         expect(userDbB?.name).to.eq('gregorette');
+
+        dbA.close();
+        dbB.close();
     });
 });

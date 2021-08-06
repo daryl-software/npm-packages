@@ -17,13 +17,13 @@ export const redisCluster = new Cluster(
 class MyNotFoundError extends NotFoundError {
 }
 
-describe('Dataloaders', async () => {
+describe('redis-dataloader', async () => {
     it('Custom redis dataloader', async () => {
         type CountryCode = string;
         const loader = new RedisDataLoader<CountryCode, string>(
             `Country@${new Date().getTime()}`,
             async (isos) => {
-                return isos.map((iso) => (data.countries as Record<string, string>)[iso] ?? new NotFoundError(iso, 'CountUserByCountry'));
+                return isos.map((iso) => (data.countries as Record<string, string>)[iso] ?? new MyNotFoundError(iso, iso + ' not found'));
             },
             {
                 maxBatchSize: 20,

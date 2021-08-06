@@ -20,6 +20,5 @@ export const redisCluster = new Cluster(
     })
 );
 
-before(async () => {
-    await Promise.resolve(true)
-})
+before(() => Promise.resolve(true))
+after(() => redisCluster.disconnect())

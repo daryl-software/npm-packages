@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model, ModelCtor } from 'sequelize';
 import { SingleDataloader, MultipleDataloader } from '../src';
-import { redisCluster } from './init.spec';
+import { redisCluster as client } from './init.spec';
 import { ModelNotFoundError } from "@ezweb/sequelize-dataloader";
 
 export class UserNotFoundError<M extends Model = User> extends ModelNotFoundError<M> {
@@ -27,12 +27,12 @@ export class User extends Model {
 
     static loaderFrenchNames = SingleDataloader(User, 'name', { find: { where: { country: 'FR' } } });
 
-    static redisLoaderById = SingleDataloader(User, 'id', { redis: { client: redisCluster, ttl: 30 }, notFound: (k) => new UserNotFoundError(User, k) });
-    static redisLoaderByName = MultipleDataloader(User, 'name', { redis: { client: redisCluster, ttl: 30 } });
-    static redisLoaderByNameFrench = MultipleDataloader(User, 'name', { redis: { suffix: 'fr', client: redisCluster, ttl: 30 }, find: { where: { country: 'FR' } } });
+    static redisLoaderById = SingleDataloader(User, 'id', { redis: { client, ttl: 30 }, notFound: (k) => new UserNotFoundError(User, k) });
+    static redisLoaderByName = MultipleDataloader(User, 'name', { redis: { client, ttl: 30 } });
+    static redisLoaderByNameFrench = MultipleDataloader(User, 'name', { redis: { suffix: 'fr', client, ttl: 30 }, find: { where: { country: 'FR' } } });
 
-    static redisLoaderByNameAndEmail = SingleDataloader(User, ['name', 'email'], { redis: { client: redisCluster, ttl: 30 } });
-    static redisLoaderByNameAndCountry = MultipleDataloader(User, ['name', 'country'], { redis: { client: redisCluster, ttl: 30 } });
+    static redisLoaderByNameAndEmail = SingleDataloader(User, ['name', 'email'], { redis: { client, ttl: 30 } });
+    static redisLoaderByNameAndCountry = MultipleDataloader(User, ['name', 'country'], { redis: { client, ttl: 30 } });
 }
 
 export const model = (sequelize: Sequelize) => {
