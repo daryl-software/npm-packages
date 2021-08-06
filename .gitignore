@@ -13,6 +13,7 @@ yarn-error.log*
 
 # Coverage
 coverage/
+.nyc_output/
 
 # Node modules
 node_modules/

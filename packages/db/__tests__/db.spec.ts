@@ -90,6 +90,7 @@ describe('db', () => {
         });
 
         initModel(dbA);
+        dbA.sync();
         await User.bulkCreate([
             { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
@@ -98,6 +99,7 @@ describe('db', () => {
         expect(userDbA?.name).to.eq('arsonik');
 
         initModel(dbB);
+        dbB.sync();
 
         await User.bulkCreate([
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },

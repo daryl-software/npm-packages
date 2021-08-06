@@ -21,12 +21,12 @@ describe('sequelize-redis-cache', async () => {
 
     it('BatchLoader find', async () => {
         const cache = new SequelizeCache(User, redisCluster);
-        const res = await cache.findAll({ where: { country: 'BE' }, logging: console.info.bind(console) }, { ttl: 10 });
+        const res = await cache.findAll({ where: { country: 'BE' } }, { ttl: 10 });
         expect(res.length).to.eq(3);
-        const res3 = await cache.count({ where: { country: 'BE' }, logging: console.info.bind(console) }, { ttl: 10 });
+        const res3 = await cache.count({ where: { country: 'BE' } }, { ttl: 10 });
         expect(res3).to.eq(3);
         await User.bulkCreate([{ name: 'toto', email: '798@domain.com', country: 'BE', bornDate: new Date('1985-07-21') }]);
-        expect(await cache.count({ where: { country: 'BE' }, logging: console.info.bind(console) }, { ttl: 10 })).to.eq(3);
-        expect(await cache.count({ where: { country: 'BE' }, logging: console.info.bind(console) }, { ttl: 10, skip: true })).to.eq(4);
+        expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10 })).to.eq(3);
+        expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10, skip: true })).to.eq(4);
     });
 });
