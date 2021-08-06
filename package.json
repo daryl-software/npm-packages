@@ -13,8 +13,6 @@
     "postinstall": "lerna run prepare && npm run compile",
     "test": "lerna run test",
     "testonly": "npm test",
-    "coverage": "npm test -- --coverage",
-    "coverage:upload": "codecov",
     "prettier-check": "prettier --check ."
   },
   "engines": {
