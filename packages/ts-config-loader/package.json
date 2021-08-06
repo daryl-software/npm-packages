@@ -11,9 +11,6 @@
   "homepage": "https://github.com/ezweb/npm-packages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "mocha -r ts-node/register __tests__/*.spec.ts"
-  },
   "dependencies": {
     "chokidar": "^3.5.2",
     "deep-object-diff": "^1.1.0",

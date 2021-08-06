@@ -17,9 +17,6 @@
     "url": "git+https://github.com/ezweb/npm-packages.git",
     "directory": "packages/db"
   },
-  "scripts": {
-    "test": "mocha -r ts-node/register __tests__/*.spec.ts"
-  },
   "dependencies": {
     "lodash.shuffle": "^4.2.0",
     "sequelize": "^6.6.5"

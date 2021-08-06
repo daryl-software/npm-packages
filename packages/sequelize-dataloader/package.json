@@ -16,9 +16,6 @@
     "type": "git",
     "url": "git+https://github.com/ezweb/npm-packages.git"
   },
-  "scripts": {
-    "test": "mocha -r ts-node/register __tests__/*.spec.ts"
-  },
   "bugs": {
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
