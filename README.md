@@ -6,4 +6,5 @@ Open sourced node packages
 * [db](packages/db/README.md)
 * [redis-dataloader](packages/redis-dataloader/README.md)
 * [sequelize-dataloader](packages/sequelize-dataloader/README.md)
+* [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
 
