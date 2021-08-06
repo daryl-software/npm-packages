@@ -58,6 +58,7 @@ export class ConfigLoader {
 
     log(...args: any[]) {
         if (this.options?.verbose) {
+            // eslint-disable-next-line no-console
             console.log(...args);
         }
     }

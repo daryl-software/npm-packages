@@ -26,7 +26,7 @@ describe('Config Loader', () => {
         loader.close();
     });
 
-    it('Config Simple load', async () => {
+    it('Config Simple load', () => {
         const doge = loader.get<TestConfig['$DOGE']>('$DOGE');
         expect(doge).to.eq('🚀 > 🌙');
         const cluster = loader.get<TestConfig['rediscluster']>('rediscluster');

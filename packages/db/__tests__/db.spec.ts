@@ -4,8 +4,8 @@ import { Db } from '@ezweb/db';
 import { Sequelize } from 'sequelize';
 import { initModel, User } from './UserModel';
 
-describe('Db', async () => {
-    it('Configuration MySQL with slave', async () => {
+describe('Db', () => {
+    it('Configuration MySQL with slave', () => {
         try {
             new Db({
                 database: 'xxx',
@@ -37,7 +37,7 @@ describe('Db', async () => {
             expect(e.message).to.be.match(/Please install mariadb package manually/);
         }
     });
-    it('Configuration postgres', async () => {
+    it('Configuration postgres', () => {
         try {
             new Db(
                 {
@@ -62,7 +62,7 @@ describe('Db', async () => {
             expect(e.message).to.be.match(/Please install pg package manually/);
         }
     });
-    it('Configuration postgres', async () => {
+    it('Configuration postgres', () => {
         try {
             new Db({
                 database: '',
@@ -80,6 +80,7 @@ describe('Db', async () => {
     });
 
     it('Configuration change over time', async () => {
+        // eslint-disable-next-line no-console
         const logging = console.log;
         const dbA = new Sequelize({ dialect: 'sqlite', storage: 'memory', logging });
         const dbB = new Sequelize({

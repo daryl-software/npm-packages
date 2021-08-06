@@ -1,6 +1,5 @@
-import { ConnectionOptions, Dialect, Sequelize } from 'sequelize';
+import { ConnectionOptions, Dialect, Sequelize, Options as SequelizeOptions } from 'sequelize';
 import { DBConfigComponent } from './interfaces';
-import { Options as SequelizeOptions } from 'sequelize/types/lib/sequelize';
 import shuffle from 'lodash.shuffle';
 
 export class Db extends Sequelize {
@@ -29,8 +28,8 @@ export class Db extends Sequelize {
 
         const conf: SequelizeOptions = {
             database: config.database,
-            username: config.master.username || 'root',
-            password: config.master.password || '',
+            username: config.master.username ?? 'root',
+            password: config.master.password ?? '',
             dialect,
             timezone: 'UTC',
             dialectOptions: {
@@ -56,13 +55,13 @@ export class Db extends Sequelize {
                 evict: 2000,
                 maxUses: 100,
                 validate: (client?: { isValid?: () => boolean; _connected?: boolean }) => {
-                    if (dialect === 'postgres' && client && client._connected) {
+                    if (dialect === 'postgres' && client?._connected) {
                         return client._connected;
                     }
-                    if (client && client.isValid) {
+                    if (client?.isValid) {
                         return client.isValid();
                     }
-                    throw new Error('todo');
+                    throw new Error('Todo');
                 },
             },
             ...options?.confAppend,
