@@ -11,16 +11,7 @@ export const redisCluster = new Cluster(
           server.host = 'localhost';
       }
       return server;
-  }),
-  {
-      redisOptions: {
-          maxRetriesPerRequest: 10,
-          enableReadyCheck: true,
-      },
-      scaleReads: 'slave',
-      retryDelayOnClusterDown: 5000,
-      retryDelayOnTryAgain: 500,
-  }
+  })
 );
 
 class MyNotFoundError extends NotFoundError {

@@ -1,6 +1,9 @@
 import { CustomNotFound, NotFoundError } from '@ezweb/redis-dataloader';
 import { FindOptions, Model, ModelCtor } from 'sequelize';
 import DataLoader from 'dataloader';
+export * from './batch-loader';
+export * from './multiple';
+export * from './single';
 
 export class ModelNotFoundError<M extends Model> extends NotFoundError {
     model: ModelCtor<M>;

@@ -13,7 +13,7 @@
     "directory": "packages/redis-dataloader"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "mocha -r ts-node/register __tests__/*.spec.ts"
   },
   "bugs": {
     "url": "https://github.com/ezweb/npm-packages/issues"
