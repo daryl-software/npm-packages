@@ -2,7 +2,8 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
-import { SequelizeCache } from '@ezweb/sequelize-redis-cache';
+import { DbFactoryCache, SequelizeCache } from '@ezweb/sequelize-redis-cache';
+import { QueryTypes } from 'sequelize';
 
 describe('sequelize-redis-cache', async () => {
     before(async () => {
@@ -19,7 +20,7 @@ describe('sequelize-redis-cache', async () => {
         ] as User[]);
     });
 
-    it('BatchLoader find', async () => {
+    it('SequelizeCache', async () => {
         const cache = new SequelizeCache(User, redisCluster);
         const res = await cache.findAll({ where: { country: 'BE' } }, { ttl: 10 });
         expect(res.length).to.eq(3);
@@ -28,5 +29,10 @@ describe('sequelize-redis-cache', async () => {
         await User.bulkCreate([{ name: 'toto', email: '798@domain.com', country: 'BE', bornDate: new Date('1985-07-21') }]);
         expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10 })).to.eq(3);
         expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10, skip: true })).to.eq(4);
+    });
+    it('DbFactoryCache', async () => {
+        const cache = new DbFactoryCache(sequelize, redisCluster);
+        const res = await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10 });
+        expect(res.day).to.length(10);
     });
 });

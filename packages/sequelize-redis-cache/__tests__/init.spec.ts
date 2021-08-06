@@ -21,4 +21,7 @@ export const redisCluster = new Cluster(
 );
 
 before(() => Promise.resolve(true));
-after(() => redisCluster.disconnect());
+after(() => {
+    redisCluster.disconnect();
+    sequelize.close();
+});
