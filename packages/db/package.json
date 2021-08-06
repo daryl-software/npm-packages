@@ -1,0 +1,32 @@
+{
+  "name": "@ezweb/db",
+  "version": "1.0.0",
+  "description": "Sequelize Database loader with config file",
+  "keywords": [
+    "db",
+    "sequelize",
+    "loader"
+  ],
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ez-web/npm-packages",
+    "directory": "packages/db"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register __tests__/*.spec.ts"
+  },
+  "dependencies": {
+    "lodash.shuffle": "^4.2.0",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "@types/lodash.shuffle": "^4.2.6",
+    "@types/validator": "^13.1.2",
+    "sqlite3": "^5.0.0"
+  }
+}

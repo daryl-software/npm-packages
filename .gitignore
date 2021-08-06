@@ -22,3 +22,5 @@ node_modules/
 
 # Intellij Configuration Files
 .idea/
+
+packages/**/package-lock.json
