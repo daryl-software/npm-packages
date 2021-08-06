@@ -20,9 +20,6 @@ describe('Config Loader', () => {
         await writeFile(testFile, '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}');
         loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: true });
     });
-    after(async () => {
-        loader.close();
-    });
 
     after(async () => {
         await unlink(testFile);
