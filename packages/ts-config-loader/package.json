@@ -11,8 +11,8 @@
   "homepage": "https://github.com/ez-web/npm-packages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "engines": {
-    "node": ">=16.0"
+  "scripts": {
+    "test": "mocha -r ts-node/register src/__tests__/*.test.ts"
   },
   "dependencies": {
     "chokidar": "^3.5.2",

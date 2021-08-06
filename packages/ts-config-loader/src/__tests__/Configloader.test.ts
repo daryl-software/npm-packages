@@ -1,6 +1,8 @@
 import { unlink, writeFile } from 'fs/promises';
 import { ConfigLoader } from '../index';
 import { randomUUID } from 'crypto';
+import { before, after, it } from 'mocha';
+import { expect } from 'chai';
 
 type TestConfig = {
     arsonik: boolean;
@@ -14,23 +16,24 @@ describe('Config Loader',  () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 
-    beforeAll(async () => {
+    before(async () => {
         await writeFile(
             testFile,
             '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}'
         );
-        loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: false });
+        loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: true });
     });
 
-    afterAll(async () => {
+    after(async () => {
         await unlink(testFile);
+        loader.close();
     });
 
     it('Config Simple load', async () => {
         const doge = loader.get<TestConfig['$DOGE']>('$DOGE');
-        expect(doge).toEqual('🚀 > 🌙');
+        expect(doge).to.eq('🚀 > 🌙');
         const cluster = loader.get<TestConfig['rediscluster']>('rediscluster');
-        expect(cluster.servers.length).toEqual(2);
+        expect(cluster.servers.length).to.eq(2);
     });
 
     it('Config Watch for change', async () => {
@@ -41,16 +44,16 @@ describe('Config Loader',  () => {
             observerCalled = true;
         });
 
-        expect(cluster.servers.length).toEqual(2);
+        expect(cluster.servers.length).to.eq(2);
         setTimeout(async () => {
-            jest.resetModules();
             await writeFile(
                 testFile,
                 '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}'
             );
         }, 50);
-        // Jest caches files so it fails ! jest.resetModules();
-        expect(observerCalled).toEqual(false);
-        expect(cluster.servers.length).toEqual(2);
+        await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 180));
+
+        expect(observerCalled).to.eq(true);
+        expect(cluster.servers.length).to.eq(3);
     });
 });
