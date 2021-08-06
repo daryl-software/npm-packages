@@ -23,6 +23,7 @@
     "@ezweb/db": "file:packages/db",
     "@ezweb/redis-dataloader": "file:packages/redis-dataloader",
     "@ezweb/sequelize-dataloader": "file:packages/sequelize-dataloader",
+    "@ezweb/sequelize-redis-cache": "file:packages/sequelize-redis-cache",
     "@ezweb/ts-config-loader": "file:packages/ts-config-loader"
   },
   "devDependencies": {
