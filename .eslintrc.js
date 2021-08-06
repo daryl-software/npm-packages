@@ -24,7 +24,7 @@ module.exports = {
     "node/no-missing-require": "off",
     "node/shebang": "off",
     "node/no-extraneous-import": ["error", {
-      "allowModules": ["mocha","chai"]
+      "allowModules": ["mocha","chai","@ezweb/ts-config-loader"]
     }],
     "no-dupe-class-members": "off",
     "require-atomic-updates": "off",

@@ -1,5 +1,5 @@
 import { unlink, writeFile } from 'fs/promises';
-import { ConfigLoader } from '../index';
+import { ConfigLoader } from '@ezweb/ts-config-loader';
 import { randomUUID } from 'crypto';
 import { before, after, it } from 'mocha';
 import { expect } from 'chai';
