@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/sequelize-dataloader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> TODO: description",
   "keywords": [
     "sequelize",
@@ -20,8 +20,8 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/db": "^1.0.2",
-    "@ezweb/redis-dataloader": "^1.0.1",
+    "@ezweb/db": "^1.0.3",
+    "@ezweb/redis-dataloader": "^1.0.2",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7",
     "sequelize": "^6.6.5"
