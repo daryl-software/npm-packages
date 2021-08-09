@@ -7,6 +7,8 @@
     "lint": "lerna exec --parallel -- eslint src",
     "lint-test": "lerna exec --parallel -- eslint __tests__",
     "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ **/tsconfig*tsbuildinfo",
+    "prepublishOnly": "npm run compile:clean",
+    "prepack": "npm run compile",
     "compile": "tsc --build tsconfig.build.json",
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "watch": "tsc --build tsconfig.build.json --watch",
