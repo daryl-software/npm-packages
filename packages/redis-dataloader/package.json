@@ -21,5 +21,6 @@
   },
   "devDependencies": {
     "@types/ioredis": "^4.26.6"
-  }
+  },
+  "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }

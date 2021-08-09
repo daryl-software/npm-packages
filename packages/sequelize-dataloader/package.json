@@ -20,13 +20,14 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/db": "file:../db",
-    "@ezweb/redis-dataloader": "file:../redis-dataloader",
+    "@ezweb/db": "^1.0.2",
+    "@ezweb/redis-dataloader": "^1.0.1",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7",
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
     "@types/ioredis": "^4.26.6"
-  }
+  },
+  "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }
