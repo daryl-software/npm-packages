@@ -1,6 +1,7 @@
 import { NotFoundError } from './errors/not-found';
 export * from './errors/model-not-found';
 export * from './errors/http';
+export * from './errors/json';
 
 export const nullIfNotFound = (e: Error): null => allowErrors(null, NotFoundError)(e);
 export const undefinedIfNotFound = (e: Error): undefined => allowErrors(undefined, NotFoundError)(e);
