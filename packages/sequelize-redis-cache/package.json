@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/sequelize-redis-cache",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Sequelize Redis cache helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages/packages/sequelize-redis-cache",

@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/redis-dataloader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Dataloader backed by redis",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
@@ -16,7 +16,7 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/error": "^1.0.0",
+    "@ezweb/error": "^1.0.1",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7"
   },
