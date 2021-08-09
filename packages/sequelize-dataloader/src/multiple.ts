@@ -3,7 +3,8 @@ import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
 import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
-import { ModelNotFoundError, SequelizeMultipleModelDataloaderOptions } from './index';
+import { SequelizeMultipleModelDataloaderOptions } from './index';
+import { ModelNotFoundError } from '@ezweb/error';
 
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelCtor<V>,

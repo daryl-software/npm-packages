@@ -1,16 +1,8 @@
 import { Cluster, Redis } from 'ioredis';
+import { NotFoundError } from '@ezweb/error';
 
 export interface CustomNotFound<T> {
     notFound?: (key: T) => NotFoundError;
-}
-
-export class NotFoundError extends Error {
-    key: unknown;
-
-    constructor(key: unknown, message: string) {
-        super(message);
-        this.key = key;
-    }
 }
 
 export interface RedisDataloaderOptions<K, V> {

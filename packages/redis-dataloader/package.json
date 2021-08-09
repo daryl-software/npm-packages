@@ -16,6 +16,7 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
+    "@ezweb/error": "^1.0.0",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7"
   },

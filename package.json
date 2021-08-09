@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@ezweb/db": "file:packages/db",
+    "@ezweb/error": "file:packages/error",
     "@ezweb/redis-dataloader": "file:packages/redis-dataloader",
     "@ezweb/sequelize-dataloader": "file:packages/sequelize-dataloader",
     "@ezweb/sequelize-redis-cache": "file:packages/sequelize-redis-cache",

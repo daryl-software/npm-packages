@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@ezweb/db": "^1.0.3",
+    "@ezweb/error": "^1.0.0",
     "@ezweb/redis-dataloader": "^1.0.2",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7",

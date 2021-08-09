@@ -3,8 +3,9 @@ import { describe, it } from 'mocha';
 import { queryCount, redisCluster, sequelize } from './init.spec';
 import { model, User, UserNotFoundError } from './UserModel';
 import { Op, QueryTypes } from 'sequelize';
-import { NotFoundError, RedisDataLoader } from "@ezweb/redis-dataloader";
-import { BatchLoader, BatchLoaderMultiColumns, ModelNotFoundError, MultipleDataloader } from "@ezweb/sequelize-dataloader";
+import { RedisDataLoader } from '@ezweb/redis-dataloader';
+import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '../src';
+import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
 
 describe('sequelize-dataloader', async () => {
     before(async () => {
@@ -102,7 +103,7 @@ describe('sequelize-dataloader', async () => {
         });
     });
 
-    describe('Redis.io', async () => {
+    describe('Redis.io', () => {
         it('set + get', async () => {
             await redisCluster.set('toto', 'test', 'EX', 5);
             expect(await redisCluster.get('toto')).to.eq('test');
