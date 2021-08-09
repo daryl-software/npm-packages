@@ -3,8 +3,27 @@ import { expect } from 'chai';
 import { Db } from '@ezweb/db';
 import { Sequelize } from 'sequelize';
 import { initModel, User } from './UserModel';
+import { hydrateModel } from '../src';
 
 describe('db', () => {
+    let dbA: Sequelize;
+    let dbB: Sequelize;
+    before(() => {
+        // eslint-disable-next-line no-console
+        const logging = console.log;
+        dbA = new Sequelize({ dialect: 'sqlite', storage: 'test-db.sqlite', logging });
+        dbB = new Sequelize({
+            dialect: 'sqlite',
+            storage: 'temp.sqlite',
+            logging,
+        });
+    });
+
+    after(() => {
+        dbA.close();
+        dbB.close();
+    });
+
     it('Configuration MySQL with slave', () => {
         try {
             new Db({
@@ -80,15 +99,6 @@ describe('db', () => {
     });
 
     it('Configuration change over time', async () => {
-        // eslint-disable-next-line no-console
-        const logging = console.log;
-        const dbA = new Sequelize({ dialect: 'sqlite', storage: 'test-db.sqlite', logging });
-        const dbB = new Sequelize({
-            dialect: 'sqlite',
-            storage: 'temp.sqlite',
-            logging,
-        });
-
         initModel(dbA);
         dbA.sync();
         await User.bulkCreate([
@@ -107,8 +117,16 @@ describe('db', () => {
         ]);
         const userDbB = await User.findByPk(1);
         expect(userDbB?.name).to.eq('gregorette');
+    });
 
-        dbA.close();
-        dbB.close();
+    it('Helpers hydrate', async () => {
+        await User.bulkCreate([
+            { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
+            { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
+        ]);
+        const user = await User.findByPk(1);
+        const str = JSON.stringify(user);
+        const hyd = hydrateModel(User, JSON.parse(str));
+        expect(hyd.createdAt.toUTCString()).to.eq(user!.createdAt.toUTCString());
     });
 });

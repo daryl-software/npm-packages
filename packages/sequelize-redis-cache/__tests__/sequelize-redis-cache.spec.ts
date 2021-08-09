@@ -30,9 +30,25 @@ describe('sequelize-redis-cache', async () => {
         expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10 })).to.eq(3);
         expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10, skip: true })).to.eq(4);
     });
+
     it('DbFactoryCache', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
+        const time = 'SELECT strftime("%s","now") AS time';
+        const x = await cache.query<{ day: string }>(time, { type: QueryTypes.SELECT, plain: true }, { ttl: 10 });
+        await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10, clear: true });
         const res = await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10 });
+        await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10, skip: true });
+        const xn = await cache.query<{ day: string }>(time, { type: QueryTypes.SELECT, plain: true }, { ttl: 10, skip: true });
         expect(res.day).to.length(10);
+        expect(res.day).to.length(10);
+        expect(x).not.to.eq(xn);
+    });
+    it('DbFactoryCache', async () => {
+        const cache = new DbFactoryCache(sequelize, redisCluster);
+        await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User, type: QueryTypes.SELECT }, { ttl: 10, clear: true });
+        const res = await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User }, { ttl: 10 });
+        expect(res.length).to.gte(6);
+        const res1 = await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User, plain: true }, { ttl: 10 });
+        expect(res1.id).to.gte(1);
     });
 });

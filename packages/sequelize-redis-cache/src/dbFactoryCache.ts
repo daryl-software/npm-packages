@@ -70,8 +70,7 @@ export class DbFactoryCache {
         }
 
         if (cache !== null) {
-            const modelctor = options.model as unknown as ModelCtor<M>;
-            return JSON.parse(cache).map((obj: {}) => hydrateModel(modelctor, obj));
+            return JSON.parse(cache).map((obj: {}) => hydrateModel(options.model as ModelCtor<M>, obj));
         }
         const result = await this.component.query(sql, options);
         if (options.plain && result instanceof Model) {
