@@ -1,9 +1,9 @@
 {
   "name": "@ezweb/sequelize-redis-cache",
   "version": "1.0.2",
-  "description": "> TODO: description",
+  "description": "Sequelize Redis cache helpers",
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "homepage": "https://github.com/ezweb/npm-packages/packages/sequelize-redis-cache",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

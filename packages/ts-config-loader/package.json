@@ -8,7 +8,7 @@
     "url": "https://github.com/ezweb/npm-packages",
     "directory": "packages/ts-config-loader"
   },
-  "homepage": "https://github.com/ezweb/npm-packages",
+  "homepage": "https://github.com/ezweb/npm-packages/packages/ts-config-loader",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {

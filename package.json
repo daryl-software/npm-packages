@@ -15,6 +15,7 @@
     "postinstall": "lerna run prepare && npm run compile",
     "coverage": "lerna exec -- nyc mocha",
     "test": "lerna exec -- mocha",
+    "outdated": "lerna exec -- npm outdated",
     "prettier-check": "prettier --check ."
   },
   "engines": {
