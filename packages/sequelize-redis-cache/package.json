@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/sequelize-redis-cache",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Sequelize Redis cache helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages/packages/sequelize-redis-cache",
@@ -15,7 +15,7 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/db": "^1.1.0",
+    "@ezweb/db": "^1.1.2",
     "ioredis": "^4.27.7",
     "lodash.clonedeep": "^4.5.0",
     "md5": "^2.3.0",
