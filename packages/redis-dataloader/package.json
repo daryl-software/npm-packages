@@ -1,0 +1,27 @@
+{
+  "name": "@ezweb/redis-dataloader",
+  "version": "1.0.4",
+  "description": "Dataloader backed by redis",
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "directory": "packages/redis-dataloader"
+  },
+  "bugs": {
+    "url": "https://github.com/ezweb/npm-packages/issues"
+  },
+  "dependencies": {
+    "@ezweb/error": "^1.0.2",
+    "dataloader": "^2.0.0",
+    "ioredis": "^4.27.7"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.26.6"
+  },
+  "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
+}
