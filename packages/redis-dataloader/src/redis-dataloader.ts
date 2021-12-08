@@ -17,9 +17,12 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         this.name = name + (options.redis.suffix ? `-${options.redis.suffix}` : '');
         this.options = options;
 
-        assert(!RedisDataLoader.usedNames.includes(this.name), `RedisDataLoader name already in use ${this.name}`);
-        this.log(`New RedisDataLoader ${this.name}`);
-        RedisDataLoader.usedNames.push(this.name);
+        if (RedisDataLoader.usedNames.includes(this.name)) {
+            this.log(`WARNING this RedisDataLoader ${this.name} already exists`);
+        } else {
+            this.log(`New RedisDataLoader ${this.name}`);
+            RedisDataLoader.usedNames.push(this.name);
+        }
     }
 
     /**

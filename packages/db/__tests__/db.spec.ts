@@ -52,8 +52,8 @@ describe('db', () => {
                 ],
             });
             throw new Error('cannot be here');
-        } catch (e) {
-            expect(e.message).to.be.match(/Please install mariadb package manually/);
+        } catch (e: any) {
+            expect(e.message).to.match(/Please install mariadb package manually/);
         }
     });
     it('Configuration postgres', () => {
@@ -77,8 +77,8 @@ describe('db', () => {
                 }
             );
             throw new Error('cannot be here');
-        } catch (e) {
-            expect(e.message).to.be.match(/Please install pg package manually/);
+        } catch (e: any) {
+            expect(e.message).to.match(/Please install pg package manually/);
         }
     });
     it('Configuration postgres', () => {
@@ -93,8 +93,8 @@ describe('db', () => {
                 type: 'pgsql',
             });
             throw new Error('cannot be here');
-        } catch (e) {
-            expect(e.message).to.be.match(/Please install pg package manually/);
+        } catch (e: any) {
+            expect(e.message).to.match(/Please install pg package manually/);
         }
     });
 
