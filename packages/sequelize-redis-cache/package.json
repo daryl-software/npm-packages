@@ -1,0 +1,30 @@
+{
+  "name": "@ezweb/sequelize-redis-cache",
+  "version": "1.1.2",
+  "description": "Sequelize Redis cache helpers",
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages/packages/sequelize-redis-cache",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezweb/npm-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ezweb/npm-packages/issues"
+  },
+  "dependencies": {
+    "@ezweb/db": "^1.1.2",
+    "ioredis": "^4.27.7",
+    "lodash.clonedeep": "^4.5.0",
+    "md5": "^2.3.0",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.26.6",
+    "@types/lodash.clonedeep": "^4.5.6",
+    "@types/md5": "^2.3.1"
+  },
+  "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
+}

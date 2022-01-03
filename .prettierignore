@@ -1,0 +1,9 @@
+*.yml
+*.md
+*.mdx
+*.snap
+
+dist/
+docs/.cache/
+
+tsconfig*.json

@@ -1,0 +1,20 @@
+{
+  "name": "@ezweb/error",
+  "version": "1.0.2",
+  "description": "Common error classes",
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezweb/npm-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ezweb/npm-packages/issues"
+  },
+  "dependencies": {
+    "sequelize": "^6.6.5"
+  }
+}
