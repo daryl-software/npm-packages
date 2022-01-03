@@ -8,3 +8,6 @@ Open sourced node packages
 * [sequelize-dataloader](packages/sequelize-dataloader/README.md)
 * [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
 
+
+
+`lerna publish`
