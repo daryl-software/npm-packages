@@ -1,6 +1,5 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { Db } from '@ezweb/db';
 import { Sequelize } from 'sequelize';
 import { initModel, User } from './UserModel';
 import { hydrateModel } from '../src';
@@ -24,73 +23,13 @@ describe('db', () => {
         dbB.close();
     });
 
-    it('Configuration MySQL with slave', () => {
-        try {
-            new Db({
-                database: 'xxx',
-                master: {
-                    host: 'dd',
-                    port: 3306,
-                    charset: 'utf8',
-                },
-                type: 'mysql',
-                slaves: [
-                    {
-                        host: 'dd',
-                        port: 3306,
-                        charset: 'utf8',
-                        username: 'toto',
-                        password: 'passowd',
-                        weight: 1,
-                    },
-                    {
-                        host: 'dd',
-                        port: 3306,
-                        charset: 'utf8',
-                        weight: 0,
-                    },
-                ],
-            });
-            throw new Error('cannot be here');
-        } catch (e: any) {
-            expect(e.message).to.match(/Please install mariadb package manually/);
-        }
-    });
     it('Configuration postgres', () => {
         try {
-            new Db(
-                {
-                    database: 'ddd',
-                    master: {
-                        host: 'dd',
-                        port: 3306,
-                        charset: 'utf8',
-                    },
-                    type: 'postgres',
-                },
-                {
-                    confAppend: {
-                        logging: () => {
-                            //
-                        },
-                    },
-                }
-            );
-            throw new Error('cannot be here');
-        } catch (e: any) {
-            expect(e.message).to.match(/Please install pg package manually/);
-        }
-    });
-    it('Configuration postgres', () => {
-        try {
-            new Db({
-                database: '',
-                master: {
-                    host: 'dd',
-                    port: 3306,
-                    charset: 'utf8',
-                },
-                type: 'pgsql',
+            new Sequelize({
+                database: 'ddd',
+                host: 'dd',
+                port: 3306,
+                dialect: 'postgres',
             });
             throw new Error('cannot be here');
         } catch (e: any) {

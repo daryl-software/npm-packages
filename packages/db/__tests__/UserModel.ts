@@ -1,12 +1,12 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
 export class User extends Model {
-    id!: number;
-    name!: string;
-    email!: string;
-    createdAt!: Date;
-    bornDate!: Date;
-    country!: string;
+    declare id: number;
+    declare name: string;
+    declare email: string;
+    declare createdAt: Date;
+    declare bornDate: Date;
+    declare country: string;
 }
 
 export const initModel = (sequelize: Sequelize) =>

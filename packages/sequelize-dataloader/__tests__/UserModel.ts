@@ -12,12 +12,12 @@ export class UserNotFoundError<M extends Model = User> extends ModelNotFoundErro
 }
 
 export class User extends Model {
-    id!: number;
-    name!: string;
-    email!: string;
-    createdAt!: Date;
-    bornDate!: Date;
-    country!: string;
+    declare id: number;
+    declare name: string;
+    declare email: string;
+    declare createdAt: Date;
+    declare bornDate: Date;
+    declare country: string;
 
     static loaderById = SingleDataloader(User, 'id', { notFound: (k) => new UserNotFoundError(User, k) });
     static loaderByName = MultipleDataloader(User, 'name');
