@@ -43,7 +43,7 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
     if (options && 'redis' in options) {
         return new RedisDataLoader(`${model.name}-${key.toString()}`, batchLoadFn, {
             cacheKeyFn,
-            notFound: (key) => new ModelNotFoundError(model, key),
+            notFound: (akey) => new ModelNotFoundError(model, akey),
             ...options,
             redis: {
                 deserialize: (_, json) => hydrateModel(model, JSON.parse(json)),

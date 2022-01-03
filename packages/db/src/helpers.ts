@@ -3,7 +3,7 @@ import { ModelAttributeColumnOptions, ModelCtor, Model } from 'sequelize';
 const datefieldTypes = ['DATE', 'DATETIME', 'DATEONLY'];
 
 export function restoreTimestampsSequelize<M extends Model>(data: Record<string, any>, instance: M) {
-    const attrs: { [attribute: string]: ModelAttributeColumnOptions<M> } = (instance as any)['rawAttributes'];
+    const attrs: Record<string, ModelAttributeColumnOptions<M>> = (instance as any)['rawAttributes'];
 
     // todo cache this process ?
     Object.values(attrs).forEach((field) => {

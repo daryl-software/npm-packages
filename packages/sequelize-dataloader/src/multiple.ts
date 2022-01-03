@@ -43,7 +43,7 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
     if (options && 'redis' in options) {
         return new RedisDataLoader(`${model.name}-${key.toString()}-MULTI`, batchLoadFn, {
             cacheKeyFn,
-            notFound: (key) => new ModelNotFoundError(model, key),
+            notFound: (akey) => new ModelNotFoundError(model, akey),
             maxBatchSize: 100,
             ...options,
             redis: {

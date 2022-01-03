@@ -45,7 +45,7 @@ describe('ts-config-loader', () => {
         setTimeout(async () => {
             await writeFile(testFile, '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001","redis-cluster:7003"]}}');
         }, 50);
-        await new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 180));
+        await new Promise<boolean>((resolve) => setTimeout(() => { resolve(true); }, 180));
 
         expect(observerCalled).to.eq(true);
         expect(cluster.servers.length).to.eq(3);
