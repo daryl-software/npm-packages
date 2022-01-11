@@ -1,4 +1,4 @@
-import { FindOptions, Model, ModelCtor, Op } from 'sequelize';
+import { FindOptions, Model, ModelStatic, Op } from 'sequelize';
 import { CustomNotFound } from '@ezweb/redis-dataloader';
 import { ModelNotFoundError } from '@ezweb/error';
 
@@ -15,21 +15,21 @@ export interface BatchLoaderOptions<M extends Model, K = any> extends CustomNotF
 }
 
 export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelCtor<M>,
+    model: ModelStatic<M>,
     columns: K[],
     values: readonly Pick<M, K>[],
     mode: 'find',
     options?: BatchLoaderOptions<M>
 ): Promise<(M | Error)[]>;
 export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelCtor<M>,
+    model: ModelStatic<M>,
     columns: K[],
     values: readonly Pick<M, K>[],
     mode: 'filter',
     options?: BatchLoaderOptions<M>
 ): Promise<(M[] | Error)[]>;
 export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelCtor<M>,
+    model: ModelStatic<M>,
     columns: K[],
     values: readonly Pick<M, K>[],
     mode: 'find' | 'filter',
@@ -51,10 +51,10 @@ export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M
           );
 }
 
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelCtor<M>, key: K, keys: readonly M[K][], mode: 'find', options?: BatchLoaderOptions<M>): Promise<(M | Error)[]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelCtor<M>, key: K, keys: readonly M[K][], mode: 'filter', options?: BatchLoaderOptions<M>): Promise<(M[] | Error)[]>;
+export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'find', options?: BatchLoaderOptions<M>): Promise<(M | Error)[]>;
+export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'filter', options?: BatchLoaderOptions<M>): Promise<(M[] | Error)[]>;
 export async function BatchLoader<M extends Model, K extends keyof M>(
-    model: ModelCtor<M>,
+    model: ModelStatic<M>,
     key: K,
     keys: readonly M[K][],
     mode: 'find' | 'filter',

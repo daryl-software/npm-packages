@@ -1,4 +1,4 @@
-import { Model, ModelCtor } from 'sequelize';
+import { Model, ModelStatic } from 'sequelize';
 import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
@@ -7,27 +7,27 @@ import { SequelizeSingleModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@ezweb/error';
 
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K[],
     options: SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
 ): RedisDataLoader<A, V, string>;
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K[],
     options?: SequelizeSingleModelDataloaderOptions<A, V, string>
 ): DataLoader<A, V, string>;
 export function SingleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K,
     options: SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
 ): RedisDataLoader<A, V, string>;
 export function SingleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K,
     options?: SequelizeSingleModelDataloaderOptions<A, V, string>
 ): DataLoader<A, V, string>;
 export function SingleDataloader<K extends keyof V, V extends Model, A>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K | K[],
     options?: SequelizeSingleModelDataloaderOptions<A, V, string> | (SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>)
 ) {

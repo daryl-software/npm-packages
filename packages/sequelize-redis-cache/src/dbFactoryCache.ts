@@ -1,4 +1,4 @@
-import { Sequelize, ModelCtor, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel } from 'sequelize';
+import { Sequelize, ModelStatic, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel } from 'sequelize';
 import md5 from 'md5';
 import { CacheOptions } from './interfaces';
 import { Cluster, Redis } from 'ioredis';
@@ -70,7 +70,7 @@ export class DbFactoryCache {
         }
 
         if (cache !== null) {
-            return JSON.parse(cache).map((obj: {}) => hydrateModel(options.model as ModelCtor<M>, obj));
+            return JSON.parse(cache).map((obj: {}) => hydrateModel(options.model as ModelStatic<M>, obj));
         }
         const result = await this.component.query(sql, options);
         if (options.plain && result instanceof Model) {

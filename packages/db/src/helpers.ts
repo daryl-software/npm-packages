@@ -1,4 +1,4 @@
-import { ModelAttributeColumnOptions, ModelCtor, Model } from 'sequelize';
+import { ModelAttributeColumnOptions, ModelStatic, Model } from 'sequelize';
 
 const datefieldTypes = ['DATE', 'DATETIME', 'DATEONLY'];
 
@@ -17,7 +17,7 @@ export function restoreTimestampsSequelize<M extends Model>(data: Record<string,
     });
 }
 
-export function hydrateModel<V extends Model>(model: ModelCtor<V>, data: V['_creationAttributes']): V {
+export function hydrateModel<V extends Model>(model: ModelStatic<V>, data: V['_creationAttributes']): V {
     const instance = model.build(data, { isNewRecord: false, raw: false });
     restoreTimestampsSequelize(data, instance);
     return instance;

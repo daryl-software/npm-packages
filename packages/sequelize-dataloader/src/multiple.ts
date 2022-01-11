@@ -1,4 +1,4 @@
-import { Model, ModelCtor } from 'sequelize';
+import { Model, ModelStatic } from 'sequelize';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
@@ -7,27 +7,27 @@ import { SequelizeMultipleModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@ezweb/error';
 
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K[],
     options: SequelizeMultipleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
 ): RedisDataLoader<A, V[], string>;
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K[],
     options?: SequelizeMultipleModelDataloaderOptions<A, V, string>
 ): DataLoader<A, V[]>;
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K,
     options: SequelizeMultipleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
 ): RedisDataLoader<A, V[], string>;
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K,
     options?: SequelizeMultipleModelDataloaderOptions<A, V, string>
 ): DataLoader<A, V[], string>;
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K> | V[K]>(
-    model: ModelCtor<V>,
+    model: ModelStatic<V>,
     key: K | K[],
     options?: SequelizeMultipleModelDataloaderOptions<A, V, string> | (SequelizeMultipleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>)
 ): DataLoader<A, V[], string> {

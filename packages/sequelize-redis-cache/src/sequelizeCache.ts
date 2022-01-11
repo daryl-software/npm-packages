@@ -1,4 +1,4 @@
-import { FindOptions, Model, ModelCtor } from 'sequelize';
+import { FindOptions, Model, ModelStatic } from 'sequelize';
 import clone from 'lodash.clonedeep';
 import md5 from 'md5';
 import assert from 'assert';
@@ -8,17 +8,17 @@ import { CacheOptions } from './interfaces';
 
 // todo use declare module instead
 interface ExposingModelPrivateMethod {
-    queryGenerator: { selectQuery: (tablename: string, opts: object | undefined, defition: ModelCtor<Model>) => string };
+    queryGenerator: { selectQuery: (tablename: string, opts: object | undefined, defition: ModelStatic<Model>) => string };
 }
 
 export class SequelizeCache<T extends Model> {
-    private readonly modelDef: ModelCtor<T> & ExposingModelPrivateMethod;
+    private readonly modelDef: ModelStatic<T> & ExposingModelPrivateMethod;
     private readonly cachePrefix = 'SequelizeCache';
     private redis: Cluster | Redis;
 
-    constructor(modelDef: ModelCtor<T>, redis: Cluster | Redis) {
+    constructor(modelDef: ModelStatic<T>, redis: Cluster | Redis) {
         this.redis = redis;
-        this.modelDef = modelDef as ModelCtor<T> & ExposingModelPrivateMethod;
+        this.modelDef = modelDef as ModelStatic<T> & ExposingModelPrivateMethod;
     }
 
     private get entityName(): string {
