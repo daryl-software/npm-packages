@@ -3,8 +3,10 @@ import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
-import { SequelizeSingleModelDataloaderOptions } from './index';
+import { JsonLengthThreshold, SequelizeSingleModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@ezweb/error';
+import { parse, stringify } from 'bfj';
+import { Readable } from 'stream';
 
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,
@@ -46,8 +48,17 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
             notFound: (key) => new ModelNotFoundError(model, key),
             ...options,
             redis: {
-                deserialize: (_, json) => hydrateModel(model, JSON.parse(json)),
-                serialize: (data) => JSON.stringify(data.get({ plain: true })),
+                deserialize: (_, json) => {
+                    if (json.length > JsonLengthThreshold) {
+                        // long json retuns a promise
+                        return parse(Readable.from([json])).then((x) => hydrateModel(model, x));
+                    }
+                    return hydrateModel(model, JSON.parse(json));
+                },
+                serialize: async (data) => {
+                    // return JSON.stringify(data.get({ plain: true }));
+                    return stringify(data.get({ plain: true }));
+                },
                 ...options.redis,
             },
         });

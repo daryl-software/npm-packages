@@ -10,8 +10,8 @@ export interface RedisDataloaderOptions<K, V> {
         suffix?: string;
         client: Redis | Cluster;
         ttl: number;
-        deserialize?: (key: K, data: string) => V | Error;
-        serialize?: (value: V) => string;
+        deserialize?: (key: K, data: string) => V | Promise<V> | Error;
+        serialize?: (value: V) => string | Promise<string>;
         logging?: (...args: unknown[]) => void;
     };
 }

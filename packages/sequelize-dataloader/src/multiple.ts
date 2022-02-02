@@ -3,8 +3,10 @@ import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
 import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
-import { SequelizeMultipleModelDataloaderOptions } from './index';
+import { JsonLengthThreshold, SequelizeMultipleModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@ezweb/error';
+import { parse, stringify } from 'bfj';
+import { Readable } from 'stream';
 
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,
@@ -48,8 +50,16 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
             ...options,
             redis: {
                 ...options.redis,
-                deserialize: (_, json) => JSON.parse(json).map((entry: object) => hydrateModel(model, entry)),
-                serialize: (data) => JSON.stringify(data.map((o) => o.get({ plain: true }))),
+                deserialize: (_, json) => {
+                    if (json.length > JsonLengthThreshold) {
+                        return parse(Readable.from([json])).then((x: object[]) => x.map((entry) => hydrateModel(model, entry)));
+                    }
+                    return (JSON.parse(json) as object[]).map((entry) => hydrateModel(model, entry));
+                },
+                serialize: (data) => {
+                    // return JSON.stringify(data.map((o) => o.get({ plain: true })));
+                    return stringify(data.map((o) => o.get({ plain: true })));
+                },
             },
         });
     } else {

@@ -3,6 +3,10 @@ import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@ezweb/error';
 
+function isPromise(value?: any): value is Promise<unknown>  {
+    return !!value && typeof value.then === 'function'
+}
+
 export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     private readonly name: string;
     private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>;
@@ -77,12 +81,16 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
                     if (data === RedisDataLoader.NOT_FOUND_STRING) {
                         entry.value = this.options.notFound?.(entry.key) ?? new NotFoundError(entry.key, 'Not found (redis cache)');
                     } else if (data !== null) {
-                        entry.value = this.options.redis.deserialize(entry.key, data);
+                        const deserialized = this.options.redis.deserialize(entry.key, data);
+                        if (isPromise(deserialized)) {
+                            return deserialized.then((v) => entry.value = v)
+                        }
+                        entry.value = deserialized;
                     }
+                    return;
                 });
             })
         );
-
         // this.log('map was', JSON.stringify(mapRedisKeyToModelKey));
 
         // keysToLoadFromDatasource is referencing mapRedisKeyToModelKey values
@@ -131,9 +139,15 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         return Promise.resolve(false);
     }
 
-    private store(rKey: string, value: V): Promise<boolean> {
-        const rValue = this.options.redis.serialize(value);
-        this.log('saving to redis', rKey, rValue);
+    private async store(rKey: string, value: V): Promise<boolean> {
+        const serialized = this.options.redis.serialize(value);
+        let rValue: string;
+        if (isPromise(serialized)) {
+           rValue = await serialized
+        } else {
+             rValue = serialized;
+        }
+        this.log('saving to redis', rKey, serialized);
         return this.options.redis.client.set(rKey, rValue, 'EX', this.options.redis.ttl).then((result) => result === 'OK');
     }
 

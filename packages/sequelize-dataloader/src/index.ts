@@ -5,6 +5,8 @@ export * from './batch-loader';
 export * from './multiple';
 export * from './single';
 
+export const JsonLengthThreshold = 4096;
+
 export interface SequelizeModelDataloaderOptions<K, V extends Model> extends CustomNotFound<K> {
     find?: FindOptions<V>; // default where
 }
