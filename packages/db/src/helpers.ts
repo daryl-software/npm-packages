@@ -1,9 +1,9 @@
-import { ModelAttributeColumnOptions, ModelCtor, Model } from 'sequelize';
+import { ModelStatic, Model, CreationAttributes } from 'sequelize';
 
 const datefieldTypes = ['DATE', 'DATETIME', 'DATEONLY'];
 
-export function restoreTimestampsSequelize<M extends Model>(data: Record<string, any>, instance: M) {
-    const attrs: Record<string, ModelAttributeColumnOptions<M>> = (instance as any)['rawAttributes'];
+export function restoreTimestampsSequelize<M extends Model>(data: Record<string, unknown>, instance: M, model: ModelStatic<M>) {
+    const attrs = model.getAttributes();
 
     // todo cache this process ?
     Object.values(attrs).forEach((field) => {
@@ -11,14 +11,14 @@ export function restoreTimestampsSequelize<M extends Model>(data: Record<string,
         if (datefieldTypes.includes(type) && 'fieldName' in field) {
             const t = field as unknown as { fieldName: string };
             if (data[t.fieldName]) {
-                instance.setDataValue(t.fieldName, new Date(data[t.fieldName]));
+                instance.setDataValue(t.fieldName, new Date(data[t.fieldName] as any));
             }
         }
     });
 }
 
-export function hydrateModel<V extends Model>(model: ModelCtor<V>, data: V['_creationAttributes']): V {
+export function hydrateModel<V extends Model>(model: ModelStatic<V>, data: CreationAttributes<V>): V {
     const instance = model.build(data, { isNewRecord: false, raw: false });
-    restoreTimestampsSequelize(data, instance);
+    restoreTimestampsSequelize(data, instance, model);
     return instance;
 }

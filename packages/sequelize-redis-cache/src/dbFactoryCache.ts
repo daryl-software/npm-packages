@@ -1,4 +1,4 @@
-import { Sequelize, ModelCtor, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel } from 'sequelize';
+import { Sequelize, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel, CreationAttributes } from 'sequelize';
 import md5 from 'md5';
 import { CacheOptions } from './interfaces';
 import { Cluster, Redis } from 'ioredis';
@@ -16,7 +16,7 @@ export class DbFactoryCache {
 
     private cached(key: string, options: CacheOptions): Promise<string | null> {
         if (options.clear === true) {
-            this.redis.del(key);
+            void this.redis.del(key);
             return Promise.resolve(null);
         }
         if (options.skip === true) {
@@ -52,7 +52,7 @@ export class DbFactoryCache {
         }
 
         if (cache !== null) {
-            return JSON.parse(cache);
+            return JSON.parse(cache) as T;
         }
 
         const results = await this.component.query<T>(sql, options);
@@ -70,7 +70,7 @@ export class DbFactoryCache {
         }
 
         if (cache !== null) {
-            return JSON.parse(cache).map((obj: {}) => hydrateModel(options.model as ModelCtor<M>, obj));
+            return (JSON.parse(cache) as CreationAttributes<M>[]).map((obj) => hydrateModel(options.model, obj));
         }
         const result = await this.component.query(sql, options);
         if (options.plain && result instanceof Model) {

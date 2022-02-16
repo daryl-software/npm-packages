@@ -1,7 +1,7 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes, Model, CreationOptional } from "sequelize";
 
 export class User extends Model {
-    declare id: number;
+    declare id: CreationOptional<number>;
     declare name: string;
     declare email: string;
     declare createdAt: Date;

@@ -1,11 +1,11 @@
-import { Sequelize, DataTypes, Model, ModelCtor } from 'sequelize';
+import { Sequelize, DataTypes, Model, ModelStatic } from 'sequelize';
 import { SingleDataloader, MultipleDataloader } from '../src';
 import { redisCluster as client } from './init.spec';
 import { ModelNotFoundError } from '@ezweb/error';
 
 export class UserNotFoundError<M extends Model = User> extends ModelNotFoundError<M> {
     id: number;
-    constructor(model: ModelCtor<M>, identifier: number) {
+    constructor(model: ModelStatic<M>, identifier: number) {
         super(model, identifier);
         this.id = identifier;
     }

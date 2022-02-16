@@ -17,7 +17,7 @@ describe('sequelize-redis-cache', async () => {
             { name: 'tutu', email: 'aice@domain.com', country: 'BE' },
             { name: 'toto', email: 'anotherone@domain.com', country: 'BE' },
             { name: 'arso', email: 'me@domain.com', country: 'CH' },
-        ] as User[]);
+        ]);
     });
 
     it('SequelizeCache', async () => {
