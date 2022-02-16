@@ -20,9 +20,9 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/db": "^2.0.2-alpha.0",
-    "@ezweb/error": "^2.0.2-alpha.0",
-    "@ezweb/redis-dataloader": "^2.0.2-alpha.0",
+    "@ezweb/db": "^2.0.2-alpha.1",
+    "@ezweb/error": "^2.0.2-alpha.1",
+    "@ezweb/redis-dataloader": "^2.0.2-alpha.1",
     "dataloader": "^2.0.0",
     "ioredis": "^4.27.7",
     "sequelize": "7.0.0-alpha.9"
