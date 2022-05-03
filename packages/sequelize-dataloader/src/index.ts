@@ -1,5 +1,5 @@
 import { CustomNotFound } from '@ezweb/redis-dataloader';
-import { FindOptions, Model } from 'sequelize';
+import { FindOptions, Model } from '@sequelize/core';
 import DataLoader from 'dataloader';
 export * from './batch-loader';
 export * from './multiple';

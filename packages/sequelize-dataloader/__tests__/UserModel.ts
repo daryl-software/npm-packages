@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model, ModelStatic } from 'sequelize';
+import { Sequelize, DataTypes, Model, ModelStatic } from '@sequelize/core';
 import { SingleDataloader, MultipleDataloader } from '../src';
 import { redisCluster as client } from './init.spec';
 import { ModelNotFoundError } from '@ezweb/error';

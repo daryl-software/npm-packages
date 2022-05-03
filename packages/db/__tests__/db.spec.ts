@@ -1,8 +1,8 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from '@sequelize/core';
 import { initModel, User } from './UserModel';
-import { hydrateModel } from '../src';
+import { hydrateModel } from '@ezweb/db';
 
 describe('db', () => {
     let dbA: Sequelize;
@@ -39,7 +39,7 @@ describe('db', () => {
 
     it('Configuration change over time', async () => {
         initModel(dbA);
-        dbA.sync();
+        await dbA.sync();
         await User.bulkCreate([
             { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
@@ -48,7 +48,7 @@ describe('db', () => {
         expect(userDbA?.name).to.eq('arsonik');
 
         initModel(dbB);
-        dbB.sync();
+        await dbB.sync();
 
         await User.bulkCreate([
             { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },

@@ -1,4 +1,4 @@
-import { ModelStatic, Model, CreationAttributes } from 'sequelize';
+import { ModelStatic, Model, CreationAttributes } from '@sequelize/core';
 
 const datefieldTypes = ['DATE', 'DATETIME', 'DATEONLY'];
 

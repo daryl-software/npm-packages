@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model, CreationOptional } from "sequelize";
+import { Sequelize, DataTypes, Model, CreationOptional } from "@sequelize/core";
 
 export class User extends Model {
     declare id: CreationOptional<number>;

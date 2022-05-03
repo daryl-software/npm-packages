@@ -1,5 +1,5 @@
 import { NotFoundError } from './not-found';
-import { Model, ModelStatic } from 'sequelize';
+import { Model, ModelStatic } from '@sequelize/core';
 
 export class ModelNotFoundError<M extends Model> extends NotFoundError {
     model: ModelStatic<M>;

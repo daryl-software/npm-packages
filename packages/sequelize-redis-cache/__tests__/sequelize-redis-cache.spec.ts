@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
 import { DbFactoryCache, SequelizeCache } from '@ezweb/sequelize-redis-cache';
-import { QueryTypes } from 'sequelize';
+import { QueryTypes } from '@sequelize/core';
 
 describe('sequelize-redis-cache', async () => {
     before(async () => {

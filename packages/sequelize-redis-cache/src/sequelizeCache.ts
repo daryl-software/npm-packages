@@ -1,4 +1,4 @@
-import { CreationAttributes, FindOptions, Model, ModelStatic } from 'sequelize';
+import { CreationAttributes, FindOptions, Model, ModelStatic } from '@sequelize/core';
 import clone from 'lodash.clonedeep';
 import md5 from 'md5';
 import assert from 'assert';

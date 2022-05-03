@@ -1,4 +1,4 @@
-import { Sequelize, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel, CreationAttributes } from 'sequelize';
+import { Sequelize, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel, CreationAttributes } from '@sequelize/core';
 import md5 from 'md5';
 import { CacheOptions } from './interfaces';
 import { Cluster, Redis } from 'ioredis';

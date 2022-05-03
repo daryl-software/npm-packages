@@ -1,4 +1,4 @@
-import { Dialect } from 'sequelize';
+import { Dialect } from '@sequelize/core';
 
 export interface HostPortCharset {
     host: string;

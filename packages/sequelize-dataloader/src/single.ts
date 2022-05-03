@@ -1,4 +1,4 @@
-import { Model, ModelStatic } from 'sequelize';
+import { Model, ModelStatic } from '@sequelize/core';
 import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
