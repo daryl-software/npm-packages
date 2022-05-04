@@ -10,7 +10,14 @@ Open sourced node packages
 
 
 ### Install
-`npm i`
+```shell
+nvm install
+nvm use
+npm i
+```
 
 ### Tests
-`npm exec -ws mocha`
+```shell
+npm run compile # Must compile before testing
+npm exec -ws mocha
+```

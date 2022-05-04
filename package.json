@@ -4,16 +4,16 @@
   "license": "MIT",
   "repository": "github:ezweb/npm-packages",
   "scripts": {
-    "lint": "npm exec -ws eslint src --parallel",
+    "lint": "npm exec -ws eslint -- src",
     "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ **/tsconfig*tsbuildinfo",
     "prepublishOnly": "npm run compile:clean",
     "prepack": "npm run compile",
     "compile": "tsc --build tsconfig.build.json",
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "watch": "tsc --build tsconfig.build.json --watch",
-    "coverage": "npm exec -ws nyc mocha",
+    "coverage": "npm exec -ws nyc -- mocha",
     "test": "npm exec -ws mocha",
-    "prettier-check": "prettier --check ."
+    "prettier-check": "npm exec -ws prettier -- --check src"
   },
   "engines": {
     "node": ">=17",
