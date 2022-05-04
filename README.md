@@ -19,5 +19,10 @@ npm i
 ### Tests
 ```shell
 npm run compile # Must compile before testing
-npm exec -ws mocha
+npm run test
+```
+
+### Publish
+```shell
+npm publish -ws
 ```
