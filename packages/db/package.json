@@ -18,8 +18,8 @@
     "directory": "packages/db"
   },
   "dependencies": {
-    "lodash.shuffle": "^4.2.0",
-    "sequelize": "7.0.0-alpha.9"
+    "@sequelize/core": "^7.0.0-alpha.10",
+    "lodash.shuffle": "^4.2.0"
   },
   "devDependencies": {
     "@types/lodash.shuffle": "^4.2.6",

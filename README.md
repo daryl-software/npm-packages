@@ -9,5 +9,8 @@ Open sourced node packages
 * [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
 
 
+### Install
+`npm i`
 
-`lerna publish`
+### Tests
+`npm exec -ws mocha`

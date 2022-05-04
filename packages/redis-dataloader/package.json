@@ -18,10 +18,7 @@
   "dependencies": {
     "@ezweb/error": "^2.0.2-alpha.1",
     "dataloader": "^2.0.0",
-    "ioredis": "^4.27.7"
-  },
-  "devDependencies": {
-    "@types/ioredis": "^4.26.6"
+    "ioredis": "^5.0.4"
   },
   "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }

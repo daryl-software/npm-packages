@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@ezweb/db": ["packages/db/src/index.ts"],
+    }
   },
   "files": [],
   "include": [],
-  "references": [
-    { "path": "./tsconfig.build.json" },
-    { "path": "./tsconfig.test.json" },
-  ]
 }
