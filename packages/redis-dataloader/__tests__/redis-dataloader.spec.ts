@@ -35,12 +35,21 @@ describe('redis-dataloader', async () => {
                 },
             }
         );
+        const notCached = await loader.loadCached('FR');
+        expect(notCached[0].cached).to.be.false;
+        expect(notCached[0].value).to.be.null;
+
         const res = await loader.loadMany(['FR', 'CH', 'XX']);
         expect(res[0]).to.eq('France');
         expect(res[1]).to.eq('Suisse');
         expect(res[2]).to.instanceof(MyNotFoundError);
         expect(await loader.load('FR')).to.eq('France');
         expect(await loader.load('XX').catch((e) => e)).to.instanceof(MyNotFoundError);
+
+        const cached = await loader.loadCached('FR');
+        expect(cached[0].cached).to.be.true;
+        expect(cached[0].value).to.eq('France');
+
         expect(await loader.clearAsync('FR', 'CH', 'XX')).to.eq(3);
 
         await loader.primeAsync('FF', 'FranceFrance');
