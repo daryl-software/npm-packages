@@ -22,6 +22,11 @@ npm run compile # Must compile before testing
 npm run test
 ```
 
+## Bump version
+```shell
+npm version patch -ws
+```
+
 ### Publish
 ```shell
 npm publish -ws
