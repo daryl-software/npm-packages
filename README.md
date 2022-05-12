@@ -25,9 +25,11 @@ npm run test
 ## Bump version
 ```shell
 npm version patch -ws
+npm version prerelease -ws
 ```
 
 ### Publish
 ```shell
+npm run prepublish
 npm publish -ws
 ```

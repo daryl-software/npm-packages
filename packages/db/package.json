@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/db",
-  "version": "2.0.2-alpha.3",
+  "version": "2.0.2-alpha.5",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
     "db",
