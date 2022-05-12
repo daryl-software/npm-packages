@@ -141,4 +141,22 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         this.log('saving not found error to redis', rKey);
         return this.options.redis.client.set(rKey, RedisDataLoader.NOT_FOUND_STRING, 'EX', 60).then((result) => result === 'OK');
     }
+
+    /**
+     * Load a value only if cached
+     * @param keys
+     */
+    async loadCached(...keys: K[]) {
+        const datas = await Promise.all(keys.map((key) => this.options.redis.client.get(this.redisKey(key))));
+        return datas.map((data, idx) => {
+            const cached = data !== null;
+            let value = null;
+            if (data === RedisDataLoader.NOT_FOUND_STRING) {
+                value = new NotFoundError(keys[idx], 'Not found (redis cache)');
+            } else if (cached) {
+                value = this.options.redis.deserialize(keys[idx], data);
+            }
+            return { cached, value };
+        });
+    }
 }
