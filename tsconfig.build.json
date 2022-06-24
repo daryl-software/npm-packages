@@ -10,6 +10,7 @@
     { "path": "./packages/error" },
     { "path": "./packages/redis-dataloader" },
     { "path": "./packages/sequelize-dataloader" },
-    { "path": "./packages/sequelize-redis-cache" }
+    { "path": "./packages/sequelize-redis-cache" },
+    { "path": "./packages/ts-helpers" }
   ]
 }
