@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "composite": true,
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -18,8 +17,6 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2019"],
-    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]

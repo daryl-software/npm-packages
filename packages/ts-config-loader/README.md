@@ -1,4 +1,6 @@
-# ts-config-loader
+# `@ezweb/ts-config-loader`
+[![npm version](https://badge.fury.io/js/@ezweb%2Fts-config-loader.svg)](https://badge.fury.io/js/@ezweb%2Fts-config-loader)
+
 
 JSON files loader & watcher
 

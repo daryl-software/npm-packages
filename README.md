@@ -8,5 +8,28 @@ Open sourced node packages
 * [sequelize-dataloader](packages/sequelize-dataloader/README.md)
 * [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
 
-# Commands
 
+### Install
+```shell
+nvm install
+nvm use
+npm i
+```
+
+### Tests
+```shell
+npm run compile # Must compile before testing
+npm run test
+```
+
+## Bump version
+```shell
+npm version patch -ws
+npm version prerelease -ws
+```
+
+### Publish
+```shell
+npm run prepublish
+npm publish -ws
+```

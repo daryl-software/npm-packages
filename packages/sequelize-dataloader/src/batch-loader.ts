@@ -1,4 +1,4 @@
-import { FindOptions, Model, ModelStatic, Op } from 'sequelize';
+import { FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
 import { CustomNotFound } from '@ezweb/redis-dataloader';
 import { ModelNotFoundError } from '@ezweb/error';
 

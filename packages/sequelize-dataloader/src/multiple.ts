@@ -1,4 +1,4 @@
-import { Model, ModelStatic } from 'sequelize';
+import { CreationAttributes, Model, ModelStatic } from '@sequelize/core';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
@@ -43,12 +43,12 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
     if (options && 'redis' in options) {
         return new RedisDataLoader(`${model.name}-${key.toString()}-MULTI`, batchLoadFn, {
             cacheKeyFn,
-            notFound: (key) => new ModelNotFoundError(model, key),
+            notFound: (akey) => new ModelNotFoundError(model, akey),
             maxBatchSize: 100,
             ...options,
             redis: {
                 ...options.redis,
-                deserialize: (_, json) => JSON.parse(json).map((entry: object) => hydrateModel(model, entry)),
+                deserialize: (_, json) => (JSON.parse(json) as CreationAttributes<V>[]).map((entry) => hydrateModel(model, entry)),
                 serialize: (data) => JSON.stringify(data.map((o) => o.get({ plain: true }))),
             },
         });

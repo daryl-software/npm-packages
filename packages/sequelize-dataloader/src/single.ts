@@ -1,4 +1,4 @@
-import { Model, ModelStatic } from 'sequelize';
+import { Model, ModelStatic } from '@sequelize/core';
 import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
@@ -43,7 +43,7 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
     if (options && 'redis' in options) {
         return new RedisDataLoader(`${model.name}-${key.toString()}`, batchLoadFn, {
             cacheKeyFn,
-            notFound: (key) => new ModelNotFoundError(model, key),
+            notFound: (akey) => new ModelNotFoundError(model, akey),
             ...options,
             redis: {
                 deserialize: (_, json) => hydrateModel(model, JSON.parse(json)),

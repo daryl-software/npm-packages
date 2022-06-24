@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/db",
-  "version": "1.2.0",
+  "version": "2.0.2-alpha.5",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
     "db",
@@ -18,8 +18,8 @@
     "directory": "packages/db"
   },
   "dependencies": {
-    "lodash.shuffle": "^4.2.0",
-    "sequelize": "^6.6.5"
+    "@sequelize/core": "^7.0.0-alpha.10",
+    "lodash.shuffle": "^4.2.0"
   },
   "devDependencies": {
     "@types/lodash.shuffle": "^4.2.6",

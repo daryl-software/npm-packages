@@ -1,4 +1,4 @@
-import { FindOptions, Model, ModelStatic } from 'sequelize';
+import { CreationAttributes, FindOptions, Model, ModelStatic } from '@sequelize/core';
 import clone from 'lodash.clonedeep';
 import md5 from 'md5';
 import assert from 'assert';
@@ -45,7 +45,7 @@ export class SequelizeCache<T extends Model> {
         const cache = await this.cached(key, options);
 
         if (cache !== null) {
-            return JSON.parse(cache).map((item: {}) => hydrateModel(this.modelDef, item));
+            return (JSON.parse(cache) as CreationAttributes<T>[]).map((item) => hydrateModel(this.modelDef, item));
         }
 
         const results = await this.modelDef.findAll(find);

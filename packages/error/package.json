@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/error",
-  "version": "1.1.0",
+  "version": "2.0.2-alpha.5",
   "description": "Common error classes",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
@@ -15,6 +15,6 @@
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "sequelize": "^6.6.5"
+    "@sequelize/core": "^7.0.0-alpha.10"
   }
 }

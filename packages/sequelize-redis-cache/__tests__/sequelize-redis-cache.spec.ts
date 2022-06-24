@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
 import { DbFactoryCache, SequelizeCache } from '@ezweb/sequelize-redis-cache';
-import { QueryTypes } from 'sequelize';
+import { QueryTypes } from '@sequelize/core';
 
 describe('sequelize-redis-cache', async () => {
     before(async () => {
@@ -17,7 +17,7 @@ describe('sequelize-redis-cache', async () => {
             { name: 'tutu', email: 'aice@domain.com', country: 'BE' },
             { name: 'toto', email: 'anotherone@domain.com', country: 'BE' },
             { name: 'arso', email: 'me@domain.com', country: 'CH' },
-        ] as User[]);
+        ]);
     });
 
     it('SequelizeCache', async () => {

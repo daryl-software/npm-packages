@@ -1,11 +1,3 @@
 # `sequelize-redis-cache`
-
-> TODO: description
-
-## Usage
-
-```
-const sequelizeRedisCache = require('sequelize-redis-cache');
-
-// TODO: DEMONSTRATE API
-```
+# `@ezweb/sequelize-redis-cache`
+[![npm version](https://badge.fury.io/js/@ezweb%2Fsequelize-redis-cache.svg)](https://badge.fury.io/js/@ezweb%2Fsequelize-redis-cache)

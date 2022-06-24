@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { queryCount, redisCluster, sequelize } from './init.spec';
 import { model, User, UserNotFoundError } from './UserModel';
-import { Op, QueryTypes } from 'sequelize';
+import { Op, QueryTypes } from "@sequelize/core";
 import { RedisDataLoader } from '@ezweb/redis-dataloader';
-import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '../src';
+import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@ezweb/sequelize-dataloader';
 import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
 
 describe('sequelize-dataloader', async () => {
@@ -18,7 +18,7 @@ describe('sequelize-dataloader', async () => {
             { name: 'tutu', email: 'aice@domain.com', country: 'BE' },
             { name: 'toto', email: 'anotherone@domain.com', country: 'BE' },
             { name: 'arso', email: 'me@domain.com', country: 'CH' },
-        ] as User[]);
+        ]);
     });
     describe('helpers', () => {
         it('BatchLoader find', async () => {

@@ -1,11 +1,2 @@
-# `redis-dataloader`
-
-> TODO: description
-
-## Usage
-
-```
-const redisDataloader = require('redis-dataloader');
-
-// TODO: DEMONSTRATE API
-```
+# `@ezweb/redis-dataloader`
+[![npm version](https://badge.fury.io/js/@ezweb%2Fredis-dataloader.svg)](https://badge.fury.io/js/@ezweb%2Fredis-dataloader)

@@ -4,19 +4,15 @@
   "license": "MIT",
   "repository": "github:ezweb/npm-packages",
   "scripts": {
-    "lint": "lerna exec --parallel -- eslint src",
-    "lint-test": "lerna exec --parallel -- eslint __tests__",
+    "lint": "npm exec -ws eslint -- src",
     "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ **/tsconfig*tsbuildinfo",
-    "prepublishOnly": "npm run compile:clean",
-    "prepack": "npm run compile",
     "compile": "tsc --build tsconfig.build.json",
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "watch": "tsc --build tsconfig.build.json --watch",
-    "postinstall": "lerna run prepare && npm run compile",
-    "coverage": "lerna exec -- nyc mocha",
-    "test": "lerna exec -- mocha",
-    "outdated": "lerna exec -- npm outdated",
-    "prettier-check": "prettier --check ."
+    "coverage": "npm exec -ws nyc -- mocha",
+    "test": "npm exec -ws mocha",
+    "prepublish": "npm run compile:clean && npm run compile",
+    "prettier-check": "npm exec -ws prettier -- --check src"
   },
   "engines": {
     "node": ">=17",
@@ -42,11 +38,12 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "lerna": "^4.0.0",
-    "mocha": "^9.0.3",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.2",
     "ts-node": "^10.1.0",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.0.5"
   },
   "workspaces": [

@@ -25,11 +25,11 @@ describe('Errors', async () => {
         const test = await Promise.reject(new NotFoundError('test', 'a message')).catch(emptyArrayIfNotFound);
         expect(test).to.be.eql([]);
     });
-    it('http error', async () => {
+    it('http error',  () => {
         const e = new HttpError(404, 'messa');
         expect(e.code).to.eq(404);
     });
-    it('not found error to json', async () => {
+    it('not found error to json',  () => {
         const e = new NotFoundError('test', 'a message');
         expect(e.toJSON().code).to.eq('404');
     });

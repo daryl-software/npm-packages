@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from '@sequelize/core';
 import { Cluster } from 'ioredis';
 import { before } from 'mocha';
 import config from './config.json';
