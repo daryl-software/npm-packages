@@ -22,5 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: docker --version
     - run: npm i
     - run: npm exec -ws mocha
