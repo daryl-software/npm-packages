@@ -17,7 +17,7 @@ declare global {
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
 
-        mutableCopy(): T;
+        mutableCopy(): T[];
         sample(): T;
 
         // ⚠️ Must copy all functions to ReadonlyArray below
@@ -43,7 +43,7 @@ declare global {
 }
 
 Array.prototype.first = function () {
-    return this.find(Boolean);
+    return this.length > 0 ? this[0] : undefined;
 };
 
 Array.prototype.last = function () {
@@ -79,7 +79,7 @@ Array.prototype.unique = function () {
 };
 
 Array.prototype.mutableCopy = function () {
-    return JSON.parse(JSON.stringify(this));
+    return [...this];
 };
 
 Array.prototype.sample = function () {
@@ -88,4 +88,4 @@ Array.prototype.sample = function () {
 
 Array.range = (start, end) => Array.from({ length: end - start }, (_, k) => k + start);
 
-export {}
+export {};

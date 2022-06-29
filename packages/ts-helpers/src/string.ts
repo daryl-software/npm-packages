@@ -20,7 +20,7 @@ String.prototype.base64Decode = function () {
 String.prototype.explode = function (separator: string, limit?: number): string[] {
     const array = this.split(separator);
     if (limit !== undefined && array.length >= limit) {
-        array.push(array.splice(limit - 1).join(separator));
+        array.push(array.splice(limit > 0 ? limit - 1 : 0).join(separator));
     }
 
     return array;

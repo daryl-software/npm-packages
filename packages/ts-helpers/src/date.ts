@@ -66,10 +66,9 @@ Date.prototype.secs = function () {
 };
 
 Date.prototype.minus = function (date: Date | number, abs = false) {
-    if (typeof date === 'number') {
-        abs ? Math.abs(this.setTime(this.getTime() - date)) : this.setTime(this.getTime() - date);
-    } else {
-        abs ? Math.abs(this.setTime(this.getTime() - date.getTime())) : this.setTime(this.getTime() - date.getTime());
-    }
+    const time = typeof date === 'number' ? Math.abs(date) : date.getTime();
+    const dTime = this.getTime() - time;
+
+    this.setTime(abs ? Math.abs(dTime) : dTime);
     return this;
 };

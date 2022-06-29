@@ -5,8 +5,6 @@ type RequiredAndNotNull<T> = {
 };
 
 declare global {
-    function ObjectKeys<Obj>(obj: Obj): (keyof Obj)[];
-
     function sleep(ms: number): Promise<void>;
 
     function filterNullAndUndefined<T extends Record<string, unknown>>(object: T): RequiredAndNotNull<T>;
@@ -15,6 +13,8 @@ declare global {
     function JSONparse<T>(string: string): Promise<T>;
 
     function extractNumber(str: string | null | undefined): number;
+
+    function ObjectKeys<Obj>(obj: Obj): (keyof Obj)[];
 }
 
 global.sleep = function (millisec: number): Promise<void> {
