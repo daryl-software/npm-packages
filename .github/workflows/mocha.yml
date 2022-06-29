@@ -23,5 +23,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: docker --version
+    - run: docker run -e "IP=0.0.0.0" -p 7000-7005:7000-7005 grokzen/redis-cluster:latest
     - run: npm i
     - run: npm exec -ws mocha
