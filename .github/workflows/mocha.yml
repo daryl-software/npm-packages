@@ -7,11 +7,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      redis-cluster:
-        image: grokzen/redis-cluster:latest  
-        ports:
-          - 7000-7005:7000-7005
     strategy:
       matrix:
         node-version: [17.8]
@@ -24,6 +19,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: docker --version
-    #- run: docker run -d -e "IP=0.0.0.0" -p 7000-7005:7000-7005 grokzen/redis-cluster:latest
+    - run: docker run -d -e "IP=0.0.0.0" -p 7000-7005:7000-7005 grokzen/redis-cluster:latest
     - run: npm i
     - run: npm exec -ws mocha
