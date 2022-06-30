@@ -9,9 +9,6 @@ declare global {
 
     function filterNullAndUndefined<T extends Record<string, unknown>>(object: T): RequiredAndNotNull<T>;
 
-    function JSONparse<T>(string: string, options: { vanilla: true }): T;
-    function JSONparse<T>(string: string): Promise<T>;
-
     function extractNumber(str: string | null | undefined): number;
 
     function ObjectKeys<Obj>(obj: Obj): (keyof Obj)[];
@@ -34,15 +31,6 @@ global.filterNullAndUndefined = function <T extends Record<string, unknown>>(obj
         }
     });
     return objCopy;
-};
-
-global.JSONparse = function <T>(string: string, options?: { vanilla: boolean }): T | Promise<T> {
-    return options?.vanilla === true
-        ? (JSON.parse(string) as T)
-        : new Promise((resolve) => {
-              // todo if too big >> bfj
-              resolve(JSON.parse(string) as T);
-          });
 };
 
 global.extractNumber = function (str: string | null | undefined): number {

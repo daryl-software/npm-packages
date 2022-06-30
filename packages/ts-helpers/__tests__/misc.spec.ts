@@ -3,7 +3,7 @@ import '@ezweb/ts-helpers';
 
 describe('Misc prototype', async () => {
     it('Sleep', async () => {
-        const timeToWait = 1000;
+        const timeToWait = 100;
         const precision = 5;
 
         const startTime = performance.now();
@@ -16,17 +16,6 @@ describe('Misc prototype', async () => {
     it('Filter null and undefined', async () => {
         const anyObject: Record<string, any> = Object.assign({}, [0, undefined, null, NaN, 'string', {}, false, 8, -6]);
         expect(Object.values(filterNullAndUndefined(anyObject))).to.eql([0, NaN, 'string', {}, false, 8, -6]);
-    });
-
-    it('Json parse', async () => {
-        const object = {
-            a: 1,
-            b: 2,
-        };
-        const json = JSON.stringify(object);
-
-        expect(JSONparse(json, { vanilla: true })).to.eql(object);
-        expect(await JSONparse(json)).to.eql(object);
     });
 
     it('Extract number', async () => {

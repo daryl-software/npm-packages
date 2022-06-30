@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "paths": {
       "@ezweb/db": ["packages/db/src/index.ts"],
       "@ezweb/ts-helpers": ["packages/ts-helpers/src/index.ts"],

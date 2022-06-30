@@ -1,6 +1,5 @@
-import { expect, spy, use } from 'chai';
+import { expect } from 'chai';
 import '@ezweb/ts-helpers';
-use(require('chai-spies'));
 
 describe('Array prototype', async () => {
     const anyArray: Array<any> = [0, undefined, null, NaN, 'string', {}, false, 8, -6];
@@ -24,10 +23,9 @@ describe('Array prototype', async () => {
     });
 
     it('Shuffle', async () => {
-        spy.on(Math, 'random', () => 0.4);
         const sArray = [...anyArray].shuffle();
-        expect(sArray).to.eql(['string', 0, 8, undefined, {}, false, null, -6, NaN]);
-        spy.restore(Math);
+        expect(anyArray.filter((i) => sArray.includes(i)).length).to.eq(anyArray.length);
+        expect(sArray).to.not.eql(anyArray);
     });
 
     it('Avg', async () => {
@@ -55,9 +53,7 @@ describe('Array prototype', async () => {
     });
 
     it('Sample', async () => {
-        spy.on(Math, 'random', () => 0.5);
-        expect(anyArray.sample()).to.eq('string');
-        spy.restore(Math);
+        expect(anyArray.includes(anyArray.sample())).true;
     });
 
     it('Range', async () => {

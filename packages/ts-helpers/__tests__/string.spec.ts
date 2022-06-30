@@ -8,7 +8,7 @@ describe('String prototype', async () => {
     });
 
     it('Base64 decode', async () => {
-        const value = '64 bαses de côde 🤔';
+        const value = 'Try to decode me!';
         const encoded64 = Buffer.from(value).toString('base64');
         expect(encoded64.base64Decode()).to.eq(value);
     });
