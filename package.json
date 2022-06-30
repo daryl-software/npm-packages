@@ -12,7 +12,9 @@
     "coverage": "npm exec -ws nyc -- mocha",
     "test": "npm exec -ws mocha",
     "prepublish": "npm run compile:clean && npm run compile",
-    "prettier-check": "npm exec -ws prettier -- --check src"
+    "prettier-check": "npm exec -ws prettier -- --check src",
+    "docker:mac-up-services": "export REDIS_CLUSTER_IP=0.0.0.0; npm run docker:up-services",
+    "docker:up-services": "docker compose up -d --remove-orphans redis-cluster"
   },
   "engines": {
     "node": ">=17",
@@ -43,7 +45,6 @@
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.2",
-    "ts-helpers": "^1.1.2",
     "ts-node": "^10.1.0",
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.0.5"

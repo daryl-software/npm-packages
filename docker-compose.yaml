@@ -6,9 +6,6 @@ services:
     environment:
       - IP=${REDIS_CLUSTER_IP}
     expose:
-      - 7000
-      - 7001
-      - 7002
-      - 7003
-      - 7004
-      - 7005
+      - 7000-7005
+    ports:
+      - 7000-7005:7000-7005

@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import '@ezweb/ts-helpers';
 
 describe('Array prototype', async () => {
-    const anyArray: Array<any> = [0, undefined, null, NaN, 'string', {}, false, 8, -6];
-    const numberArray: Array<number> = [0, 1, -8];
+    const anyArray = [0, undefined, null, NaN, 'string', {}, false, 8, -6];
+    const numberArray = [0, 1, -8];
 
     it('First', async () => {
         expect(anyArray.first()).to.eq(0);
@@ -35,8 +35,8 @@ describe('Array prototype', async () => {
     });
 
     it('Unique', async () => {
-        const uArray = [...anyArray, 666, ...anyArray];
-        expect(uArray.unique()).to.eql([0, undefined, null, NaN, 'string', {}, false, 8, -6, 666]);
+        const uArray = ['a', ...numberArray, 666, ...numberArray, 'a'];
+        expect(uArray.unique()).to.eql(['a', 0, 1, -8, 666]);
     });
 
     it('mutableCopy', async () => {
