@@ -31,6 +31,11 @@ npm version prerelease -ws
 
 ### Publish
 ```shell
+# all
 npm run prepublish
 npm publish -ws
+
+# publish just one ?
+npm publish -w @ezweb/ts-helpers
 ```
+
