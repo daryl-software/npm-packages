@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  redis-cluster:
+    image: grokzen/redis-cluster:latest
+    environment:
+      - IP=${REDIS_CLUSTER_IP}
+    expose:
+      - 7000-7005
+    ports:
+      - 7000-7005:7000-7005
