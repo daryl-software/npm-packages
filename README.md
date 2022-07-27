@@ -7,6 +7,7 @@ Open sourced node packages
 * [redis-dataloader](packages/redis-dataloader/README.md)
 * [sequelize-dataloader](packages/sequelize-dataloader/README.md)
 * [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
+* [eslint-config](packages/eslint-config/README.md)
 
 
 ### Install
