@@ -1,8 +1,8 @@
 {
   "name": "@ezweb/ts-config-loader",
-  "version": "2.0.2-alpha.5",
+  "version": "2.0.2-alpha.6",
   "author": "Florian Morello",
-  "license": "MIT",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/ezweb/npm-packages",

@@ -1,20 +1,23 @@
 {
-  "name": "@ezweb/error",
-  "version": "2.0.2-alpha.6",
-  "description": "Common error classes",
+  "name": "@ezweb/ts-helpers",
+  "version": "1.0.0",
+  "description": "Typescript helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git"
+    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "directory": "packages/ts-helpers"
   },
   "bugs": {
     "url": "https://github.com/ezweb/npm-packages/issues"
   },
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.10"
-  }
+    "ts-toolbelt": "^9.6.0"
+  },
+  "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }

@@ -13,7 +13,9 @@
     "coverage": "npm exec -ws nyc -- mocha",
     "test": "npm exec -ws mocha",
     "prepublish": "npm run compile:clean && npm run compile",
-    "prettier-check": "npm exec -ws prettier -- --check src"
+    "prettier-check": "npm exec -ws prettier -- --check src",
+    "docker:mac-up-services": "export REDIS_CLUSTER_IP=0.0.0.0; npm run docker:up-services",
+    "docker:up-services": "docker compose up -d --remove-orphans redis-cluster"
   },
   "engines": {
     "node": ">=17",
@@ -30,6 +32,7 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.21",
+    "@types/chai-spies": "^1.0.3",
     "@types/mocha": "^9.0.0",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
