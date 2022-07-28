@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/eslint-config",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "ESLint Configs",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
