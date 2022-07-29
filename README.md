@@ -37,6 +37,6 @@ npm run prepublish
 npm publish -ws
 
 # publish just one ?
-npm publish -w @ezweb/ts-helpers --access=public
+npm publish -w @ezweb/eslint-config --access=public
 ```
 
