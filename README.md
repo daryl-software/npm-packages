@@ -38,5 +38,9 @@ npm publish -ws
 
 # publish just one ?
 npm publish -w @ezweb/eslint-config --access=public
+
+# patch and publish
+npm version patch -w @ezweb/ts-helpers
+npm publish -w @ezweb/ts-helpers --access=public
 ```
 
