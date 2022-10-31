@@ -1,11 +1,11 @@
 {
   "name": "@ezweb/eslint-config",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "ESLint Configs",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
   "liense": "ISC",
-  "main": "dist/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ezweb/npm-packages.git",
@@ -21,8 +21,9 @@
     "@vue/eslint-config-typescript": "^11.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-prettier-vue": "^4.1.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "eslint-plugin-vue": "^9.1.1"
+    "eslint-plugin-vue": "^9.7.0"
   }
 }

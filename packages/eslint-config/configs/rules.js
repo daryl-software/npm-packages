@@ -20,6 +20,7 @@ module.exports = {
     "no-unmodified-loop-condition": "error",
     "no-unreachable-loop": "error",
     "no-unused-vars": "error",
+    "no-unused-expressions": ["error"],
     "no-useless-concat": "error",
     "no-useless-return": "error",
     "no-var": "error",

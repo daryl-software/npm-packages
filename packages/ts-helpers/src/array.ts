@@ -17,7 +17,8 @@ declare global {
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
 
-        mutableCopy(): T[];
+        mapKey(key: keyof T): T[keyof T][];
+
         sample(): T;
 
         // ⚠️ Must copy all functions to ReadonlyArray below
@@ -33,7 +34,6 @@ declare global {
         sum(this: number[]): number;
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
-        mutableCopy(): T[];
         sample(): T;
     }
 
@@ -78,14 +78,14 @@ Array.prototype.unique = function () {
     return [...new Set(this)];
 };
 
-Array.prototype.mutableCopy = function () {
-    return [...this];
-};
-
 Array.prototype.sample = function () {
     return this[Math.floor(Math.random() * this.length)];
 };
 
 Array.range = (start, end) => Array.from({ length: end - start }, (_, k) => k + start);
+
+Array.prototype.mapKey = function (key) {
+    return this.map((item) => item[key]);
+};
 
 export {};

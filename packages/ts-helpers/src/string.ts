@@ -3,6 +3,7 @@ export {};
 declare global {
     interface String {
         ucfirst(): Capitalize<string>;
+        toCamelCase(): string;
         explode(separator: string, limit?: number): string[];
         base64Decode(): string;
         mysqlCrc32(): number;
@@ -12,6 +13,9 @@ declare global {
 
 String.prototype.ucfirst = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
+};
+String.prototype.toCamelCase = function () {
+    return this.replace(/_(.)/g, (_, chr) => chr.toUpperCase());
 };
 String.prototype.base64Decode = function () {
     return Buffer.from(this, 'base64').toString('utf-8');
