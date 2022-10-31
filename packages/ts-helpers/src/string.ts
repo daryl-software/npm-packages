@@ -12,7 +12,7 @@ declare global {
 }
 
 String.prototype.ucfirst = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+    return (this.charAt(0).toUpperCase() + this.slice(1)) as Capitalize<string>;
 };
 String.prototype.toCamelCase = function () {
     return this.replace(/_(.)/g, (_, chr) => chr.toUpperCase());

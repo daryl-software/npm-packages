@@ -14,7 +14,7 @@ declare global {
 
     function extractNumber(str: string | null | undefined): number;
 
-    function ObjectKeys<Obj>(obj: Obj): (keyof Obj)[];
+    function ObjectKeys<Obj extends object>(obj: Obj): (keyof Obj)[];
 
     function objectKeysToCamelCase<T extends Record<string, unknown>>(object: T): T;
 
@@ -49,7 +49,7 @@ global.extractNumber = function (str: string | null | undefined): number {
     return n;
 };
 
-global.ObjectKeys = <Obj>(obj: Obj): (keyof Obj)[] => Object.keys(obj) as (keyof Obj)[];
+global.ObjectKeys = <Obj extends object>(obj: Obj): (keyof Obj)[] => Object.keys(obj) as (keyof Obj)[];
 
 global.objectKeysToCamelCase = function <T extends Record<string, unknown>>(object: T): T {
     return Object.keys(object).reduce((value, key) => {

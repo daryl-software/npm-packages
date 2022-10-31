@@ -5,6 +5,4 @@
       "@ezweb/ts-helpers": ["packages/ts-helpers/src/index.ts"],
     }
   },
-  "files": [],
-  "include": [],
 }
