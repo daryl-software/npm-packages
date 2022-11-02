@@ -7,6 +7,8 @@ declare global {
         filterNullAndUndefined(): Exclude<T, null | undefined>[];
         filterError(): Exclude<T, Error>[];
         filter<U extends T>(pred: (value: T, index: number, array: T[]) => value is U): U[];
+        filterAsync<U extends T>(pred: (value: T, index?: number, array?: T[]) => Promise<boolean>): Promise<U[]>;
+        groupBy(predicate: (v: T) => string | number): Record<string | number, T[]>;
 
         /**
          * Shuffle in place
@@ -30,6 +32,8 @@ declare global {
         filterNullAndUndefined(): Exclude<T, null | undefined>[];
         filterError(): Exclude<T, Error>[];
         filter<U extends T>(pred: (value: T, index: number, array: T[]) => value is U): U[];
+        filterAsync<U extends T>(pred: (value: T, index?: number, array?: T[]) => Promise<boolean>): Promise<U[]>;
+        groupBy(predicate: (v: T) => string | number): Record<string | number, T[]>;
         shuffle(): void;
         sum(this: number[]): number;
         avg(this: number[]): number;
@@ -56,6 +60,18 @@ Array.prototype.filterNullAndUndefined = function () {
 };
 Array.prototype.filterError = function () {
     return this.filter((item) => !(item instanceof Error));
+};
+
+Array.prototype.filterAsync = async function (predicate) {
+    const results = await Promise.all(this.map(predicate));
+    return this.filter((_, index) => results[index]);
+};
+
+Array.prototype.groupBy = function (predicate) {
+    return this.reduce((acc, value) => {
+        (acc[predicate(value)] ||= []).push(value);
+        return acc;
+    }, {});
 };
 
 Array.prototype.shuffle = function () {
