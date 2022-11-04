@@ -1,0 +1,27 @@
+{
+  "name": "@ezweb/graphql-helpers",
+  "version": "1.0.0",
+  "description": "Graphql helpers",
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "directory": "packages/graphql-helpers"
+  },
+  "bugs": {
+    "url": "https://github.com/ezweb/npm-packages/issues"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "^2.1.4",
+    "@graphql-tools/schema": "^9.0.8",
+    "@types/glob": "^8.0.0",
+    "apollo-server-core": "^3.11.1",
+    "deepmerge-ts": "^4.2.2",
+    "glob": "^8.0.3"
+  }
+}

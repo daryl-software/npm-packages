@@ -1,0 +1,10 @@
+enum Currency {
+    EUR
+    USD
+    CHF
+}
+
+
+type Query {
+    currencies: [Currency!]
+}

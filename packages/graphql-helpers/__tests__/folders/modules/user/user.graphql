@@ -1,0 +1,15 @@
+extend type Query {
+    user(id: ID!): User
+    users: [User!]
+}
+
+type User {
+    id: ID!
+    name: String!
+    gender: Gender
+}
+
+enum Gender {
+    MALE
+    FEMALE
+}

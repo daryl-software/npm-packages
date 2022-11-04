@@ -7,6 +7,7 @@
     { "path": "./packages/ts-config-loader" },
     { "path": "./packages/db" },
     { "path": "./packages/error" },
+    { "path": "./packages/graphql-helpers" },
     { "path": "./packages/redis-dataloader" },
     { "path": "./packages/sequelize-dataloader" },
     { "path": "./packages/sequelize-redis-cache" },
