@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/graphql-helpers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Graphql helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/ezweb/npm-packages#readme",
