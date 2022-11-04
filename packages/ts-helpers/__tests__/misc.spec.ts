@@ -10,7 +10,7 @@ describe('Misc prototype', async () => {
         await sleep(timeToWait);
         expect(performance.now() - startTime)
             .to.lte(timeToWait + precision)
-            .to.gte(timeToWait);
+            .to.gte(timeToWait - precision);
     });
 
     it('Filter null and undefined', async () => {

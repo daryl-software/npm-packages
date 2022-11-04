@@ -39,19 +39,6 @@ describe('Array prototype', async () => {
         expect(uArray.unique()).to.eql(['a', 0, 1, -8, 666]);
     });
 
-    it('mutableCopy', async () => {
-        const toCopy = [...anyArray];
-        let copy = toCopy;
-        copy.push(888);
-
-        copy = toCopy.mutableCopy();
-        copy.push(666);
-
-        expect(anyArray).to.eql([0, undefined, null, NaN, 'string', {}, false, 8, -6]);
-        expect(toCopy.mutableCopy()).to.eql([0, undefined, null, NaN, 'string', {}, false, 8, -6, 888]);
-        expect(copy.mutableCopy()).to.eql([0, undefined, null, NaN, 'string', {}, false, 8, -6, 888, 666]);
-    });
-
     it('Sample', async () => {
         expect(anyArray.includes(anyArray.sample())).true;
     });

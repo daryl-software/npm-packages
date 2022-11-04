@@ -8,6 +8,7 @@ Open sourced node packages
 * [sequelize-dataloader](packages/sequelize-dataloader/README.md)
 * [sequelize-redis-cache](packages/sequelize-redis-cache/README.md)
 * [ts-helpers](packages/ts-helpers/README.md)
+* [eslint-config](packages/eslint-config/README.md)
 
 
 ### Install
@@ -36,6 +37,12 @@ npm run prepublish
 npm publish -ws
 
 # publish just one ?
-npm publish -w @ezweb/ts-helpers
+npm prepublish;
+npm publish -w @ezweb/eslint-config --access=public
+
+# patch and publish
+npm version patch -w @ezweb/ts-helpers;
+npm prepublish;
+npm publish -w @ezweb/ts-helpers --access=public;
 ```
 

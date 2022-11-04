@@ -7,6 +7,8 @@ declare global {
         filterNullAndUndefined(): Exclude<T, null | undefined>[];
         filterError(): Exclude<T, Error>[];
         filter<U extends T>(pred: (value: T, index: number, array: T[]) => value is U): U[];
+        filterAsync<U extends T>(pred: (value: T, index?: number, array?: T[]) => Promise<boolean>): Promise<U[]>;
+        groupBy(predicate: (v: T) => string | number): Record<string | number, T[]>;
 
         /**
          * Shuffle in place
@@ -17,7 +19,8 @@ declare global {
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
 
-        mutableCopy(): T[];
+        mapKey(key: keyof T): T[keyof T][];
+
         sample(): T;
 
         // ⚠️ Must copy all functions to ReadonlyArray below
@@ -29,11 +32,12 @@ declare global {
         filterNullAndUndefined(): Exclude<T, null | undefined>[];
         filterError(): Exclude<T, Error>[];
         filter<U extends T>(pred: (value: T, index: number, array: T[]) => value is U): U[];
+        filterAsync<U extends T>(pred: (value: T, index?: number, array?: T[]) => Promise<boolean>): Promise<U[]>;
+        groupBy(predicate: (v: T) => string | number): Record<string | number, T[]>;
         shuffle(): void;
         sum(this: number[]): number;
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
-        mutableCopy(): T[];
         sample(): T;
     }
 
@@ -58,6 +62,18 @@ Array.prototype.filterError = function () {
     return this.filter((item) => !(item instanceof Error));
 };
 
+Array.prototype.filterAsync = async function (predicate) {
+    const results = await Promise.all(this.map(predicate));
+    return this.filter((_, index) => results[index]);
+};
+
+Array.prototype.groupBy = function (predicate) {
+    return this.reduce((acc, value) => {
+        (acc[predicate(value)] ||= []).push(value);
+        return acc;
+    }, {});
+};
+
 Array.prototype.shuffle = function () {
     for (let i = this.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -78,14 +94,14 @@ Array.prototype.unique = function () {
     return [...new Set(this)];
 };
 
-Array.prototype.mutableCopy = function () {
-    return [...this];
-};
-
 Array.prototype.sample = function () {
     return this[Math.floor(Math.random() * this.length)];
 };
 
 Array.range = (start, end) => Array.from({ length: end - start }, (_, k) => k + start);
+
+Array.prototype.mapKey = function (key) {
+    return this.map((item) => item[key]);
+};
 
 export {};
