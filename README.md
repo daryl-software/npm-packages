@@ -44,5 +44,6 @@ npm publish -w @ezweb/eslint-config --access=public
 npm version patch -w @ezweb/ts-helpers;
 npm run prepublish;
 npm publish -w @ezweb/ts-helpers --access=public;
+npm publish -w @ezweb/ts-config-loader --access=public;
 ```
 

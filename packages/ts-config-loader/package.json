@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/ts-config-loader",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "author": "Florian Morello",
   "license": "ISC",
   "repository": {
@@ -13,7 +13,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "chokidar": "^3.5.2",
-    "deep-object-diff": "^1.1.0",
+    "deep-object-diff": "^1.1.5",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
