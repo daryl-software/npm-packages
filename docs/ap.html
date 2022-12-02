@@ -9,7 +9,7 @@ if (window.ApplePaySession) {
   	div.innerText += 'ApplePaySession.canMakePayments() ❌\n';
   }
   
-	ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+	ApplePaySession.canMakePaymentsWithActiveCard();
    promise.then(function (so) {
    
     div.innerText += 'ApplePaySession.canMakePaymentsWithActiveCard() '+so ? '✅' : '❌'+'\n';
