@@ -11,7 +11,7 @@ if (window.ApplePaySession) {
   
 	ApplePaySession.canMakePaymentsWithActiveCard('merchant.sbs').then(function (so) {
    
-    div.innerText += 'ApplePaySession.canMakePaymentsWithActiveCard() '+so ? '✅' : '❌'+'\n';
+    div.innerText += 'ApplePaySession.canMakePaymentsWithActiveCard() '+(so ? '✅' : '❌')+'\n';
 });
   
 } else {
