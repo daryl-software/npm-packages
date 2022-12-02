@@ -1,0 +1,21 @@
+<pre id=out></pre>
+<script>
+let div = document.getElementById('out');
+if (window.ApplePaySession) {
+  div.innerText += 'window.ApplePaySession ✅\n';
+  if (ApplePaySession.canMakePayments()) {
+    div.innerText += 'ApplePaySession.canMakePayments() ✅\n';
+  } else {
+  	div.innerText += 'ApplePaySession.canMakePayments() ❌\n';
+  }
+  
+	ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+   promise.then(function (so) {
+   
+    div.innerText += 'ApplePaySession.canMakePaymentsWithActiveCard() '+so ? '✅' : '❌'+'\n';
+});
+  
+} else {
+  div.innerText += 'window.ApplePaySession ❌\n'
+}
+</script>
