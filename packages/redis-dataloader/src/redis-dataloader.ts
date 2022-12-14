@@ -112,7 +112,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         }
 
         this.log('map to be returned', mapRedisKeyToModelKey);
-        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))!.value!);
+        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))!.value);
     }
 
     private redisKey(key: K): string {
@@ -139,7 +139,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
 
     private storeNotFoundError(rKey: string): Promise<boolean> {
         this.log('saving not found error to redis', rKey);
-        return this.options.redis.client.set(rKey, RedisDataLoader.NOT_FOUND_STRING, 'EX', 60).then((result) => result === 'OK');
+        return this.options.redis.client.set(rKey, RedisDataLoader.NOT_FOUND_STRING, 'EX', this.options.redis.ttlNotFound ?? 60).then((result) => result === 'OK');
     }
 
     /**

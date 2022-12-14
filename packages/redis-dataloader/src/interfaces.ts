@@ -10,6 +10,7 @@ export interface RedisDataloaderOptions<K, V> {
         suffix?: string;
         client: Redis | Cluster;
         ttl: number;
+        ttlNotFound?: number; // default to 60sec
         deserialize?: (key: K, data: string) => V | Error;
         serialize?: (value: V) => string;
         logging?: (...args: unknown[]) => void;
