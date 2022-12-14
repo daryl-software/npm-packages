@@ -18,5 +18,5 @@ export interface RedisDataloaderOptions<K, V> {
 }
 
 export interface RedisDataloaderOptionsRequired<K, V> extends RedisDataloaderOptions<K, V> {
-    redis: Pick<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix'> & Required<Omit<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix'>>;
+    redis: Pick<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix'> & Required<Omit<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix' | 'ttlNotFound'>>;
 }
