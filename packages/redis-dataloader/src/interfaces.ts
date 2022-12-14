@@ -10,6 +10,7 @@ export interface RedisDataloaderOptions<K, V> {
         suffix?: string;
         client: Redis | Cluster;
         ttl: number;
+        ttlNotFound?: number; // default to 60sec
         deserialize?: (key: K, data: string) => V | Error;
         serialize?: (value: V) => string;
         logging?: (...args: unknown[]) => void;
@@ -17,5 +18,5 @@ export interface RedisDataloaderOptions<K, V> {
 }
 
 export interface RedisDataloaderOptionsRequired<K, V> extends RedisDataloaderOptions<K, V> {
-    redis: Pick<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix'> & Required<Omit<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix'>>;
+    redis: Pick<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix' | 'ttlNotFound'> & Required<Omit<RedisDataloaderOptions<K, V>['redis'], 'logging' | 'suffix' | 'ttlNotFound'>>;
 }

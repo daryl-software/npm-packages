@@ -19,7 +19,7 @@ declare global {
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
 
-        mapKey(key: keyof T): T[keyof T][];
+        mapKey<Key extends keyof T>(key: Key): T[Key][];
 
         sample(): T;
 
@@ -39,6 +39,7 @@ declare global {
         avg(this: number[]): number;
         unique<T extends number | string>(this: T[]): T[];
         sample(): T;
+        mapKey<Key extends keyof T>(key: Key): T[Key][];
     }
 
     interface ArrayConstructor {
