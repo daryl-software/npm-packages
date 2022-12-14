@@ -112,7 +112,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         }
 
         this.log('map to be returned', mapRedisKeyToModelKey);
-        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))!.value);
+        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))?.value ?? new NotFoundError(key, 'Not found'));
     }
 
     private redisKey(key: K): string {
