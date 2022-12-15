@@ -4,7 +4,7 @@ import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
 import { SequelizeSingleModelDataloaderOptions } from './index';
-import { ModelNotFoundError } from '@ezweb/error';
+import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
 
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,
@@ -31,7 +31,7 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
     key: K | K[],
     options?: SequelizeSingleModelDataloaderOptions<A, V, string> | (SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>)
 ) {
-    let batchLoadFn: (keys: readonly any[]) => Promise<(V | Error)[]>;
+    let batchLoadFn: (keys: readonly any[]) => Promise<(V | Error | undefined)[]>;
     let cacheKeyFn: (k: any) => string;
     if (Array.isArray(key)) {
         batchLoadFn = (keys: readonly Pick<V, K>[]) => BatchLoaderMultiColumns(model, key, keys, 'find', options);
@@ -52,6 +52,18 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
             },
         });
     } else {
-        return new DataLoader<A, V, string>(batchLoadFn, { cacheKeyFn, ...options });
+        return new DataLoader<A, V, string>(
+            (keys) =>
+                batchLoadFn(keys).then(
+                    (values) =>
+                        keys.map((k, i) => {
+                            if (values[i] === undefined) {
+                                return options?.notFound?.(k) ?? new NotFoundError(k, 'Not found');
+                            }
+                            return values[i];
+                        }) as Exclude<V, undefined>[]
+                ),
+            { cacheKeyFn, ...options }
+        );
     }
 }

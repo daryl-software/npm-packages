@@ -5,7 +5,7 @@ import { model, User, UserNotFoundError } from './UserModel';
 import { Op, QueryTypes } from "@sequelize/core";
 import { RedisDataLoader } from '@ezweb/redis-dataloader';
 import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@ezweb/sequelize-dataloader';
-import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
+import { ModelNotFoundError, NotFoundError } from "@ezweb/error";
 
 describe('sequelize-dataloader', async () => {
     before(async () => {
@@ -24,12 +24,12 @@ describe('sequelize-dataloader', async () => {
         it('BatchLoader find', async () => {
             const finder = await BatchLoader(User, 'name', ['toto', 'arsonik'], 'find');
             expect((finder[0] as User).email).to.eq('toto@domain.com');
-            expect(finder[1]).to.instanceOf(ModelNotFoundError);
+            expect(finder[1]).to.be.undefined;
         });
         it('BatchLoader filter', async () => {
             const finder = await BatchLoader(User, 'country', ['FR', 'VA'], 'filter');
             expect(finder[0]).to.length(2);
-            expect(finder[1]).to.instanceOf(ModelNotFoundError);
+            expect(finder[1]).to.be.empty;
         });
         it('BatchLoaderMultiColumns w predefined where', async () => {
             const finder = await BatchLoaderMultiColumns(User, ['name', 'email'], [{ name: 'toto', email: 'toto@domain.com' }], 'filter', { find: { where: { country: 'FR' } } });

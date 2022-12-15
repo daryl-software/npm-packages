@@ -11,7 +11,7 @@
     "compile:clean": "tsc --build tsconfig.build.json --clean",
     "watch": "tsc --build tsconfig.build.json --watch",
     "coverage": "npm exec -ws nyc -- mocha",
-    "test": "npm exec -ws mocha",
+    "test": "npm run compile && npm exec -ws mocha",
     "prepublish": "npm run compile:clean && npm run compile",
     "prettier-check": "npm exec -ws prettier -- --check src",
     "docker:mac-up-services": "export REDIS_CLUSTER_IP=0.0.0.0; npm run docker:up-services",

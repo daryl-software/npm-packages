@@ -51,26 +51,33 @@ export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M
           );
 }
 
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'find', options?: BatchLoaderOptions<M>): Promise<(M | Error)[]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'filter', options?: BatchLoaderOptions<M>): Promise<(M[] | Error)[]>;
+export async function BatchLoader<M extends Model, K extends keyof M>(
+    model: ModelStatic<M>,
+    key: K,
+    keys: readonly M[K][],
+    mode: 'find',
+    options?: BatchLoaderOptions<M>
+): Promise<(M | undefined | Error)[]>;
+export async function BatchLoader<M extends Model, K extends keyof M>(
+    model: ModelStatic<M>,
+    key: K,
+    keys: readonly M[K][],
+    mode: 'filter',
+    options?: BatchLoaderOptions<M>
+): Promise<(M[] | undefined | Error)[]>;
 export async function BatchLoader<M extends Model, K extends keyof M>(
     model: ModelStatic<M>,
     key: K,
     keys: readonly M[K][],
     mode: 'find' | 'filter',
     options: BatchLoaderOptions<M> = {}
-): Promise<(M[] | M | Error)[]> {
+): Promise<unknown> {
     const models = await model.findAll({ ...options.find, where: { ...options.find?.where, [key]: keys } });
     return keys.map((akey) => {
-        let found: M | M[] | undefined;
         if (mode === 'find') {
-            found = models.find((result) => result[key] === akey);
+            return models.find((result) => result[key] === akey);
         } else {
-            found = models.filter((result) => result[key] === akey);
-            if (!found.length) {
-                found = undefined;
-            }
+            return models.filter((result) => result[key] === akey);
         }
-        return found ?? options.notFound?.(akey) ?? new ModelNotFoundError(model, akey);
     });
 }
