@@ -15,11 +15,11 @@ export class DbFactoryCache {
     }
 
     private cached(key: string, options: CacheOptions): Promise<string | null> {
-        if (options.clear === true) {
+        if (options.clear) {
             void this.redis.del(key);
             return Promise.resolve(null);
         }
-        if (options.skip === true) {
+        if (options.skip) {
             return Promise.resolve(null);
         }
 
@@ -47,7 +47,7 @@ export class DbFactoryCache {
         const key = this.key(sql, options);
 
         const cache = await this.cached(key, cOptions);
-        if (cOptions.clear === true) {
+        if (cOptions.clear) {
             return [];
         }
 
@@ -65,7 +65,7 @@ export class DbFactoryCache {
     async queryModel<M extends Model>(sql: string, options: QueryOptionsWithModel<M>, cOptions: CacheOptions): Promise<M[] | M> {
         const key = this.key(sql, options);
         const cache = await this.cached(key, cOptions);
-        if (cOptions.clear === true) {
+        if (cOptions.clear) {
             return [];
         }
 

@@ -75,7 +75,7 @@ export class SequelizeCache<T extends Model> {
     }
 
     protected cached(key: string, options: CacheOptions): Promise<string | null> {
-        if (options.skip === true) {
+        if (options.skip) {
             return Promise.resolve(null);
         }
 
