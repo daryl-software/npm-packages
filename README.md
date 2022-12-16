@@ -45,9 +45,9 @@ npm publish -w @ezweb/eslint-config --access=public
 # patch and publish
 npm version patch -w @ezweb/ts-helpers;
 npm version patch -w @ezweb/ts-config-loader;
-npm version patch -w @ezweb/redis-dataloader
+npm version patch -w @ezweb/sequelize-dataloader
 npm run prepublish;
-npm publish -w @ezweb/redis-dataloader --access=public
+npm publish -w @ezweb/sequelize-dataloader --access=public
 npm publish -w @ezweb/ts-helpers --access=public;
 npm publish -w @ezweb/ts-config-loader --access=public;
 ```

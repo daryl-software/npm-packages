@@ -2,6 +2,10 @@ import { Sequelize } from '@sequelize/core';
 import { Cluster } from 'ioredis';
 import { before } from 'mocha';
 import config from './config.json';
+import chaiPromise from 'chai-as-promised';
+import { use } from "chai";
+
+use(chaiPromise);
 
 export let queryCount = 0;
 export const sequelize = new Sequelize('sqlite::memory:', {

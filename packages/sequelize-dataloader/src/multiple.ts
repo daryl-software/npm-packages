@@ -58,7 +58,7 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
                 batchLoadFn(keys).then(
                     (values) =>
                         keys.map((k, i) => {
-                            if (values[i] === undefined) {
+                            if (!Array.isArray(values[i]) || !(values[i] as V[]).length) {
                                 return options?.notFound?.(k) ?? new NotFoundError(k, 'Not found');
                             }
                             return values[i];

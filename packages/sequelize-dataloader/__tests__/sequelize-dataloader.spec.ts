@@ -101,6 +101,9 @@ describe('sequelize-dataloader', async () => {
             const a = await User.loaderByNameAndCountry.load({ name: 'toto', country: 'BE' });
             expect(a).to.length(2);
         });
+        it('multi not found', async () => {
+           await expect(User.loaderByNameAndCountry.load({ name: '404xxx', country: 'BE' })).to.eventually.be.rejectedWith(NotFoundError);
+        });
     });
 
     describe('Redis.io', () => {

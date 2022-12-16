@@ -57,7 +57,7 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
                 batchLoadFn(keys).then(
                     (values) =>
                         keys.map((k, i) => {
-                            if (values[i] === undefined) {
+                            if (values[i] === undefined || values[i] === null) {
                                 return options?.notFound?.(k) ?? new NotFoundError(k, 'Not found');
                             }
                             return values[i];
