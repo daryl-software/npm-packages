@@ -5,7 +5,7 @@ import { model, User, UserNotFoundError } from './UserModel';
 import { Op, QueryTypes } from "@sequelize/core";
 import { RedisDataLoader } from '@ezweb/redis-dataloader';
 import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@ezweb/sequelize-dataloader';
-import { NotFoundError } from "@ezweb/error";
+import { ModelNotFoundError, NotFoundError } from "@ezweb/error";
 
 describe('sequelize-dataloader', async () => {
     before(async () => {
@@ -96,7 +96,7 @@ describe('sequelize-dataloader', async () => {
             ]);
             expect(a[0]).to.instanceof(User);
             expect(a[2]).to.instanceof(User);
-            expect(a[1]).to.instanceof(Error);
+            expect(a[1]).to.instanceof(ModelNotFoundError);
         });
         it('multi cols multi result', async () => {
             const a = await User.loaderByNameAndCountry.load({ name: 'toto', country: 'BE' });
@@ -144,7 +144,7 @@ describe('sequelize-dataloader', async () => {
             ]);
             expect(a[0]).to.instanceof(User);
             expect(a[2]).to.instanceof(User);
-            expect(a[1]).to.instanceof(Error);
+            expect(a[1]).to.instanceof(ModelNotFoundError);
         });
         it('call with object containing unknown key', async () => {
             const data = { name: 'arso', email: 'me@domain.com', notDbKey: true };

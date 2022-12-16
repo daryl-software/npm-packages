@@ -1,6 +1,6 @@
 {
   "name": "@ezweb/sequelize-dataloader",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Sequelize dataloader, memory and redis backends",
   "keywords": [
     "sequelize",

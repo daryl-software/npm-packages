@@ -4,7 +4,7 @@ import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@ezweb/db';
 import { SequelizeSingleModelDataloaderOptions } from './index';
-import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
+import { ModelNotFoundError } from '@ezweb/error';
 
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,
@@ -58,7 +58,7 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
                     (values) =>
                         keys.map((k, i) => {
                             if (values[i] === undefined || values[i] === null) {
-                                return options?.notFound?.(k) ?? new NotFoundError(k, 'Not found');
+                                return options?.notFound?.(k) ?? new ModelNotFoundError(model, k);
                             }
                             return values[i];
                         }) as Exclude<V, undefined>[]
