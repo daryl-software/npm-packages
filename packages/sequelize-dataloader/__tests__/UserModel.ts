@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model, ModelStatic } from '@sequelize/core';
 import { SingleDataloader, MultipleDataloader } from '../src';
 import { redisCluster as client } from './init.spec';
-import { ModelNotFoundError } from '@ezweb/error';
+import { ModelNotFoundError } from '@daryl-software/error';
 
 export class UserNotFoundError<M extends Model = User> extends ModelNotFoundError<M> {
     id: number;

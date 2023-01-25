@@ -1,6 +1,6 @@
 import { FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
-import { CustomNotFound } from '@ezweb/redis-dataloader';
-import { ModelNotFoundError } from '@ezweb/error';
+import { CustomNotFound } from '@daryl-software/redis-dataloader';
+import { ModelNotFoundError } from '@daryl-software/error';
 
 function StrictValues<M extends Model, K extends keyof M>(columns: K[], values: readonly Pick<M, K>[]): Pick<M, K>[] {
     return values.map((value) => {

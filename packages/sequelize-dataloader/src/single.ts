@@ -1,10 +1,10 @@
 import { Model, ModelStatic } from '@sequelize/core';
-import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
+import { RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
-import { hydrateModel } from '@ezweb/db';
+import { hydrateModel } from '@daryl-software/db';
 import { SequelizeSingleModelDataloaderOptions } from './index';
-import { ModelNotFoundError } from '@ezweb/error';
+import { ModelNotFoundError } from '@daryl-software/error';
 
 export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,

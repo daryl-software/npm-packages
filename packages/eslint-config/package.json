@@ -1,18 +1,18 @@
 {
-  "name": "@ezweb/eslint-config",
+  "name": "@daryl-software/eslint-config",
   "version": "1.0.9",
   "description": "ESLint Configs",
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "liense": "ISC",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/eslint-config"
   },
   "bugs": {
-    "url": "https://github.com/ezweb/npm-packages/issues"
+    "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "peerDependencies": {
     "eslint": ">= 8.0.0",

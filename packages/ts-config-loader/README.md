@@ -1,12 +1,12 @@
-# `@ezweb/ts-config-loader`
-[![npm version](https://badge.fury.io/js/@ezweb%2Fts-config-loader.svg)](https://badge.fury.io/js/@ezweb%2Fts-config-loader)
+# `@daryl-software/ts-config-loader`
+[![npm version](https://badge.fury.io/js/@daryl-software%2Fts-config-loader.svg)](https://badge.fury.io/js/@daryl-software%2Fts-config-loader)
 
 
 JSON files loader & watcher
 
 ### Installation
 ```shell
-npm i @ezweb/ts-config-loader
+npm i @daryl-software/ts-config-loader
 ```
 
 ### Usage

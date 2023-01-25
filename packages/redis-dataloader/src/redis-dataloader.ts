@@ -1,7 +1,7 @@
 import DataLoader, { BatchLoadFn } from 'dataloader';
 import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
-import { NotFoundError } from '@ezweb/error';
+import { NotFoundError } from '@daryl-software/error';
 
 export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     private readonly name: string;

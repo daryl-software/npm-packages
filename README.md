@@ -39,14 +39,14 @@ npm publish -ws
 
 # publish just one ?
 npm prepublish;
-npm publish -w @ezweb/eslint-config --access=public
-npm publish -w @ezweb/eslint-config --access=public
+npm publish -w @daryl-software/eslint-config --access=public
+npm publish -w @daryl-software/eslint-config --access=public
 
 # patch and publish
-npm version patch -w @ezweb/ts-helpers;
-npm version patch -w @ezweb/ts-config-loader;
+npm version patch -w @daryl-software/ts-helpers;
+npm version patch -w @daryl-software/ts-config-loader;
 npm run prepublish;
-npm publish -w @ezweb/ts-helpers --access=public;
-npm publish -w @ezweb/ts-config-loader --access=public;
+npm publish -w @daryl-software/ts-helpers --access=public;
+npm publish -w @daryl-software/ts-config-loader --access=public;
 ```
 
