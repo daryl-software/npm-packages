@@ -1,18 +1,18 @@
 {
-  "name": "@ezweb/error",
-  "version": "2.0.3",
+  "name": "@daryl-software/error",
+  "version": "2.0.4",
   "description": "Common error classes",
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git"
+    "url": "git+https://github.com/daryl-software/npm-packages.git"
   },
   "bugs": {
-    "url": "https://github.com/ezweb/npm-packages/issues"
+    "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.10"

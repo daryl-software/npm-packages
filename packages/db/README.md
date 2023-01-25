@@ -1,5 +1,5 @@
-# `@ezweb/db`
-[![npm version](https://badge.fury.io/js/@ezweb%2Fdb.svg)](https://badge.fury.io/js/@ezweb%2Fdb)
+# `@daryl-software/db`
+[![npm version](https://badge.fury.io/js/@daryl-software%2Fdb.svg)](https://badge.fury.io/js/@daryl-software%2Fdb)
 
 ## Usage
 

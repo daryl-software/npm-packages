@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { RedisDataLoader } from '@ezweb/redis-dataloader';
+import { RedisDataLoader } from '@daryl-software/redis-dataloader';
 import { Cluster } from 'ioredis';
 import config from './config.json';
 import data from './data.json';
-import { NotFoundError } from '@ezweb/error';
+import { NotFoundError } from '@daryl-software/error';
 
 export const redisCluster = new Cluster(
     config.rediscluster.servers.map((server) => {

@@ -23,6 +23,9 @@ declare global {
 
         sample(): T;
 
+        // Swap 2 items based on their indexes
+        swap(a: number, b: number): this;
+
         // ⚠️ Must copy all functions to ReadonlyArray below
     }
 
@@ -103,6 +106,12 @@ Array.range = (start, end) => Array.from({ length: end - start }, (_, k) => k + 
 
 Array.prototype.mapKey = function (key) {
     return this.map((item) => item[key]);
+};
+
+Array.prototype.swap = function (a, b) {
+    // eslint-disable-next-line prefer-destructuring
+    this[a] = this.splice(b, 1, this[a])[0];
+    return this;
 };
 
 export {};

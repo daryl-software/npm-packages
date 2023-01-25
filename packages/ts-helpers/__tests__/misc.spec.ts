@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import '@ezweb/ts-helpers';
+import '@daryl-software/ts-helpers';
 
 describe('Misc prototype', async () => {
     it('Sleep', async () => {

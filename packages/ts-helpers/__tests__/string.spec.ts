@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import '@ezweb/ts-helpers';
+import '@daryl-software/ts-helpers';
 
 describe('String prototype', async () => {
     it('First char to uppercase ', async () => {
