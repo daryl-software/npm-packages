@@ -1,4 +1,5 @@
 import assert from 'assert';
+import { randomInt } from 'crypto';
 
 type RequiredAndNotNull<T> = {
     [P in keyof T]-?: Exclude<T[P], null | undefined>;
@@ -9,18 +10,13 @@ type EmptyObject = {
 
 declare global {
     function sleep(ms: number): Promise<void>;
-
     function filterNullAndUndefined<T extends Record<string, unknown>>(object: T): RequiredAndNotNull<T>;
-
     function extractNumber(str: string | null | undefined): number;
-
     function ObjectKeys<Obj extends object>(obj: Obj): (keyof Obj)[];
-
     function objectKeysToCamelCase<T extends Record<string, unknown>>(object: T): T;
-
     function notEmpty<T extends object>(obj: T | null | undefined): obj is Exclude<T, EmptyObject>;
-
     function recordToStringRecord(record: Record<string, unknown>): Record<string, string>;
+    function flipCoin(): boolean;
 }
 
 global.sleep = function (millisec: number): Promise<void> {
@@ -67,4 +63,8 @@ global.recordToStringRecord = function (record: Record<string, unknown>): Record
         value[key] = String(record[key]);
         return value;
     }, {} as Record<string, string>);
+};
+
+global.flipCoin = function (): boolean {
+    return randomInt(2) === 1;
 };

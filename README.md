@@ -35,18 +35,9 @@ npm version prerelease -ws
 # all with patch version
 npm version patch -ws
 npm run prepublish
-npm publish -ws
+npm publish -ws --access=public
 
 # publish just one ?
-npm prepublish;
-npm publish -w @daryl-software/eslint-config --access=public
-npm publish -w @daryl-software/eslint-config --access=public
-
-# patch and publish
-npm version patch -w @daryl-software/ts-helpers;
-npm version patch -w @daryl-software/ts-config-loader;
-npm run prepublish;
-npm publish -w @daryl-software/ts-helpers --access=public;
-npm publish -w @daryl-software/ts-config-loader --access=public;
+./publish.sh patch ts-helpers
 ```
 
