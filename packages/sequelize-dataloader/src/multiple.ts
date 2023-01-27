@@ -3,7 +3,7 @@ import { CreationAttributes, Model, ModelStatic } from '@sequelize/core';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@daryl-software/db';
-import { RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
+import { CustomNotFound, RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import { SequelizeModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@daryl-software/error';
 
@@ -15,7 +15,7 @@ export function MultipleDataloader<
     MKey extends keyof M,
     KeyOrKeys extends MKey | MKey[], // [id, email] or id
     KeyToLoad extends KeyOrKeys extends MKey[] ? Pick<M, MKey> : M[MKey], // { id: 1, email: 'xxx' } or 1
-    MinOptions extends SequelizeModelDataloaderOptions<KeyToLoad, M, string, M[]>,
+    MinOptions extends SequelizeModelDataloaderOptions<KeyToLoad, M, string, M[]> & CustomNotFound<KeyToLoad>,
     WithRedisOptions extends MinOptions & RedisDataloaderOptions<KeyToLoad, M>,
     Options extends MinOptions | WithRedisOptions,
     TBatchLoader = KeyOrKeys extends MKey ? typeof BatchLoader<M, MKey, 'filter'> : typeof BatchLoaderMultiColumns<M, MKey, 'filter'>,

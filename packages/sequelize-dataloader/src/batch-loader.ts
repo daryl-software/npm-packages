@@ -17,8 +17,8 @@ export async function BatchLoaderMultiColumns<
     M extends Model,
     K extends keyof M,
     Mode extends 'filter' | 'find',
-    Inter extends Mode extends 'filter' ? M[] : Mode extends 'find' ? M : never,
-    Return extends (Inter | undefined)[]
+    Inter = Mode extends 'filter' ? M[] : Mode extends 'find' ? M : never,
+    Return = (Inter | undefined)[]
 >(model: ModelStatic<M>, columns: K[], values: readonly Pick<M, K>[], mode: Mode, options: BatchLoaderOptions<M> = {}): Promise<Return> {
     const models = await model.findAll({
         ...options.find,

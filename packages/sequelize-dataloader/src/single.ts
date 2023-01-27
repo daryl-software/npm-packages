@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Model, ModelStatic } from '@sequelize/core';
-import { RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
+import { CustomNotFound, RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@daryl-software/db';
@@ -12,7 +12,9 @@ export function SingleDataloader<
     K extends keyof V,
     Key extends K | K[],
     KeyToLoad extends Pick<V, K> | V[K], // can be a single key (id) or a combination of keys [id, email]
-    Options extends SequelizeModelDataloaderOptions<KeyToLoad, V, string, V> & Partial<RedisDataloaderOptions<KeyToLoad, V>>,
+    MinOptions extends SequelizeModelDataloaderOptions<KeyToLoad, V, string, V> & CustomNotFound<KeyToLoad>,
+    WithRedisOptions extends MinOptions & RedisDataloaderOptions<KeyToLoad, V>,
+    Options extends MinOptions | WithRedisOptions,
     BatchFn = (keys: readonly KeyToLoad[]) => KeyToLoad extends V[K] ? typeof BatchLoader<V, K, 'filter'> : typeof BatchLoaderMultiColumns<V, K, 'filter'>,
     Return = Options extends RedisDataloaderOptions<KeyToLoad, V> ? RedisDataLoader<KeyToLoad, V, string> : DataLoader<KeyToLoad, V, string>
 >(model: ModelStatic<V>, key: Key, options?: Options): Return {
