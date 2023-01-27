@@ -1,47 +1,34 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Model, ModelStatic } from '@sequelize/core';
 import { RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@daryl-software/db';
-import { SequelizeSingleModelDataloaderOptions } from './index';
+import { SequelizeModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@daryl-software/error';
 
-export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelStatic<V>,
-    key: K[],
-    options: SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
-): RedisDataLoader<A, V, string>;
-export function SingleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
-    model: ModelStatic<V>,
-    key: K[],
-    options?: SequelizeSingleModelDataloaderOptions<A, V, string>
-): DataLoader<A, V, string>;
-export function SingleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelStatic<V>,
-    key: K,
-    options: SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>
-): RedisDataLoader<A, V, string>;
-export function SingleDataloader<K extends keyof V, V extends Model, A extends V[K]>(
-    model: ModelStatic<V>,
-    key: K,
-    options?: SequelizeSingleModelDataloaderOptions<A, V, string>
-): DataLoader<A, V, string>;
-export function SingleDataloader<K extends keyof V, V extends Model, A>(
-    model: ModelStatic<V>,
-    key: K | K[],
-    options?: SequelizeSingleModelDataloaderOptions<A, V, string> | (SequelizeSingleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>)
-) {
-    let batchLoadFn: (keys: readonly any[]) => Promise<(V | Error)[]>;
-    let cacheKeyFn: (k: any) => string;
+export function SingleDataloader<
+    V extends Model,
+    K extends keyof V,
+    Key extends K | K[],
+    KeyToLoad extends Pick<V, K> | V[K], // can be a single key (id) or a combination of keys [id, email]
+    Options extends SequelizeModelDataloaderOptions<KeyToLoad, V, string, V> & Partial<RedisDataloaderOptions<KeyToLoad, V>>,
+    BatchFn = (keys: readonly KeyToLoad[]) => KeyToLoad extends V[K] ? typeof BatchLoader<V, K, 'filter'> : typeof BatchLoaderMultiColumns<V, K, 'filter'>,
+    Return = Options extends RedisDataloaderOptions<KeyToLoad, V> ? RedisDataLoader<KeyToLoad, V, string> : DataLoader<KeyToLoad, V, string>
+>(model: ModelStatic<V>, key: Key, options?: Options): Return {
+    let batchLoadFn: BatchFn;
+    let cacheKeyFn: (keyToLoad: KeyToLoad) => string;
     if (Array.isArray(key)) {
-        batchLoadFn = (keys: readonly Pick<V, K>[]) => BatchLoaderMultiColumns(model, key, keys, 'find', options);
-        cacheKeyFn = (ak: any) => key.map((o) => ak[o]).join(',');
+        batchLoadFn = ((keys: readonly Pick<V, K>[]) => BatchLoaderMultiColumns(model, key, keys, 'find', options)) as BatchFn;
+        cacheKeyFn = (ak) => key.map((o) => (ak as Pick<V, K>)[o]).join(',');
     } else {
-        batchLoadFn = (keys: readonly V[K][]) => BatchLoader(model, key, keys, 'find', options);
-        cacheKeyFn = (ak: A) => JSON.stringify(ak);
+        // @ts-ignore
+        batchLoadFn = (keys: readonly V[K][]) => BatchLoader(model, key, keys, 'find', options) as BatchFn;
+        cacheKeyFn = (ak) => JSON.stringify(ak);
     }
     if (options && 'redis' in options) {
-        return new RedisDataLoader(`${model.name}-${key.toString()}`, batchLoadFn, {
+        // @ts-ignore
+        return new RedisDataLoader<K, V>(`${model.name}-${key.toString()}`, batchLoadFn, {
             cacheKeyFn,
             notFound: (akey) => new ModelNotFoundError(model, akey),
             ...options,
@@ -52,6 +39,19 @@ export function SingleDataloader<K extends keyof V, V extends Model, A>(
             },
         });
     } else {
-        return new DataLoader<A, V, string>(batchLoadFn, { cacheKeyFn, ...options });
+        // @ts-ignore
+        return new DataLoader<KeyToLoad, V, string>(
+            (keys) =>
+                // @ts-ignore
+                batchLoadFn(keys).then((values) =>
+                    keys.map((k, i) => {
+                        if (values[i] === undefined || values[i] === null) {
+                            return options?.notFound?.(k) ?? new ModelNotFoundError(model, k);
+                        }
+                        return values[i];
+                    })
+                ),
+            { cacheKeyFn, ...options }
+        );
     }
 }

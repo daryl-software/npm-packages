@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
 import { CustomNotFound } from '@daryl-software/redis-dataloader';
 import { ModelNotFoundError } from '@daryl-software/error';
@@ -14,63 +15,47 @@ export interface BatchLoaderOptions<M extends Model, K = any> extends CustomNotF
     find?: FindOptions<M>;
 }
 
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
+export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M, Mode extends 'filter' | 'find'>(
     model: ModelStatic<M>,
     columns: K[],
     values: readonly Pick<M, K>[],
-    mode: 'find',
-    options?: BatchLoaderOptions<M>
-): Promise<(M | Error)[]>;
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelStatic<M>,
-    columns: K[],
-    values: readonly Pick<M, K>[],
-    mode: 'filter',
-    options?: BatchLoaderOptions<M>
-): Promise<(M[] | Error)[]>;
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelStatic<M>,
-    columns: K[],
-    values: readonly Pick<M, K>[],
-    mode: 'find' | 'filter',
+    mode: Mode,
     options: BatchLoaderOptions<M> = {}
-): Promise<(M[] | M | Error)[]> {
+): Promise<((Mode extends 'filter' ? M[] : M) | Error)[]> {
     const models = await model.findAll({
         ...options.find,
         where: { ...options.find?.where, [Op.or]: StrictValues(columns, values) },
     });
     const nColumns = columns.length;
-    return mode === 'filter'
-        ? values.map(
-              (value) =>
-                  (models.filter((result) => columns.filter((column) => result[column] === value[column]).length === nColumns) || options.notFound?.(value)) ?? new ModelNotFoundError(model, value)
-          )
-        : values.map(
-              (value) =>
-                  (models.find((result) => columns.filter((column) => result[column] === value[column]).length === nColumns) || options.notFound?.(value)) ?? new ModelNotFoundError(model, value)
-          );
+    if (mode === 'filter') {
+        // @ts-ignore
+        return values.map(
+            (value) => models.filter((result) => columns.filter((column) => result[column] === value[column]).length === nColumns) ?? options.notFound?.(value) ?? new ModelNotFoundError(model, value)
+        );
+    } else {
+        // @ts-ignore
+        return values.map(
+            (value) => models.find((result) => columns.filter((column) => result[column] === value[column]).length === nColumns) ?? options.notFound?.(value) ?? new ModelNotFoundError(model, value)
+        );
+    }
 }
 
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'find', options?: BatchLoaderOptions<M>): Promise<(M | Error)[]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'filter', options?: BatchLoaderOptions<M>): Promise<(M[] | Error)[]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(
+export async function BatchLoader<M extends Model, K extends keyof M, Mode extends 'filter' | 'find'>(
     model: ModelStatic<M>,
     key: K,
     keys: readonly M[K][],
-    mode: 'find' | 'filter',
+    mode: Mode,
     options: BatchLoaderOptions<M> = {}
-): Promise<(M[] | M | Error)[]> {
+): Promise<Mode extends 'find' ? (M | Error)[] : (M[] | Error)[]> {
     const models = await model.findAll({ ...options.find, where: { ...options.find?.where, [key]: keys } });
-    return keys.map((akey) => {
-        let found: M | M[] | undefined;
-        if (mode === 'find') {
-            found = models.find((result) => result[key] === akey);
-        } else {
-            found = models.filter((result) => result[key] === akey);
-            if (!found.length) {
-                found = undefined;
-            }
-        }
-        return found ?? options.notFound?.(akey) ?? new ModelNotFoundError(model, akey);
-    });
+    if (mode === 'find') {
+        // @ts-ignore
+        return keys.map((akey) => models.find((result) => result[key] === akey) ?? options.notFound?.(akey) ?? new ModelNotFoundError(model, akey));
+    } else {
+        // @ts-ignore
+        return keys.map((akey) => {
+            const list = models.filter((result) => result[key] === akey);
+            return list.length ? list : options.notFound?.(akey) ?? new ModelNotFoundError(model, akey);
+        });
+    }
 }
