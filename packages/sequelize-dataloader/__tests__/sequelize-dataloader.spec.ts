@@ -22,12 +22,13 @@ describe('sequelize-dataloader', async () => {
         it('BatchLoader find', async () => {
             const finder = await BatchLoader(User, 'name', ['toto', 'arsonik'], 'find');
             expect((finder[0] as User).email).to.eq('toto@domain.com');
-            expect(finder[1]).to.instanceOf(ModelNotFoundError);
+            expect(finder[1]).to.be.undefined;
         });
         it('BatchLoader filter', async () => {
             const finder = await BatchLoader(User, 'country', ['FR', 'VA'], 'filter');
+            console.log(finder);
             expect(finder[0]).to.length(2);
-            expect(finder[1]).to.instanceOf(ModelNotFoundError);
+            expect(finder[1]).to.be.undefined;
         });
         it('BatchLoaderMultiColumns w predefined where', async () => {
             const finder = await BatchLoaderMultiColumns(User, ['name', 'email'], [{ name: 'toto', email: 'toto@domain.com' }], 'filter', { find: { where: { country: 'FR' } } });
@@ -45,7 +46,7 @@ describe('sequelize-dataloader', async () => {
             );
 
             expect((finder[0] as User).email).to.eq('toto@domain.com');
-            expect(finder[1]).to.instanceOf(ModelNotFoundError);
+            expect(finder[1]).to.be.undefined;
         });
     });
 
@@ -93,11 +94,14 @@ describe('sequelize-dataloader', async () => {
             ]);
             expect(a[0]).to.instanceof(User);
             expect(a[2]).to.instanceof(User);
-            expect(a[1]).to.instanceof(Error);
+            expect(a[1]).to.instanceof(ModelNotFoundError);
         });
         it('multi cols multi result', async () => {
             const a = await User.loaderByNameAndCountry.load({ name: 'toto', country: 'BE' });
             expect(a).to.length(2);
+        });
+        it('multi not found', async () => {
+           await expect(User.loaderByNameAndCountry.load({ name: '404xxx', country: 'BE' })).to.eventually.be.rejectedWith(NotFoundError);
         });
     });
 
@@ -138,7 +142,7 @@ describe('sequelize-dataloader', async () => {
             ]);
             expect(a[0]).to.instanceof(User);
             expect(a[2]).to.instanceof(User);
-            expect(a[1]).to.instanceof(Error);
+            expect(a[1]).to.instanceof(ModelNotFoundError);
         });
         it('call with object containing unknown key', async () => {
             const data = { name: 'arso', email: 'me@domain.com', notDbKey: true };
@@ -200,6 +204,7 @@ describe('sequelize-dataloader', async () => {
             });
             const res = await loader.load({ name: 'toto', email: 'toto@domain.com' });
             expect(res).to.length(1);
+            expect(loader.load({ name: 'toto', email: 'toto@domain.com' })).to.eventually.be.rejectedWith(NotFoundError);
         });
     });
 });

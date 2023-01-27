@@ -14,7 +14,6 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     ) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
         this.name += options.redis.suffix ? `-${options.redis.suffix}` : '';
-
         assert(!RedisDataLoader.usedNames.includes(this.name), `RedisDataLoader name ${this.name} already used`);
 
         this.log(`New RedisDataLoader ${this.name}`);
@@ -124,7 +123,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
 
     private store(rKey: string, value: V): Promise<boolean> {
         const rValue = this.options.redis.serialize(value);
-        this.log('saving to redis', rKey, rValue);
+        this.log('saving to redis', rKey, rValue, typeof rValue);
         return this.options.redis.client.set(rKey, rValue, 'EX', this.options.redis.ttl).then((result) => result === 'OK');
     }
 
