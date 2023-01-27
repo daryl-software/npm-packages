@@ -1,6 +1,6 @@
 {
-  "name": "@ezweb/sequelize-dataloader",
-  "version": "2.0.8",
+  "name": "@daryl-software/sequelize-dataloader",
+  "version": "2.0.4",
   "description": "Sequelize dataloader, memory and redis backends",
   "keywords": [
     "sequelize",
@@ -8,21 +8,21 @@
     "dataloader"
   ],
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages/packages/sequelize-dataloader",
+  "homepage": "https://github.com/daryl-software/npm-packages/packages/sequelize-dataloader",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git"
+    "url": "git+https://github.com/daryl-software/npm-packages.git"
   },
   "bugs": {
-    "url": "https://github.com/ezweb/npm-packages/issues"
+    "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
-    "@ezweb/db": "^2.0.2",
-    "@ezweb/error": "^2.0.2",
-    "@ezweb/redis-dataloader": "^3.0.0",
+    "@daryl-software/db": "^2.0.2-alpha.2",
+    "@daryl-software/error": "^2.0.2-alpha.2",
+    "@daryl-software/redis-dataloader": "^2.0.2-alpha.2",
     "@sequelize/core": "^7.0.0-alpha.10",
     "dataloader": "^2.0.0",
     "ioredis": "^5.0.4"

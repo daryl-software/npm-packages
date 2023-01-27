@@ -1,20 +1,20 @@
 {
-  "name": "@ezweb/ts-helpers",
-  "version": "1.0.6",
+  "name": "@daryl-software/ts-helpers",
+  "version": "1.0.8",
   "description": "Typescript helpers",
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/ts-helpers"
   },
   "bugs": {
-    "url": "https://github.com/ezweb/npm-packages/issues"
+    "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
     "ts-toolbelt": "^9.6.0"

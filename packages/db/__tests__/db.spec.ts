@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { Sequelize } from '@sequelize/core';
 import { initModel, User } from './UserModel';
-import { hydrateModel } from '@ezweb/db';
+import { hydrateModel } from '@daryl-software/db';
 
 describe('db', () => {
     let dbA: Sequelize;

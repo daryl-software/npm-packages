@@ -1,4 +1,4 @@
-import '@ezweb/ts-helpers';
+import '@daryl-software/ts-helpers';
 import { expect } from 'chai';
 
 describe('Date prototype', async () => {

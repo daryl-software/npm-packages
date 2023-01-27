@@ -1,5 +1,5 @@
 import { Cluster, Redis } from 'ioredis';
-import { NotFoundError } from '@ezweb/error';
+import { NotFoundError } from '@daryl-software/error';
 
 export interface CustomNotFound<T> {
     notFound?: (key: T) => NotFoundError;

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import '@ezweb/ts-helpers';
+import '@daryl-software/ts-helpers';
 
 describe('Array prototype', async () => {
     const anyArray = [0, undefined, null, NaN, 'string', {}, false, 8, -6];

@@ -1,10 +1,10 @@
 import { CreationAttributes, Model, ModelStatic } from '@sequelize/core';
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
-import { hydrateModel } from '@ezweb/db';
-import { RedisDataLoader, RedisDataloaderOptions } from '@ezweb/redis-dataloader';
+import { hydrateModel } from '@daryl-software/db';
+import { RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import { SequelizeMultipleModelDataloaderOptions } from './index';
-import { ModelNotFoundError, NotFoundError } from '@ezweb/error';
+import { ModelNotFoundError } from '@daryl-software/error';
 
 export function MultipleDataloader<K extends keyof V, V extends Model, A extends Pick<V, K>>(
     model: ModelStatic<V>,
@@ -59,7 +59,7 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
                     (values) =>
                         keys.map((k, i) => {
                             if (!Array.isArray(values[i]) || !(values[i] as V[]).length) {
-                                return options?.notFound?.(k) ?? new NotFoundError(k, 'Not found');
+                                return options?.notFound?.(k) ?? new ModelNotFoundError(model, k);
                             }
                             return values[i];
                         }) as Exclude<V[], undefined>[]

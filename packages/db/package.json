@@ -1,5 +1,5 @@
 {
-  "name": "@ezweb/db",
+  "name": "@daryl-software/db",
   "version": "2.0.4",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
@@ -8,13 +8,13 @@
     "loader"
   ],
   "author": "Florian Morello <arsonik@me.com>",
-  "homepage": "https://github.com/ezweb/npm-packages#readme",
+  "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ezweb/npm-packages.git",
+    "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/db"
   },
   "dependencies": {
@@ -27,7 +27,7 @@
     "sqlite3": "^5.0.0"
   },
   "bugs": {
-    "url": "https://github.com/ezweb/npm-packages/issues"
+    "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }

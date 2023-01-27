@@ -3,7 +3,7 @@ import clone from 'lodash.clonedeep';
 import md5 from 'md5';
 import assert from 'assert';
 import { Cluster, Redis } from 'ioredis';
-import { hydrateModel } from '@ezweb/db';
+import { hydrateModel } from '@daryl-software/db';
 import { CacheOptions } from './interfaces';
 
 // todo use declare module instead

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { allowErrors, emptyArrayIfNotFound, HttpError, NotFoundError, nullIfNotFound, undefinedIfNotFound } from '@ezweb/error';
+import { allowErrors, emptyArrayIfNotFound, HttpError, NotFoundError, nullIfNotFound, undefinedIfNotFound } from '@daryl-software/error';
 
 describe('Errors', async () => {
     it('allow error - pass', async () => {

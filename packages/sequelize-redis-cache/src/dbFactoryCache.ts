@@ -2,7 +2,7 @@ import { Sequelize, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithMod
 import md5 from 'md5';
 import { CacheOptions } from './interfaces';
 import { Cluster, Redis } from 'ioredis';
-import { hydrateModel } from '@ezweb/db';
+import { hydrateModel } from '@daryl-software/db';
 
 export class DbFactoryCache {
     private readonly component: Sequelize;

@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
-import { DbFactoryCache, SequelizeCache } from '@ezweb/sequelize-redis-cache';
+import { DbFactoryCache, SequelizeCache } from '@daryl-software/sequelize-redis-cache';
 import { QueryTypes } from '@sequelize/core';
 
 describe('sequelize-redis-cache', async () => {

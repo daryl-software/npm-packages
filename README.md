@@ -35,20 +35,9 @@ npm version prerelease -ws
 # all with patch version
 npm version patch -ws
 npm run prepublish
-npm publish -ws
+npm publish -ws --access=public
 
 # publish just one ?
-npm prepublish;
-npm publish -w @ezweb/eslint-config --access=public
-npm publish -w @ezweb/eslint-config --access=public
-
-# patch and publish
-npm version patch -w @ezweb/ts-helpers;
-npm version patch -w @ezweb/ts-config-loader;
-npm version patch -w @ezweb/sequelize-dataloader
-npm run prepublish;
-npm publish -w @ezweb/sequelize-dataloader --access=public
-npm publish -w @ezweb/ts-helpers --access=public;
-npm publish -w @ezweb/ts-config-loader --access=public;
+./publish.sh patch ts-helpers
 ```
 
