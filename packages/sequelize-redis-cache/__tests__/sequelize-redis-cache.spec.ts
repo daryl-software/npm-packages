@@ -22,7 +22,6 @@ describe('sequelize-redis-cache', async () => {
     it('SequelizeCache', async () => {
         const cache = new SequelizeCache(User, redisCluster);
         const res = await cache.findAll({ where: { country: 'BE' } }, { ttl: 10 });
-        console.log(res);
         expect(res.length).to.eq(3);
         const res3 = await cache.count({ where: { country: 'BE' } }, { ttl: 10 });
         expect(res3).to.eq(3);

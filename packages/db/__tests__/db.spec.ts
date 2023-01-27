@@ -1,4 +1,3 @@
-
 import { Sequelize } from '@sequelize/core';
 import { initModel, User } from './UserModel';
 import { hydrateModel } from '@daryl-software/db';

@@ -20,9 +20,8 @@ export function MultipleDataloader<
     Options extends MinOptions | WithRedisOptions,
     TBatchLoader = KeyOrKeys extends MKey ? typeof BatchLoader<M, MKey, 'filter'> : typeof BatchLoaderMultiColumns<M, MKey, 'filter'>,
     RedisReturn = RedisDataLoader<KeyToLoad, M[], string>,
-    RegularReturn = DataLoader<KeyToLoad, M[], string>,
-    Return = Options extends WithRedisOptions ? RedisReturn : RegularReturn
->(model: ModelStatic<M>, key: KeyOrKeys, options?: Options): Return {
+    RegularReturn = DataLoader<KeyToLoad, M[], string>
+>(model: ModelStatic<M>, key: KeyOrKeys, options?: Options): Options extends WithRedisOptions ? RedisReturn : RegularReturn {
     let batchLoadFn: (keys: readonly KeyToLoad[]) => TBatchLoader;
     let cacheKeyFn: (keyToLoad: KeyToLoad) => string;
 

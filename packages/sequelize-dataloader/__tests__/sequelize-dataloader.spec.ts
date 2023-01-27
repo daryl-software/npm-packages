@@ -1,6 +1,6 @@
 import { queryCount, redisCluster, sequelize } from './init.spec';
 import { model, User, UserNotFoundError } from './UserModel';
-import { Op, QueryTypes } from "@sequelize/core";
+import { Op, QueryTypes} from "@sequelize/core";
 import { RedisDataLoader } from '@daryl-software/redis-dataloader';
 import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@daryl-software/sequelize-dataloader';
 import { ModelNotFoundError, NotFoundError } from '@daryl-software/error';
@@ -22,7 +22,7 @@ describe('sequelize-dataloader', async () => {
         it('BatchLoader find', async () => {
             const finder = await BatchLoader(User, 'name', ['toto', 'arsonik'], 'find');
             expect((finder[0] as User).email).to.eq('toto@domain.com');
-            expect(finder[1]).to.be.undefined;
+            expect(finder[1]).to.be.an.undefined;
         });
         it('BatchLoader filter', async () => {
             const finder = await BatchLoader(User, 'country', ['FR', 'VA'], 'filter');
@@ -101,7 +101,7 @@ describe('sequelize-dataloader', async () => {
             expect(a).to.length(2);
         });
         it('multi not found', async () => {
-           await expect(User.loaderByNameAndCountry.load({ name: '404xxx', country: 'BE' })).to.eventually.be.rejectedWith(NotFoundError);
+           await expect(User.loaderByNameAndCountry.load({ name: '404xxx', country: 'BE' })).rejects.toThrow(NotFoundError);
         });
     });
 
@@ -186,7 +186,7 @@ describe('sequelize-dataloader', async () => {
             expect(res[0]).to.eq(2);
             expect(res[1]).to.eq(1);
         });
-        it('Custom multiple with find clause', async () => {
+        test('Custom multiple with find clause', async () => {
             const loader = MultipleDataloader(User, ['name', 'email'], {
                 find: {
                     where: {
@@ -202,9 +202,8 @@ describe('sequelize-dataloader', async () => {
                     ttl: 5,
                 },
             });
-            const res = await loader.load({ name: 'toto', email: 'toto@domain.com' });
-            expect(res).to.length(1);
-            expect(loader.load({ name: 'toto', email: 'toto@domain.com' })).to.eventually.be.rejectedWith(NotFoundError);
+            await expect(loader.load({ name: 'toto', email: 'toto@domain.com' })).resolves.length(1);
+            await expect(loader.load({ name: 'toto', email: 'xxxx@domain.com' })).rejects.toThrow(ModelNotFoundError);
         });
     });
 });

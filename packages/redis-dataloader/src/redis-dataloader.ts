@@ -23,19 +23,21 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     /**
      * @deprecated use clearAsync() instead
      */
-    override clear(): this {
-        throw new Error('Cannot call clear on Index (use clearAsync)');
+    override clear(key: K): this {
+        this.clearAsync(key);
+        return this;
+    }
+
+    async clearAsync(...keys: K[]): Promise<number> {
+        assert(keys.length, new Error('Empty array passed'));
+        return Promise.all(keys.map((key) => this.options.redis.client.del(this.redisKey(key)))).then((res) => res.reduce((acc, curr) => acc + curr, 0));
     }
 
     /**
      * @deprecated use clearAllAsync() instead
      */
     override clearAll(): this {
-        throw new Error('Cannot call clearAll on RedisDataloader (use clearAllAsync)');
-    }
-
-    async clearAsync(...keys: K[]): Promise<number> {
-        return Promise.all(keys.map((key) => this.options.redis.client.del(this.redisKey(key)))).then((res) => res.reduce((acc, curr) => acc + curr, 0));
+        throw new Error('Cannot call clearAll on RedisDataLoader (use clearAllAsync)');
     }
 
     protected log(...args: unknown[]) {
