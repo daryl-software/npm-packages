@@ -26,7 +26,6 @@ describe('sequelize-dataloader', async () => {
         });
         it('BatchLoader filter', async () => {
             const finder = await BatchLoader(User, 'country', ['FR', 'VA'], 'filter');
-            console.log(finder);
             expect(finder[0]).to.length(2);
             expect(finder[1]).to.be.undefined;
         });
