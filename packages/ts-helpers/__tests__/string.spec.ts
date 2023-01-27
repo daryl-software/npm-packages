@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+
 import '@daryl-software/ts-helpers';
 
 describe('String prototype', async () => {

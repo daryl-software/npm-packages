@@ -14,7 +14,7 @@ export class DbFactoryCache {
         this.redis = redis;
     }
 
-    private cached(key: string, options: CacheOptions): Promise<string | null> {
+    private cached<T extends CacheOptions>(key: string, options: T): Promise<T extends { clear: true } | { skip: true } ? null : string | null> {
         if (options.clear) {
             void this.redis.del(key);
             return Promise.resolve(null);
@@ -24,12 +24,10 @@ export class DbFactoryCache {
         }
 
         // todo offer local in memory or redis back end
-        return this.redis.get(key);
+        return this.redis.get(key) as any;
     }
 
-    private key<M extends Model>(sql: string, options: QueryOptionsWithModel<M>): string;
-    private key<T extends QueryTypes>(sql: string, options: QueryOptionsWithType<T>): string;
-    private key<M extends Model, T extends QueryTypes>(sql: string, options: QueryOptionsWithModel<M> | QueryOptionsWithType<T>): string {
+    private key<M extends Model | QueryTypes>(sql: string, options: M extends Model ? QueryOptionsWithModel<M> : M extends QueryTypes ? QueryOptionsWithType<M> : never): string {
         const key = [this.cachePrefix, this.component.config.database];
 
         if ('model' in options) {
@@ -60,17 +58,22 @@ export class DbFactoryCache {
         return results;
     }
 
-    async queryModel<M extends Model>(sql: string, options: QueryOptionsWithModel<M> & { plain: true }, cOptions: CacheOptions): Promise<M>;
-    async queryModel<M extends Model>(sql: string, options: QueryOptionsWithModel<M>, cOptions: CacheOptions): Promise<M[]>;
-    async queryModel<M extends Model>(sql: string, options: QueryOptionsWithModel<M>, cOptions: CacheOptions): Promise<M[] | M> {
+    async queryModel<M extends Model, Options extends QueryOptionsWithModel<M> & { plain?: true }, XOptions extends CacheOptions>(
+        sql: `SELECT ${string}`, // could be improved to handle more complex queries
+        options: Options,
+        cOptions: XOptions
+    ): Promise<XOptions extends { clear: true } ? undefined : Options extends { plain: true } ? M[] : M> {
         const key = this.key(sql, options);
         const cache = await this.cached(key, cOptions);
         if (cOptions.clear) {
-            return [];
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return;
         }
 
         if (cache !== null) {
-            return (JSON.parse(cache) as CreationAttributes<M>[]).map((obj) => hydrateModel(options.model, obj));
+            console.log({ cache });
+            return (JSON.parse(cache) as CreationAttributes<M>[]).map((obj) => hydrateModel(options.model, obj)) as any;
         }
         const result = await this.component.query(sql, options);
         if (options.plain && result instanceof Model) {
@@ -79,6 +82,6 @@ export class DbFactoryCache {
             await this.redis.set(key, JSON.stringify(result.map((o) => o.get({ plain: true }))), 'EX', cOptions.ttl);
         }
 
-        return result;
+        return result as any;
     }
 }

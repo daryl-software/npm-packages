@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-import { describe, it } from 'mocha';
 import { RedisDataLoader } from '@daryl-software/redis-dataloader';
 import { Cluster } from 'ioredis';
 import config from './config.json';

@@ -1,5 +1,4 @@
-import { describe, it } from 'mocha';
-import { expect } from 'chai';
+
 import { Sequelize } from '@sequelize/core';
 import { initModel, User } from './UserModel';
 import { hydrateModel } from '@daryl-software/db';
@@ -7,7 +6,7 @@ import { hydrateModel } from '@daryl-software/db';
 describe('db', () => {
     let dbA: Sequelize;
     let dbB: Sequelize;
-    before(() => {
+    beforeAll(() => {
         // eslint-disable-next-line no-console
         const logging = console.log;
         dbA = new Sequelize({ dialect: 'sqlite', storage: 'test-db.sqlite', logging });
@@ -18,7 +17,7 @@ describe('db', () => {
         });
     });
 
-    after(() => {
+    afterAll(() => {
         dbA.close();
         dbB.close();
     });

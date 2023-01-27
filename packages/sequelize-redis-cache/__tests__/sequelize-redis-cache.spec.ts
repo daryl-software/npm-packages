@@ -1,12 +1,11 @@
-import { describe, it } from 'mocha';
-import { expect } from 'chai';
+
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
 import { DbFactoryCache, SequelizeCache } from '@daryl-software/sequelize-redis-cache';
 import { QueryTypes } from '@sequelize/core';
 
 describe('sequelize-redis-cache', async () => {
-    before(async () => {
+    beforeAll(async () => {
         initModel(sequelize);
 
         await sequelize.sync();
@@ -23,6 +22,7 @@ describe('sequelize-redis-cache', async () => {
     it('SequelizeCache', async () => {
         const cache = new SequelizeCache(User, redisCluster);
         const res = await cache.findAll({ where: { country: 'BE' } }, { ttl: 10 });
+        console.log(res);
         expect(res.length).to.eq(3);
         const res3 = await cache.count({ where: { country: 'BE' } }, { ttl: 10 });
         expect(res3).to.eq(3);
@@ -45,10 +45,11 @@ describe('sequelize-redis-cache', async () => {
     });
     it('DbFactoryCache', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
-        await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User, type: QueryTypes.SELECT }, { ttl: 10, clear: true });
-        const res = await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User }, { ttl: 10 });
+        const q = `SELECT * FROM ${User.tableName}`
+        await cache.queryModel(q, { model: User, type: QueryTypes.SELECT }, { ttl: 10, clear: true });
+        const res = await cache.queryModel(q, { model: User }, { ttl: 10 });
         expect(res.length).to.gte(6);
-        const res1 = await cache.queryModel(`SELECT * FROM ${User.tableName}`, { model: User, plain: true }, { ttl: 10 });
+        const res1 = await cache.queryModel(q, { model: User, plain: true }, { ttl: 10 });
         expect(res1.id).to.gte(1);
     });
 });

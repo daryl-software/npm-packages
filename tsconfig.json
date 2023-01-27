@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "paths": {
-      "@daryl-software/db": ["packages/db/src/index.ts"],
-      "@daryl-software/ts-helpers": ["packages/ts-helpers/src/index.ts"],
+      "@daryl-software/db": ["./packages/db/src/index.ts"],
+      "@daryl-software/ts-helpers": ["./packages/ts-helpers/src/index.ts"],
     }
   },
 }

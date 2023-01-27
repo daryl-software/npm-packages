@@ -7,20 +7,15 @@ type ConfigObserver<T = any> = (updatedConfig: T, diff: unknown) => void;
 type ConfigLoaderOptions = { verbose?: boolean };
 
 export class ConfigLoader {
-    private readonly configFiles: string[];
-    private readonly options?: ConfigLoaderOptions;
     private config!: Record<string, unknown>;
     private observers: Record<number, { rootKey: string; observer: ConfigObserver }> = {};
     private nRef = 0;
     private watcher: FSWatcher;
 
-    constructor(paths: string[], options?: ConfigLoaderOptions) {
-        this.configFiles = paths;
-        this.options = options;
-
+    constructor(private readonly configFiles: string[], private readonly options?: ConfigLoaderOptions) {
         this.refresh();
 
-        this.watcher = watch(paths).on('change', (path) => {
+        this.watcher = watch(configFiles).on('change', (path) => {
             this.log('⚙️ Config file changed', path);
             this.refresh();
         });

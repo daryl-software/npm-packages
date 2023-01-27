@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-import { describe, it } from 'mocha';
 import { queryCount, redisCluster, sequelize } from './init.spec';
 import { model, User, UserNotFoundError } from './UserModel';
 import { Op, QueryTypes } from "@sequelize/core";
@@ -8,7 +6,7 @@ import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@daryl
 import { ModelNotFoundError, NotFoundError } from '@daryl-software/error';
 
 describe('sequelize-dataloader', async () => {
-    before(async () => {
+    beforeAll(async () => {
         model(sequelize);
         await sequelize.sync();
         await User.bulkCreate([

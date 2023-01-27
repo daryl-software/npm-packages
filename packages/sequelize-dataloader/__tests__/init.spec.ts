@@ -1,6 +1,5 @@
 import { Sequelize } from '@sequelize/core';
 import { Cluster } from 'ioredis';
-import { before } from 'mocha';
 import config from './config.json';
 
 export let queryCount = 0;
@@ -20,5 +19,8 @@ export const redisCluster = new Cluster(
     })
 );
 
-before(() => Promise.resolve(true))
-after(() => redisCluster.disconnect())
+beforeAll(() => Promise.resolve(true));
+afterAll(() => redisCluster.disconnect());
+test('test', () => {
+  expect(redisCluster.isCluster).toBe(true)
+});
