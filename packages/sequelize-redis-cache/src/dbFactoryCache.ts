@@ -72,7 +72,6 @@ export class DbFactoryCache {
         }
 
         if (cache !== null) {
-            console.log({ cache });
             return (JSON.parse(cache) as CreationAttributes<M>[]).map((obj) => hydrateModel(options.model, obj)) as any;
         }
         const result = await this.component.query(sql, options);
