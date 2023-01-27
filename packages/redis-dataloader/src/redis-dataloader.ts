@@ -3,17 +3,17 @@ import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
 
-export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
+type PreventNullable<T extends Exclude<U, null>, U = T> = {};
+
+export class RedisDataLoader<K, V extends PreventNullable<unknown>, C = K> extends DataLoader<K, V, C> {
     private readonly name: string;
     private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>;
-    private readonly underlyingBatchLoadFn: BatchLoadFn<K, V>;
 
     private static usedNames: string[] = [];
     private static NOT_FOUND_STRING = '___NOTFOUND___';
 
-    constructor(name: string, batchLoadFn: BatchLoadFn<K, V>, options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>) {
+    constructor(name: string, private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>, options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
-        this.underlyingBatchLoadFn = batchLoadFn;
         this.name = name + (options.redis.suffix ? `-${options.redis.suffix}` : '');
         this.options = options;
 
@@ -35,9 +35,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
 
     async clearAsync(...keys: K[]): Promise<number> {
         assert(keys.length, new Error('Empty array passed'));
-
-        const done = await Promise.all(keys.map((key) => this.options.redis.client.del(this.redisKey(key))));
-        return done.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        return Promise.all(keys.map((key) => this.options.redis.client.del(this.redisKey(key)))).then((res) => res.reduce((acc, curr) => acc + curr, 0));
     }
 
     /**
@@ -61,10 +59,10 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
          * Hence why we are deduplicating first
          */
         const uniqueRedisKeys = [...new Set(keys.map((key) => this.redisKey(key)))];
-        const mapRedisKeyToModelKey: { redisKey: string; key: K; value: V | null | Error }[] = uniqueRedisKeys.map((rKey) => ({
+        const mapRedisKeyToModelKey: { redisKey: string; key: K; value: V | undefined | Error }[] = uniqueRedisKeys.map((rKey) => ({
             redisKey: rKey,
             key: keys.find((o) => this.redisKey(o) === rKey)!,
-            value: null,
+            value: undefined,
         }));
 
         // ⚠️ Cannot use MGET on a cluster
@@ -73,7 +71,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
             mapRedisKeyToModelKey.map((entry) => {
                 this.log('Reading from redis', entry.redisKey);
                 return this.options.redis.client.get(entry.redisKey).then((data) => {
-                    this.log('Redis returned', entry.redisKey, data);
+                    this.log(`Redis returned key:${entry.redisKey} data:"${JSON.stringify(data)}" typeof:${typeof data}`);
                     if (data === RedisDataLoader.NOT_FOUND_STRING) {
                         entry.value = this.options.notFound?.(entry.key) ?? new NotFoundError(entry.key, 'Not found (redis cache)');
                     } else if (data !== null) {
@@ -86,7 +84,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         // this.log('map was', JSON.stringify(mapRedisKeyToModelKey));
 
         // keysToLoadFromDatasource is referencing mapRedisKeyToModelKey values
-        const keysToLoadFromDatasource = mapRedisKeyToModelKey.filter(({ value }) => value === null);
+        const keysToLoadFromDatasource = mapRedisKeyToModelKey.filter(({ value }) => value === undefined);
         // load missing values from datastore
         if (keysToLoadFromDatasource.length > 0) {
             this.log(
@@ -100,11 +98,11 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
                 keysToLoadFromDatasource.map((entry, index) => {
                     // actually editing the reference (mapRedisKeyToModelKey)
                     entry.value = underlyingResults[index];
-
+                    if (entry.value === undefined || entry.value instanceof NotFoundError) {
+                        return this.storeNotFoundError(entry.redisKey);
+                    }
                     if (!(entry.value instanceof Error)) {
                         return this.store(entry.redisKey, entry.value);
-                    } else if (entry.value instanceof NotFoundError) {
-                        return this.storeNotFoundError(entry.redisKey);
                     }
                     return true;
                 })
@@ -112,7 +110,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         }
 
         this.log('map to be returned', mapRedisKeyToModelKey);
-        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))?.value ?? new NotFoundError(key, 'Not found'));
+        return keys.map((key) => mapRedisKeyToModelKey.find(({ redisKey }) => redisKey === this.redisKey(key))?.value ?? this.options.notFound?.(key) ?? new NotFoundError(key, 'Not found'));
     }
 
     private redisKey(key: K): string {
@@ -133,7 +131,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
 
     private store(rKey: string, value: V): Promise<boolean> {
         const rValue = this.options.redis.serialize(value);
-        this.log('saving to redis', rKey, rValue);
+        this.log('saving to redis', rKey, rValue, typeof rValue);
         return this.options.redis.client.set(rKey, rValue, 'EX', this.options.redis.ttl).then((result) => result === 'OK');
     }
 
@@ -152,7 +150,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
             const cached = data !== null;
             let value = null;
             if (data === RedisDataLoader.NOT_FOUND_STRING) {
-                value = new NotFoundError(keys[idx], 'Not found (redis cache)');
+                value = this.options.notFound?.(keys[idx]) ?? new NotFoundError(keys[idx], 'Not found (redis cache)');
             } else if (cached) {
                 value = this.options.redis.deserialize(keys[idx], data);
             }

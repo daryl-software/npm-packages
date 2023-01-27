@@ -31,7 +31,7 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
     key: K | K[],
     options?: SequelizeMultipleModelDataloaderOptions<A, V, string> | (SequelizeMultipleModelDataloaderOptions<A, V, string> & RedisDataloaderOptions<A, V>)
 ): DataLoader<A, V[], string> {
-    let batchLoadFn: (keys: readonly any[]) => Promise<(V[] | Error)[]>;
+    let batchLoadFn: (keys: readonly any[]) => Promise<(V[] | undefined | Error)[]>;
     let cacheKeyFn: (k: any) => string;
     if (Array.isArray(key)) {
         batchLoadFn = (keys: readonly Pick<V, K>[]) => BatchLoaderMultiColumns(model, key, keys, 'filter', options);
@@ -53,6 +53,18 @@ export function MultipleDataloader<K extends keyof V, V extends Model, A extends
             },
         });
     } else {
-        return new DataLoader<A, V[], string>(batchLoadFn, { ...options, cacheKeyFn });
+        return new DataLoader<A, V[], string>(
+            (keys) =>
+                batchLoadFn(keys).then(
+                    (values) =>
+                        keys.map((k, i) => {
+                            if (!Array.isArray(values[i]) || !(values[i] as V[]).length) {
+                                return options?.notFound?.(k) ?? new ModelNotFoundError(model, k);
+                            }
+                            return values[i];
+                        }) as Exclude<V[], undefined>[]
+                ),
+            { cacheKeyFn, ...options }
+        );
     }
 }
