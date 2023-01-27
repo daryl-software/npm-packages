@@ -4,7 +4,7 @@ import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
 
 export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
-    private static usedNames: string[] = [];
+    private static usedNames: Set<string> = new Set([]);
     private static NOT_FOUND_STRING = '___NOTFOUND___';
 
     constructor(
@@ -14,10 +14,10 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     ) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
         this.name += options.redis.suffix ? `-${options.redis.suffix}` : '';
-        assert(!RedisDataLoader.usedNames.includes(this.name), `RedisDataLoader name ${this.name} already used`);
+        assert(!RedisDataLoader.usedNames.has(this.name), `RedisDataLoader name ${this.name} already used`);
 
         this.log(`New RedisDataLoader ${this.name}`);
-        RedisDataLoader.usedNames.push(this.name);
+        RedisDataLoader.usedNames.add(this.name);
     }
 
     /**
