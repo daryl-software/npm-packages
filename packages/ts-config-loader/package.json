@@ -13,7 +13,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "chokidar": "^3.5.2",
-    "deep-object-diff": "1.1.5",
+    "deep-object-diff": "^1.1.5",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {

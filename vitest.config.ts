@@ -13,7 +13,6 @@ export const alias: Record<string, string> = {
     '@daryl-software/sequelize-redis-cache': r('./packages/sequelize-redis-cache/src'),
     '@daryl-software/ts-config-loader': r('./packages/ts-config-loader/src'),
     '@daryl-software/ts-helpers': r('./packages/ts-helpers/src'),
-    // 'deep-object-diff': r('./node_modules/deep-object-diff'),
 };
 
 export default defineConfig({
@@ -24,9 +23,7 @@ export default defineConfig({
         alias,
     },
     test: {
-        deps: {
-            inline: ['deep-object-diff'],
-        },
+        deps: {},
         globals: true,
     },
 });
