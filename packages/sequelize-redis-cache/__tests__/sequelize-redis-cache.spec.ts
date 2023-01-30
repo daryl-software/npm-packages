@@ -39,7 +39,6 @@ describe('sequelize-redis-cache', async () => {
         await cache.query<{ day: string }>(day, { plain: true }, { ttl: 10, skip: true });
         const xn = await cache.query<{ day: string }>(time, { plain: true }, { ttl: 10, skip: true });
         expect(res.day).to.length(10);
-        expect(res.day).to.length(10);
         expect(x).not.to.eq(xn);
     });
     it('DbFactoryCache', async () => {

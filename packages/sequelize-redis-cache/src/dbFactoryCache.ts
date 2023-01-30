@@ -42,8 +42,8 @@ export class DbFactoryCache {
     }
 
     async query(query: string, options: QueryOptions, cOptions: { clear: true }): Promise<undefined>;
-    async query<TReturn extends object>(query: string, options: QueryOptions, cOptions: CacheOptions): Promise<TReturn[]>;
     async query<TReturn extends object>(query: string, options: QueryOptions & { plain: true }, cOptions: CacheOptions): Promise<TReturn>;
+    async query<TReturn extends object>(query: string, options: QueryOptions, cOptions: CacheOptions): Promise<TReturn[]>;
     async query<TReturn extends object>(query: string, options: QueryOptions = {}, cOptions: CacheOptions): Promise<any> {
         const koptions: QueryOptionsWithType<QueryTypes.SELECT> = { ...options, type: QueryTypes.SELECT };
         const key = this.key(query, koptions);
