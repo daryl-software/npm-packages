@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Sequelize, QueryOptionsWithType, QueryTypes, Model, QueryOptionsWithModel, CreationAttributes } from '@sequelize/core';
 import md5 from 'md5';
 import { CacheOptions } from './interfaces';
@@ -39,34 +40,36 @@ export class DbFactoryCache {
         return key.join('::');
     }
 
-    async query<T extends object>(sql: string, options: QueryOptionsWithType<QueryTypes.SELECT> & { plain: true }, cOptions: CacheOptions): Promise<T>;
-    async query<T extends object>(sql: string, options: QueryOptionsWithType<QueryTypes.SELECT>, cOptions: CacheOptions): Promise<T[]>;
-    async query<T extends object>(sql: string, options: QueryOptionsWithType<QueryTypes.SELECT>, cOptions: CacheOptions): Promise<T[] | T> {
+    async query<T extends {}, Options extends QueryOptionsWithType<QueryTypes.SELECT> & { plain?: true }, XOptions extends CacheOptions>(
+        sql: string,
+        options: Options,
+        cOptions: XOptions
+    ): Promise<XOptions extends { clear: true } ? undefined : Options extends { plain: true } ? T : T[]> {
         const key = this.key(sql, options);
 
         const cache = await this.cached(key, cOptions);
         if (cOptions.clear) {
-            return [];
+            // @ts-ignore
+            return;
         }
 
         if (cache !== null) {
-            return JSON.parse(cache) as T;
+            return JSON.parse(cache);
         }
 
         const results = await this.component.query<T>(sql, options);
         await this.redis.set(key, JSON.stringify(results), 'EX', cOptions.ttl);
-        return results;
+        return results as any;
     }
 
     async queryModel<M extends Model, Options extends QueryOptionsWithModel<M> & { plain?: true }, XOptions extends CacheOptions>(
         sql: `SELECT ${string}`, // could be improved to handle more complex queries
         options: Options,
         cOptions: XOptions
-    ): Promise<XOptions extends { clear: true } ? undefined : Options extends { plain: true } ? M[] : M> {
+    ): Promise<XOptions extends { clear: true } ? undefined : Options extends { plain: true } ? M : M[]> {
         const key = this.key(sql, options);
         const cache = await this.cached(key, cOptions);
         if (cOptions.clear) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             return;
         }

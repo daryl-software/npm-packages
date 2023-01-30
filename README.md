@@ -38,6 +38,6 @@ npm run prepublish
 npm publish -ws --access=public
 
 # publish just one ?
-./publish.sh patch ts-helpers
+./publish.sh patch sequelize-redis-cache
 ```
 
