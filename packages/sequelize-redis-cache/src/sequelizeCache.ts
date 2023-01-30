@@ -49,8 +49,9 @@ export class SequelizeCache<T extends Model> {
         }
 
         const results = await this.modelDef.findAll(find);
-        await this.redis.set(key, JSON.stringify(results.map((o) => o.get({ plain: true }))), 'EX', options.ttl);
-
+        if ('ttl' in options) {
+            await this.redis.set(key, JSON.stringify(results.map((o) => o.get({ plain: true }))), 'EX', options.ttl);
+        }
         return results;
     }
 
@@ -65,7 +66,9 @@ export class SequelizeCache<T extends Model> {
         }
 
         const results = await this.modelDef.count(find);
-        await this.redis.set(key, results, 'EX', options.ttl);
+        if ('ttl' in options) {
+            await this.redis.set(key, results, 'EX', options.ttl);
+        }
 
         return results;
     }
@@ -75,7 +78,7 @@ export class SequelizeCache<T extends Model> {
     }
 
     protected cached(key: string, options: CacheOptions): Promise<string | null> {
-        if (options.skip) {
+        if ('skip' in options && options.skip) {
             return Promise.resolve(null);
         }
 

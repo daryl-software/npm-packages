@@ -3,6 +3,7 @@ import { Cluster } from 'ioredis';
 import config from './config.json';
 import data from './data.json';
 import { NotFoundError } from '@daryl-software/error';
+import { expect } from 'vitest';
 
 export const redisCluster = new Cluster(
     config.rediscluster.servers.map((server) => {
@@ -14,12 +15,14 @@ export const redisCluster = new Cluster(
 );
 
 class MyNotFoundError extends NotFoundError {}
+type CountryCode = string;
+type CountryName = string;
 
 describe('redis-dataloader', async () => {
+    let loaderUndef: RedisDataLoader<CountryCode, CountryName>;
     it('Custom redis dataloader', async () => {
-        type CountryCode = string;
-        const loader = new RedisDataLoader<CountryCode, string>(
-            `Country@${new Date().getTime()}`,
+        const loader = new RedisDataLoader<CountryCode, CountryName>(
+            `Country@${Date.now()}`,
             async (isos) => isos.map((iso) => (data.countries as Record<string, string>)[iso] ?? new MyNotFoundError(iso, `${iso} not found`)),
             {
                 maxBatchSize: 20,
@@ -33,7 +36,27 @@ describe('redis-dataloader', async () => {
                 },
             }
         );
+        loaderUndef = new RedisDataLoader(
+            `CountryXX@${Date.now()}`,
+            async (isos) => {
+                const dataLocal: { countries: Record<CountryCode, CountryName> } = await import('./data.json');
+                return isos.map((iso) => {
+                    if (!(iso in dataLocal.countries)) {
+                        return undefined;
+                    }
+                    return dataLocal.countries[iso];
+                });
+            },
+            {
+                redis: {
+                    client: redisCluster,
+                    deserialize: (_, sum) => sum,
+                    serialize: (data) => data,
+                },
+            }
+        );
         const notCached = await loader.loadCached('FR');
+        await expect(loaderUndef.load('XX')).rejects.toThrow(NotFoundError);
         expect(notCached[0].cached).to.be.false;
         expect(notCached[0].value).to.be.null;
 

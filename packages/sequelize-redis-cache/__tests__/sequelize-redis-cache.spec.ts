@@ -1,4 +1,3 @@
-
 import { redisCluster, sequelize } from './init.spec';
 import { initModel, User } from './UserModel';
 import { DbFactoryCache, SequelizeCache } from '@daryl-software/sequelize-redis-cache';
@@ -33,11 +32,12 @@ describe('sequelize-redis-cache', async () => {
     it('DbFactoryCache', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
         const time = 'SELECT strftime("%s","now") AS time';
-        const x = await cache.query<{ day: string }>(time, { type: QueryTypes.SELECT, plain: true }, { ttl: 10 });
-        await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10, clear: true });
-        const res = await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10 });
-        await cache.query<{ day: string }>('SELECT DATE() AS day', { type: QueryTypes.SELECT, plain: true }, { ttl: 10, skip: true });
-        const xn = await cache.query<{ day: string }>(time, { type: QueryTypes.SELECT, plain: true }, { ttl: 10, skip: true });
+        const day = 'SELECT DATE() AS day';
+        const x = await cache.query(time, { plain: true }, { ttl: 10 });
+        await cache.query<{ day: string }>(day, { type: QueryTypes.SELECT }, { clear: true });
+        const res = await cache.query<{ day: string }>(day, { plain: true }, { ttl: 10 });
+        await cache.query<{ day: string }>(day, { plain: true }, { ttl: 10, skip: true });
+        const xn = await cache.query<{ day: string }>(time, { plain: true }, { ttl: 10, skip: true });
         expect(res.day).to.length(10);
         expect(res.day).to.length(10);
         expect(x).not.to.eq(xn);

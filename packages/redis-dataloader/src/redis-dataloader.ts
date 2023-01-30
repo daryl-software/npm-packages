@@ -9,7 +9,8 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
 
     constructor(
         private readonly name: string,
-        private readonly underlyingBatchLoadFn: BatchLoadFn<K, V>,
+        // undefined values will be converted to not found errors
+        private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>,
         private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>
     ) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
