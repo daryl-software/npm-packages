@@ -29,7 +29,7 @@ describe('sequelize-redis-cache', async () => {
         expect(await cache.count({ where: { country: 'BE' } }, { ttl: 10, skip: true })).to.eq(4);
     });
 
-    it('DbFactoryCache', async () => {
+    it('DbFactoryCache query', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
         const time = 'SELECT strftime("%s","now") AS time';
         const day = 'SELECT DATE() AS day';
@@ -41,7 +41,8 @@ describe('sequelize-redis-cache', async () => {
         expect(res.day).to.length(10);
         expect(x).not.to.eq(xn);
     });
-    it('DbFactoryCache', async () => {
+
+    it('DbFactoryCache queryModel', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
         const q = `SELECT * FROM ${User.tableName}` as const;
         await cache.queryModel(q, { model: User, type: QueryTypes.SELECT }, { ttl: 10, clear: true });

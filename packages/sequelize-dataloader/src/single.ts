@@ -4,7 +4,7 @@ import { CustomNotFound, RedisDataLoader, RedisDataloaderOptions } from '@daryl-
 import DataLoader from 'dataloader';
 import { BatchLoader, BatchLoaderMultiColumns } from './batch-loader';
 import { hydrateModel } from '@daryl-software/db';
-import { SequelizeModelDataloaderOptions } from './index';
+import { JsonStringifyWithSymbols, SequelizeModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@daryl-software/error';
 
 export function SingleDataloader<
@@ -29,8 +29,9 @@ export function SingleDataloader<
         cacheKeyFn = (ak) => JSON.stringify(ak);
     }
     if (options && 'redis' in options) {
+        const redisName = [model.name, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined].filter(Boolean).join('-');
         // @ts-ignore
-        return new RedisDataLoader<K, V>(`${model.name}-${key.toString()}`, batchLoadFn, {
+        return new RedisDataLoader<K, V>(redisName, batchLoadFn, {
             cacheKeyFn,
             notFound: (akey) => new ModelNotFoundError(model, akey),
             ...options,

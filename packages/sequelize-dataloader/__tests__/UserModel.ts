@@ -2,6 +2,8 @@ import { Sequelize, DataTypes, Model, ModelStatic } from '@sequelize/core';
 import { SingleDataloader, MultipleDataloader } from '../src';
 import { redisCluster as client } from './init.spec';
 import { ModelNotFoundError } from '@daryl-software/error';
+import { RedisDataLoader } from '@daryl-software/redis-dataloader';
+import DataLoader from 'dataloader';
 
 export class UserNotFoundError<M extends Model = User> extends ModelNotFoundError<M> {
     id: number;
@@ -19,20 +21,17 @@ export class User extends Model {
     declare bornDate: Date;
     declare country: string;
 
-    static loaderById = SingleDataloader(User, 'id', { notFound: (k) => new UserNotFoundError(User, k) });
-    static loaderByName = MultipleDataloader(User, 'name');
+    static loaderById: DataLoader<number, User>;
+    static loaderByName: DataLoader<string, User[]>;
+    static loaderByNameAndEmail: DataLoader<['name', 'country'], User>;
+    static loaderFrenchNames: DataLoader<string, User[]>;
+    static loaderByNameAndCountry: DataLoader<['name', 'country'], User[]>;
 
-    static loaderByNameAndEmail = SingleDataloader(User, ['name', 'email']);
-    static loaderByNameAndCountry = MultipleDataloader(User, ['name', 'country']);
-
-    static loaderFrenchNames = SingleDataloader(User, 'name', { find: { where: { country: 'FR' } } });
-
-    static redisLoaderById = SingleDataloader(User, 'id', { redis: { client, ttl: 30 }, notFound: (k) => new UserNotFoundError(User, k) });
-    static redisLoaderByName = MultipleDataloader(User, 'name', { redis: { client, ttl: 30 } });
-    static redisLoaderByNameFrench = MultipleDataloader(User, 'name', { redis: { suffix: 'fr', client, ttl: 30 }, find: { where: { country: 'FR' } } });
-
-    static redisLoaderByNameAndEmail = SingleDataloader(User, ['name', 'email'], { redis: { client, ttl: 30 } });
-    static redisLoaderByNameAndCountry = MultipleDataloader(User, ['name', 'country'], { redis: { client, ttl: 30 } });
+    static redisLoaderById: RedisDataLoader<number, User>;
+    static redisLoaderByName: RedisDataLoader<string, User>;
+    static redisLoaderByNameFrench: RedisDataLoader<string, User>;
+    static redisLoaderByNameAndEmail: RedisDataLoader<['name', 'email'], User>;
+    static redisLoaderByNameAndCountry: RedisDataLoader<['name', 'country'], User[]>;
 }
 
 export const model = (sequelize: Sequelize) => {
@@ -61,6 +60,21 @@ export const model = (sequelize: Sequelize) => {
             sequelize,
         }
     );
+
+    User.loaderById = SingleDataloader(User, 'id', { notFound: (k) => new UserNotFoundError(User, k) });
+    User.loaderByName = MultipleDataloader(User, 'name');
+
+    User.loaderByNameAndEmail = SingleDataloader(User, ['name', 'email']);
+    User.loaderByNameAndCountry = MultipleDataloader(User, ['name', 'country']);
+
+    User.loaderFrenchNames = SingleDataloader(User, 'name', { find: { where: { country: 'FR' } } });
+
+    User.redisLoaderById = SingleDataloader(User, 'id', { redis: { client, ttl: 30 }, notFound: (k) => new UserNotFoundError(User, k) });
+    User.redisLoaderByName = MultipleDataloader(User, 'name', { redis: { client, ttl: 30 } });
+    User.redisLoaderByNameFrench = MultipleDataloader(User, 'name', { redis: { suffix: 'fr', client, ttl: 30 }, find: { where: { country: 'FR' } } });
+
+    User.redisLoaderByNameAndEmail = SingleDataloader(User, ['name', 'email'], { redis: { client, ttl: 30 } });
+    User.redisLoaderByNameAndCountry = MultipleDataloader(User, ['name', 'country'], { redis: { client, ttl: 30 } });
 
     return User;
 };

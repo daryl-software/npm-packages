@@ -6,6 +6,7 @@ import { hydrateModel } from '@daryl-software/db';
 import { CustomNotFound, RedisDataLoader, RedisDataloaderOptions } from '@daryl-software/redis-dataloader';
 import { SequelizeModelDataloaderOptions } from './index';
 import { ModelNotFoundError } from '@daryl-software/error';
+import { JsonStringifyWithSymbols } from './json';
 
 // given User = { id: number, email: string, other: string }
 // MultipleDataloader(User, ['id', 'email'], options) - loader.load({ id: 1, email: 'xxx' })
@@ -33,8 +34,9 @@ export function MultipleDataloader<
         cacheKeyFn = (ak) => JSON.stringify(ak);
     }
     if (options && 'redis' in options) {
+        const redisName = [model.name, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined, 'MULTI'].filter(Boolean).join('-');
         // @ts-ignore
-        return new RedisDataLoader<MKey, M[]>(`${model.name}-${key.toString()}-MULTI`, batchLoadFn, {
+        return new RedisDataLoader<MKey, M[]>(redisName, batchLoadFn, {
             cacheKeyFn,
             notFound: (akey) => new ModelNotFoundError(model, akey),
             maxBatchSize: 100,
