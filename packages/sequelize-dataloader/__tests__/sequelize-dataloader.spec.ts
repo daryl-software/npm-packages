@@ -192,6 +192,9 @@ describe('sequelize-dataloader', async () => {
                         country: {
                             [Op.ne]: 'FR',
                         },
+                        name: {
+                            [Op.ne]: null,
+                        },
                     },
                 },
                 maxBatchSize: 20,
