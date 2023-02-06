@@ -1,10 +1,10 @@
 import { NotFoundError } from './not-found';
 import { Model, ModelStatic } from '@sequelize/core';
 
-export class ModelNotFoundError<M extends Model> extends NotFoundError {
+export class ModelNotFoundError<M extends Model, I = any> extends NotFoundError {
     model: ModelStatic<M>;
 
-    constructor(model: ModelStatic<M>, identifier: unknown) {
+    constructor(model: ModelStatic<M>, identifier: I) {
         super(identifier, `${model.name} not found for identifier ${JSON.stringify(identifier)}`);
 
         this.model = model;

@@ -3,26 +3,24 @@ import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
 
-type PreventNullable<T extends Exclude<U, null>, U = T> = {};
-
-export class RedisDataLoader<K, V extends PreventNullable<unknown>, C = K> extends DataLoader<K, V, C> {
-    private readonly name: string;
-    private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>;
-
-    private static usedNames: string[] = [];
+export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
+    public static checkForDuplicates = true;
+    private static usedNames: Set<string> = new Set([]);
     private static NOT_FOUND_STRING = '___NOTFOUND___';
 
-    constructor(name: string, private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>, options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>) {
+    constructor(
+        private readonly name: string,
+        // undefined values will be converted to not found errors
+        private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>,
+        private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>
+    ) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
-        this.name = name + (options.redis.suffix ? `-${options.redis.suffix}` : '');
-        this.options = options;
-
-        if (RedisDataLoader.usedNames.includes(this.name)) {
-            this.log(`WARNING this RedisDataLoader ${this.name} already exists`);
-        } else {
+        this.name += options.redis.suffix ? `-${options.redis.suffix}` : '';
+        if (RedisDataLoader.checkForDuplicates) {
+            assert(!RedisDataLoader.usedNames.has(this.name), `RedisDataLoader name ${this.name} already used`);
             this.log(`New RedisDataLoader ${this.name}`);
-            RedisDataLoader.usedNames.push(this.name);
         }
+        RedisDataLoader.usedNames.add(this.name);
     }
 
     /**
@@ -42,7 +40,7 @@ export class RedisDataLoader<K, V extends PreventNullable<unknown>, C = K> exten
      * @deprecated use clearAllAsync() instead
      */
     override clearAll(): this {
-        throw new Error('Cannot call clearAll on Index (use clearAllAsync)');
+        throw new Error('Cannot call clearAll on RedisDataLoader (use clearAllAsync)');
     }
 
     protected log(...args: unknown[]) {
@@ -67,22 +65,21 @@ export class RedisDataLoader<K, V extends PreventNullable<unknown>, C = K> exten
 
         // ⚠️ Cannot use MGET on a cluster
         // load cached values
+        if (this.options.redis.logging) {
+            this.log(`Reading keys from redis: ${mapRedisKeyToModelKey.map((x) => x.redisKey).join(', ')}`);
+        }
         await Promise.all(
-            mapRedisKeyToModelKey.map((entry) => {
-                this.log('Reading from redis', entry.redisKey);
-                return this.options.redis.client.get(entry.redisKey).then((data) => {
-                    this.log(`Redis returned key:${entry.redisKey} data:"${JSON.stringify(data)}" typeof:${typeof data}`);
+            mapRedisKeyToModelKey.map((entry) =>
+                this.options.redis.client.get(entry.redisKey).then((data) => {
                     if (data === RedisDataLoader.NOT_FOUND_STRING) {
                         entry.value = this.options.notFound?.(entry.key) ?? new NotFoundError(entry.key, 'Not found (redis cache)');
                     } else if (data !== null) {
                         entry.value = this.options.redis.deserialize(entry.key, data);
                     }
-                });
-            })
+                })
+            )
         );
-
         // this.log('map was', JSON.stringify(mapRedisKeyToModelKey));
-
         // keysToLoadFromDatasource is referencing mapRedisKeyToModelKey values
         const keysToLoadFromDatasource = mapRedisKeyToModelKey.filter(({ value }) => value === undefined);
         // load missing values from datastore
@@ -118,7 +115,7 @@ export class RedisDataLoader<K, V extends PreventNullable<unknown>, C = K> exten
     }
 
     override prime(key: K, value: Error | V) {
-        this.primeAsync(key, value);
+        void this.primeAsync(key, value);
         return this;
     }
 

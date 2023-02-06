@@ -1,8 +1,7 @@
 import { unlink, writeFile } from 'fs/promises';
 import { ConfigLoader } from '@daryl-software/ts-config-loader';
 import { randomUUID } from 'crypto';
-import { describe, before, after, it } from 'mocha';
-import { expect } from 'chai';
+
 
 type TestConfig = {
     arsonik: boolean;
@@ -16,12 +15,12 @@ describe('ts-config-loader', () => {
     const testFile = `${__dirname}/${randomUUID()}.json`;
     let loader: ConfigLoader;
 
-    before(async () => {
+    beforeAll(async () => {
         await writeFile(testFile, '{"rediscluster":{"servers":["redis-cluster:7000","redis-cluster:7001"]}}');
         loader = new ConfigLoader([`${__dirname}/test-config.json`, testFile], { verbose: true });
     });
 
-    after(async () => {
+    afterAll(async () => {
         await unlink(testFile);
         loader.close();
     });

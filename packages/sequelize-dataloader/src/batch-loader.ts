@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
-import { CustomNotFound } from '@daryl-software/redis-dataloader';
 
 function StrictValues<M extends Model, K extends keyof M>(columns: K[], values: readonly Pick<M, K>[]): Pick<M, K>[] {
     return values.map((value) => {
@@ -9,59 +9,51 @@ function StrictValues<M extends Model, K extends keyof M>(columns: K[], values: 
     });
 }
 
-export interface BatchLoaderOptions<M extends Model, K = any> extends CustomNotFound<K> {
+export interface BatchLoaderOptions<M extends Model> {
     find?: FindOptions<M>;
 }
 
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelStatic<M>,
-    columns: K[],
-    values: readonly Pick<M, K>[],
-    mode: 'find',
-    options?: BatchLoaderOptions<M>
-): Promise<(M | undefined)[]>;
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelStatic<M>,
-    columns: K[],
-    values: readonly Pick<M, K>[],
-    mode: 'filter',
-    options?: BatchLoaderOptions<M>
-): Promise<(M[] | undefined)[]>;
-export async function BatchLoaderMultiColumns<M extends Model, K extends keyof M>(
-    model: ModelStatic<M>,
-    columns: K[],
-    values: readonly Pick<M, K>[],
-    mode: 'find' | 'filter',
-    options: BatchLoaderOptions<M> = {}
-): Promise<(M[] | M | undefined)[]> {
+export async function BatchLoaderMultiColumns<
+    M extends Model,
+    K extends keyof M,
+    Mode extends 'filter' | 'find',
+    Inter = Mode extends 'filter' ? M[] : Mode extends 'find' ? M : never,
+    Return = (Inter | undefined)[]
+>(model: ModelStatic<M>, columns: K[], values: readonly Pick<M, K>[], mode: Mode, options: BatchLoaderOptions<M> = {}): Promise<Return> {
     const models = await model.findAll({
         ...options.find,
         where: { ...options.find?.where, [Op.or]: StrictValues(columns, values) },
     });
     const nColumns = columns.length;
     if (mode === 'filter') {
-        return values.map((value) => models.filter((result) => columns.filter((column) => result[column] === value[column]).length === nColumns));
-    } else {
+        // @ts-ignore
+        return values.map((value) => {
+            const found = models.filter((result) => columns.filter((column) => result[column] === value[column]).length === nColumns);
+            return found.length ? found : undefined;
+        });
+    } else if (mode === 'find') {
+        // @ts-ignore
         return values.map((value) => models.find((result) => columns.filter((column) => result[column] === value[column]).length === nColumns));
     }
+    throw new Error('Invalid mode');
 }
 
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'find', options?: BatchLoaderOptions<M>): Promise<M[]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(model: ModelStatic<M>, key: K, keys: readonly M[K][], mode: 'filter', options?: BatchLoaderOptions<M>): Promise<M[][]>;
-export async function BatchLoader<M extends Model, K extends keyof M>(
+export async function BatchLoader<M extends Model, K extends keyof M, Mode extends 'filter' | 'find'>(
     model: ModelStatic<M>,
     key: K,
     keys: readonly M[K][],
-    mode: 'find' | 'filter',
+    mode: Mode,
     options: BatchLoaderOptions<M> = {}
-): Promise<unknown> {
+): Promise<Mode extends 'find' ? (M | undefined)[] : (M[] | undefined)[]> {
     const models = await model.findAll({ ...options.find, where: { ...options.find?.where, [key]: keys } });
-    return keys.map((akey) => {
-        if (mode === 'find') {
-            return models.find((result) => result[key] === akey);
-        } else {
+    if (mode === 'find') {
+        // @ts-ignore
+        return keys.map((akey) => models.find((result) => result[key] === akey));
+    } else {
+        // @ts-ignore
+        return keys.map((akey) => {
             const list = models.filter((result) => result[key] === akey);
             return list.length ? list : undefined;
-        }
-    });
+        });
+    }
 }

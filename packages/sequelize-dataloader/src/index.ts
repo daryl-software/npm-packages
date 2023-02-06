@@ -1,14 +1,9 @@
-import { CustomNotFound } from '@daryl-software/redis-dataloader';
-import { FindOptions, Model } from '@sequelize/core';
+import { Model } from '@sequelize/core';
 import DataLoader from 'dataloader';
+import { BatchLoaderOptions } from './batch-loader';
 export * from './batch-loader';
 export * from './multiple';
 export * from './single';
+export * from './json';
 
-export interface SequelizeModelDataloaderOptions<K, V extends Model> extends CustomNotFound<K> {
-    find?: FindOptions<V>; // default where
-}
-
-export interface SequelizeSingleModelDataloaderOptions<K, V extends Model, C = K> extends SequelizeModelDataloaderOptions<K, V>, DataLoader.Options<K, V, C> {}
-
-export interface SequelizeMultipleModelDataloaderOptions<K, V extends Model, C = K> extends SequelizeModelDataloaderOptions<K, V>, DataLoader.Options<K, V[], C> {}
+export interface SequelizeModelDataloaderOptions<K, V extends Model, C = K, X = V | V[]> extends BatchLoaderOptions<V>, DataLoader.Options<K, X, C> {}

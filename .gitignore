@@ -1,6 +1,6 @@
 # Ignore the compiled output.
 dist/
-
+*.sqlite
 # TypeScript incremental compilation cache
 *.tsbuildinfo
 
