@@ -4,7 +4,7 @@ import md5 from 'md5';
 import { CacheOptions } from './interfaces';
 import { Cluster, Redis } from 'ioredis';
 import { hydrateModel } from '@daryl-software/db';
-import { QueryOptions } from '@sequelize/core/types/dialects/abstract/query-interface';
+import { QiSelectOptions } from '@sequelize/core/types/dialects/abstract/query-interface';
 
 export class DbFactoryCache {
     private readonly component: Sequelize;
@@ -41,10 +41,10 @@ export class DbFactoryCache {
         return key.join('::');
     }
 
-    async query(query: string, options: QueryOptions, cOptions: { clear: true }): Promise<undefined>;
-    async query<TReturn extends object>(query: string, options: QueryOptions & { plain: true }, cOptions: CacheOptions): Promise<TReturn>;
-    async query<TReturn extends object>(query: string, options: QueryOptions, cOptions: CacheOptions): Promise<TReturn[]>;
-    async query<TReturn extends object>(query: string, options: QueryOptions = {}, cOptions: CacheOptions): Promise<any> {
+    async query(query: string, options: QiSelectOptions, cOptions: { clear: true }): Promise<undefined>;
+    async query<TReturn extends object>(query: string, options: QiSelectOptions & { plain: true }, cOptions: CacheOptions): Promise<TReturn>;
+    async query<TReturn extends object>(query: string, options: QiSelectOptions, cOptions: CacheOptions): Promise<TReturn[]>;
+    async query<TReturn extends object>(query: string, options: QiSelectOptions = {}, cOptions: CacheOptions): Promise<any> {
         const koptions: QueryOptionsWithType<QueryTypes.SELECT> = { ...options, type: QueryTypes.SELECT };
         const key = this.key(query, koptions);
 
