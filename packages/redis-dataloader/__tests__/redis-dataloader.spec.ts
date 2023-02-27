@@ -76,4 +76,20 @@ describe('redis-dataloader', async () => {
         await loader.primeAsync('FF', 'FranceFrance');
         expect(await loader.load('FF')).to.eq('FranceFrance');
     });
+
+    it('Exist loader', async () => {
+        const loader = new RedisDataLoader<CountryCode, CountryName>(`Country@${Date.now()}Exist`, async (isos) => isos.map((iso) => (data.countries as Record<string, string>)[iso]), {
+            maxBatchSize: 20,
+            redis: {
+                client: redisCluster,
+                logging: console.log.bind(console),
+                ttl: 5,
+                deserialize: (key, country) => country,
+                serialize: (country) => country,
+            },
+        });
+        expect(await loader.exist('FR')).to.eq(true);
+        expect(await loader.exist('XXX')).to.eq(false);
+        expect(await loader.exist('FR')).to.eq(true);// cached
+    });
 });
