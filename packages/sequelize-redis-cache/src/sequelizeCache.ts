@@ -1,4 +1,4 @@
-import { CreationAttributes, FindOptions, Model, ModelStatic } from '@sequelize/core';
+import { Attributes, CreationAttributes, FindOptions, Model, ModelStatic } from '@sequelize/core';
 import clone from 'lodash.clonedeep';
 import md5 from 'md5';
 import assert from 'assert';
@@ -25,7 +25,7 @@ export class SequelizeCache<T extends Model> {
         return this.modelDef.name;
     }
 
-    private getSql(type: { rawSql?: string; options?: FindOptions }): string {
+    private getSql(type: { rawSql?: string; options?: FindOptions<Attributes<T>> }): string {
         let sql = type.rawSql;
 
         if (!sql) {
@@ -38,7 +38,7 @@ export class SequelizeCache<T extends Model> {
         return sql;
     }
 
-    async findAll(find: FindOptions, options: CacheOptions): Promise<T[]> {
+    async findAll(find: FindOptions<Attributes<T>>, options: CacheOptions): Promise<T[]> {
         const sql = this.getSql({ options: find });
 
         const key = this.key(sql, 'findAll');
@@ -55,7 +55,7 @@ export class SequelizeCache<T extends Model> {
         return results;
     }
 
-    async count(find: FindOptions, options: CacheOptions): Promise<number> {
+    async count(find: FindOptions<Attributes<T>>, options: CacheOptions): Promise<number> {
         const sql = this.getSql({ options: find });
         const key = this.key(sql, 'count');
 
