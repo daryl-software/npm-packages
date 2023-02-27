@@ -4,8 +4,6 @@ import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
 import { Cluster, Redis } from 'ioredis';
 
-type existCommand = (key: string) => Promise<boolean | '___NOTFOUND___'>;
-
 export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
     public static checkForDuplicates = true;
     private static usedNames: Set<string> = new Set([]);
@@ -55,7 +53,7 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
             numberOfKeys: 1,
             lua,
         });
-        const result = await (this.options.redis.client as (Redis & Record<'exist', existCommand>) | (Cluster & Record<'exist', existCommand>)).exist(this.redisKey(key));
+        const result = await (this.options.redis.client as (Redis | Cluster) & Record<'exist', (key: string) => Promise<boolean | '___NOTFOUND___'>>).exist(this.redisKey(key));
         if (result !== null) {
             return Promise.resolve(result !== RedisDataLoader.NOT_FOUND_STRING);
         }
