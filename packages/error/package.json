@@ -15,6 +15,6 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.10"
+    "@sequelize/core": "^7.0.0-alpha.20"
   }
 }
