@@ -51,7 +51,7 @@ export const model = (sequelize: Sequelize) => {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
             bornDate: DataTypes.DATEONLY,
-            country: DataTypes.CHAR(2),
+            country: DataTypes.STRING(2),
         },
         {
             timestamps: true,
