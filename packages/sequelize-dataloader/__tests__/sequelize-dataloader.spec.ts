@@ -166,7 +166,7 @@ describe('sequelize-dataloader', async () => {
             const loader = new RedisDataLoader<CountryCode, number>(
                 `CountUserByCountry@${new Date().getTime()}`,
                 async (isos) => {
-                    const sql = `SELECT COUNT(*) AS n, country FROM ${User.tableName} WHERE country IN("${isos.join('", "')}") GROUP BY country`;
+                    const sql = `SELECT COUNT(*) AS n, country FROM ${User.table.tableName} WHERE country IN("${isos.join('", "')}") GROUP BY country`;
                     const results = await User.sequelize.query<{ n: number; country: string }>(sql, { type: QueryTypes.SELECT });
                     return isos.map((iso) => results.find((result) => result.country === iso)?.n ?? new NotFoundError(iso, 'CountUserByCountry'));
                 },

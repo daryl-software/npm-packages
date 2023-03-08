@@ -44,7 +44,7 @@ describe('sequelize-redis-cache', async () => {
 
     it('DbFactoryCache queryModel', async () => {
         const cache = new DbFactoryCache(sequelize, redisCluster);
-        const q = `SELECT * FROM ${User.tableName}` as const;
+        const q = `SELECT * FROM ${User.table.tableName}` as const;
         await cache.queryModel(q, { model: User, type: QueryTypes.SELECT }, { ttl: 10, clear: true });
         const res = await cache.queryModel(q, { model: User }, { ttl: 10 });
         expect(res.length).to.gte(6);

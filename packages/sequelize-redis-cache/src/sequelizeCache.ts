@@ -30,7 +30,7 @@ export class SequelizeCache<T extends Model> {
 
         if (!sql) {
             const opts = clone(type.options);
-            sql = this.modelDef.queryGenerator.selectQuery(this.modelDef.tableName, opts, this.modelDef);
+            sql = this.modelDef.queryGenerator.selectQuery(this.modelDef.table.tableName, opts, this.modelDef);
         }
 
         assert(sql, new Error('Cannot get sql'));
