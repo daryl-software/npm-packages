@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/error",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Common error classes",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",

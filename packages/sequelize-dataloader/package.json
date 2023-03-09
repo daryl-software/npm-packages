@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/sequelize-dataloader",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Sequelize dataloader, memory and redis backends",
   "keywords": [
     "sequelize",
