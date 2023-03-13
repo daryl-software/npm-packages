@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/lodash.shuffle": "^4.2.6",
     "@types/validator": "^13.1.2",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.1.5"
   },
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"
