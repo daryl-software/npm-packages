@@ -2,6 +2,7 @@ import DataLoader, { BatchLoadFn } from 'dataloader';
 import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
+import { Cluster, Redis } from 'ioredis';
 
 export class RedisDataLoader<K, V, C extends string = K extends string ? K : never> extends DataLoader<K, V, C> {
     public static checkForDuplicates = true;
@@ -9,7 +10,7 @@ export class RedisDataLoader<K, V, C extends string = K extends string ? K : nev
     private static NOT_FOUND_STRING = '___NOTFOUND___';
 
     constructor(
-        private readonly name: string,
+        override readonly name: string,
         // undefined values will be converted to not found errors
         private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>,
         private readonly options: DataLoader.Options<K, V, C> &
@@ -37,6 +38,36 @@ export class RedisDataLoader<K, V, C extends string = K extends string ? K : nev
     async clearAsync(...keys: K[]): Promise<number> {
         assert(keys.length, new Error('Empty array passed'));
         return Promise.all(keys.map((key) => this.options.redis.client.del(this.redisKey(key)))).then((res) => res.reduce((acc, curr) => acc + curr, 0));
+    }
+
+    async exist(key: K): Promise<boolean> {
+        const lua = `
+        if redis.call('exists', KEYS[1]) == 1 then
+            if redis.call('get', KEYS[1]) ~= '${RedisDataLoader.NOT_FOUND_STRING}' then
+                return true
+            else
+                return '${RedisDataLoader.NOT_FOUND_STRING}'
+            end
+        else
+            return nil
+        end`;
+
+        this.options.redis.client.defineCommand('exist', {
+            numberOfKeys: 1,
+            lua,
+        });
+        const result = await (this.options.redis.client as (Redis | Cluster) & Record<'exist', (key: string) => Promise<boolean | '___NOTFOUND___'>>).exist(this.redisKey(key));
+        if (result !== null) {
+            return Promise.resolve(result !== RedisDataLoader.NOT_FOUND_STRING);
+        }
+        return this.load(key)
+            .then((value) => value !== undefined)
+            .catch((error) => {
+                if (error instanceof NotFoundError) {
+                    return false;
+                }
+                throw error;
+            });
     }
 
     /**

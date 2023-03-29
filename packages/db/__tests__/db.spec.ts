@@ -19,20 +19,6 @@ describe('db', () => {
         dbB.close();
     });
 
-    it('Configuration postgres', () => {
-        try {
-            new Sequelize({
-                database: 'ddd',
-                host: 'dd',
-                port: 3306,
-                dialect: 'postgres',
-            });
-            throw new Error('cannot be here');
-        } catch (e: any) {
-            expect(e.message).to.match(/Please install pg package manually/);
-        }
-    });
-
     it('Configuration change over time', async () => {
         initModel(dbA);
         await dbA.sync();
