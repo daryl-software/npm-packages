@@ -3,7 +3,7 @@ import assert from 'assert';
 import { CustomNotFound, RedisDataloaderOptionsRequired } from './interfaces';
 import { NotFoundError } from '@daryl-software/error';
 
-export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
+export class RedisDataLoader<K, V, C extends string = K extends string ? K : never> extends DataLoader<K, V, C> {
     public static checkForDuplicates = true;
     private static usedNames: Set<string> = new Set([]);
     private static NOT_FOUND_STRING = '___NOTFOUND___';
@@ -12,7 +12,10 @@ export class RedisDataLoader<K, V, C = K> extends DataLoader<K, V, C> {
         private readonly name: string,
         // undefined values will be converted to not found errors
         private readonly underlyingBatchLoadFn: BatchLoadFn<K, V | undefined>,
-        private readonly options: DataLoader.Options<K, V, C> & CustomNotFound<K> & RedisDataloaderOptionsRequired<K, V>
+        private readonly options: DataLoader.Options<K, V, C> &
+            CustomNotFound<K> &
+            RedisDataloaderOptionsRequired<K, V> &
+            (K extends string | number | string[] | number[] ? {} : { cacheKeyFn: (key: K) => C })
     ) {
         super((keys) => this.overridedBatchLoad(keys), { ...options, cache: false });
         this.name += options.redis.suffix ? `-${options.redis.suffix}` : '';
