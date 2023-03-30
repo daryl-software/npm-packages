@@ -16,7 +16,7 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
-    "@daryl-software/error": "^2.0.2-alpha.2",
+    "@daryl-software/error": "^2.0.7",
     "dataloader": "^2.0.0",
     "ioredis": "^5.0.4"
   },
