@@ -11,7 +11,7 @@ export function restoreTimestampsSequelize<M extends Model>(data: Record<string,
         if (type && datefieldTypes.includes(type) && 'fieldName' in field) {
             const t = field as unknown as { fieldName: string };
             if (data[t.fieldName]) {
-                instance.setDataValue(t.fieldName, new Date(data[t.fieldName] as any));
+                instance.setDataValue(t.fieldName, new Date(data[t.fieldName] as string | number));
             }
         }
     });

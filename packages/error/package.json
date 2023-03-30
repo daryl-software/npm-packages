@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/error",
-  "version": "2.0.6",
+  "version": "2.0.8",
   "description": "Common error classes",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
@@ -15,6 +15,6 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.20"
+    "@sequelize/core": "^7.0.0-alpha.25"
   }
 }
