@@ -8,8 +8,10 @@ describe('db', () => {
     beforeAll(async () => {
         // eslint-disable-next-line no-console
         const logging = console.log;
-        dbA = new Sequelize('sqlite::memory:',{ logging });
-        dbB = new Sequelize('sqlite::memory:',{
+        dbA = new Sequelize(':memory:',{
+            dialect: 'sqlite', logging });
+        dbB = new Sequelize(':memory:',{
+            dialect: 'sqlite',
             logging,
         });
         initModel(dbA);

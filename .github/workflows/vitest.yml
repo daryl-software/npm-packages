@@ -11,13 +11,11 @@ jobs:
           - 7000-7005:7000-7005
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.6.3
       - name: Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
       - run: pnpm install --frozen-lockfile
       - run: pnpm run test
