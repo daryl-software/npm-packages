@@ -16,13 +16,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: 'pnpm'
 
       - name: Pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-          cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run test
