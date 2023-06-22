@@ -12,12 +12,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "chokidar": "^3.5.2",
-    "deep-object-diff": "^1.1.5",
+    "chokidar": "^3.5.3",
+    "deep-object-diff": "^1.1.9",
     "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.6"
+    "@types/lodash.merge": "^4.6.7"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "prettier": "prettier --check src"
   },
   "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }

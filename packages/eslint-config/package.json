@@ -11,6 +11,9 @@
     "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/eslint-config"
   },
+  "scripts": {
+    "prettier": "prettier --check ."
+  },
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
