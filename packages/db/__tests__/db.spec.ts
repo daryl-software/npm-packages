@@ -5,7 +5,7 @@ import { hydrateModel } from '@daryl-software/db';
 describe('db', () => {
     let dbA: Sequelize;
     let dbB: Sequelize;
-    beforeAll(() => {
+    beforeAll(async () => {
         // eslint-disable-next-line no-console
         const logging = console.log;
         dbA = new Sequelize(':memory:',{
