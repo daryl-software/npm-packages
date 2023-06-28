@@ -46,6 +46,7 @@ export async function BatchLoader<M extends Model, K extends keyof M, Mode exten
     mode: Mode,
     options: BatchLoaderOptions<M> = {}
 ): Promise<Mode extends 'find' ? (M | undefined)[] : (M[] | undefined)[]> {
+    // @ts-ignore
     const models = await model.findAll({ ...options.find, where: { ...options.find?.where, [key]: keys } });
     if (mode === 'find') {
         // @ts-ignore
