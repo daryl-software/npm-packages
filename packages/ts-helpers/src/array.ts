@@ -87,7 +87,7 @@ Array.prototype.shuffle = function () {
 };
 
 Array.prototype.sum = function () {
-    return this.reduce((a, b) => a + b, 0);
+    return this.reduce((a: number, b: number) => a + b, 0);
 };
 
 Array.prototype.avg = function () {

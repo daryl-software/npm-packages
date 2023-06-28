@@ -29,6 +29,7 @@ describe('redis-dataloader', async () => {
                 notFound: (key) => new MyNotFoundError(key, 'custom'),
                 redis: {
                     client: redisCluster,
+                    // eslint-disable-next-line no-console
                     logging: console.log.bind(console),
                     ttl: 5,
                     deserialize: (_, sum) => sum,
@@ -90,8 +91,7 @@ describe('redis-dataloader', async () => {
         });
         expect(await loader.exist('FR')).to.eq(true);
         expect(await loader.exist('XXX')).to.eq(false);
-        expect(await loader.exist('FR')).to.eq(true);// cached
-        expect(await loader.exist('XXX')).to.eq(false);// cached
-
+        expect(await loader.exist('FR')).to.eq(true); // cached
+        expect(await loader.exist('XXX')).to.eq(false); // cached
     });
 });

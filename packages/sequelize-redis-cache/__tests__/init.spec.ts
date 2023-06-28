@@ -13,7 +13,7 @@ export const sequelize = new Sequelize(':memory:', {
 
 export let redisCluster: Cluster;
 
-beforeAll(async () => {
+beforeAll(() => {
     console.log('beforeAll called');
     redisCluster = new Cluster(
         config.rediscluster.servers.map((server) => {
@@ -30,7 +30,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    Promise.all([redisCluster.disconnect(), sequelize.close()]);
+    redisCluster.disconnect();
+    await Promise.all([sequelize.close()]);
 });
 
 test('test', () => {

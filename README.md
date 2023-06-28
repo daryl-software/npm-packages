@@ -26,6 +26,7 @@ pnpm run test
 
 ## Bump version
 ```shell
+npm version patch @daryl-software/eslint-config
 npm version patch -ws
 pnpm version prerelease -ws
 ```

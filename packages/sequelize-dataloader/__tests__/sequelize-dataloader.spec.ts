@@ -5,7 +5,7 @@ import { RedisDataLoader } from '@daryl-software/redis-dataloader';
 import { BatchLoader, BatchLoaderMultiColumns, MultipleDataloader } from '@daryl-software/sequelize-dataloader';
 import { ModelNotFoundError, NotFoundError } from '@daryl-software/error';
 
-describe('sequelize-dataloader', async () => {
+describe('sequelize-dataloader', () => {
     beforeAll(async () => {
         model(sequelize);
         await sequelize.sync();
