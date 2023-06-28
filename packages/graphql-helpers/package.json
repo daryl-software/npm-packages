@@ -1,0 +1,32 @@
+{
+  "name": "@daryl-software/graphql-helpers",
+  "version": "1.0.0",
+  "description": "Graphql helpers",
+  "author": "Florian Morello <arsonik@me.com>",
+  "homepage": "https://github.com/daryl-software/npm-packages#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daryl-software/npm-packages.git",
+    "directory": "packages/graphql-helpers"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "prettier": "prettier --check src"
+  },
+  "bugs": {
+    "url": "https://github.com/daryl-software/npm-packages/issues"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "^2.4.8",
+    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/utils": "^10.0.1",
+    "deepmerge-ts": "^5.1.0",
+    "glob": "^10.3.1",
+    "graphql": "^16.7.1",
+    "graphql-tag": "^2.12.6"
+  }
+}

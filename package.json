@@ -23,6 +23,8 @@
   "dependencies": {
     "@daryl-software/db": "file:packages/db",
     "@daryl-software/error": "file:packages/error",
+    "@daryl-software/eslint-config": "file:packages/eslint-config",
+    "@daryl-software/graphql-helpers": "file:packages/graphql-helpers",
     "@daryl-software/redis-dataloader": "file:packages/redis-dataloader",
     "@daryl-software/sequelize-dataloader": "file:packages/sequelize-dataloader",
     "@daryl-software/sequelize-redis-cache": "file:packages/sequelize-redis-cache",

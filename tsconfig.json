@@ -4,6 +4,7 @@
     "paths": {
       "@daryl-software/db": ["./packages/db/src/index.ts"],
       "@daryl-software/ts-helpers": ["./packages/ts-helpers/src/index.ts"],
+      "@daryl-software/graphql-helpers": ["./packages/graphql-helpers/src/index.ts"],
     }
   },
 }

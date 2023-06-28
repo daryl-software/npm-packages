@@ -10,6 +10,7 @@
     { "path": "./packages/redis-dataloader" },
     { "path": "./packages/sequelize-dataloader" },
     { "path": "./packages/sequelize-redis-cache" },
+    { "path": "./packages/graphql-helpers" },
     { "path": "./packages/ts-helpers" }
   ]
 }
