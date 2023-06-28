@@ -7,10 +7,6 @@
     "sequelize",
     "loader"
   ],
-  "scripts": {
-    "lint": "eslint src",
-    "prettier": "prettier --check src"
-  },
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "license": "ISC",

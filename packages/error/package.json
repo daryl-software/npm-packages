@@ -14,10 +14,6 @@
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
-  "scripts": {
-    "lint": "eslint src",
-    "prettier": "prettier --check src"
-  },
   "dependencies": {
     "@sequelize/core": "7.0.0-alpha.26"
   }

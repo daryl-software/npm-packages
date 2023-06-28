@@ -6,21 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     services:
       redis-cluster:
-        image: ghcr.io/daryl-software/redis-cluster:main
+        image: ghcr.io/daryl-software/redis-cluster
         ports:
           - 7000-7005:7000-7005
     steps:
       - uses: actions/checkout@v3
-
       - name: Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
-
-      - name: Pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run test
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test
