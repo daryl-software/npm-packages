@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/sequelize-redis-cache",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Sequelize Redis cache helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages/packages/sequelize-redis-cache",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@daryl-software/db": "workspace:^",
-    "@sequelize/core": "7.0.0-alpha.27",
+    "@sequelize/core": "7.0.0-alpha.26",
     "ioredis": "^5.3.2",
     "lodash.clonedeep": "^4.5.0",
     "md5": "^2.3.0"

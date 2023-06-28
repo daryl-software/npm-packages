@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/sequelize-dataloader",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Sequelize dataloader, memory and redis backends",
   "keywords": [
     "sequelize",
@@ -27,7 +27,7 @@
     "@daryl-software/db": "workspace:^",
     "@daryl-software/error": "workspace:^",
     "@daryl-software/redis-dataloader": "workspace:^",
-    "@sequelize/core": "7.0.0-alpha.27",
+    "@sequelize/core": "7.0.0-alpha.26",
     "dataloader": "^2.2.2",
     "ioredis": "^5.3.2"
   },

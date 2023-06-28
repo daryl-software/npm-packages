@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/db",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
     "db",
@@ -22,7 +22,7 @@
     "directory": "packages/db"
   },
   "dependencies": {
-    "@sequelize/core": "7.0.0-alpha.27",
+    "@sequelize/core": "7.0.0-alpha.26",
     "lodash.shuffle": "^4.2.0"
   },
   "devDependencies": {

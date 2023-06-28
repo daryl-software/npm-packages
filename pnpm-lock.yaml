@@ -19,7 +19,7 @@ importers:
         version: file:packages/eslint-config(@typescript-eslint/eslint-plugin@5.60.1)(@typescript-eslint/parser@5.60.1)(@vue/eslint-config-typescript@11.0.3)(eslint-config-prettier@8.8.0)(eslint-plugin-node@11.1.0)(eslint-plugin-prettier-vue@4.2.0)(eslint-plugin-prettier@4.2.1)(eslint-plugin-unused-imports@2.0.0)(eslint-plugin-vue@9.15.1)(eslint@8.43.0)
       '@daryl-software/graphql-helpers':
         specifier: file:packages/graphql-helpers
-        version: file:packages/graphql-helpers(graphql@16.7.1)
+        version: file:packages/graphql-helpers
       '@daryl-software/redis-dataloader':
         specifier: file:packages/redis-dataloader
         version: file:packages/redis-dataloader
@@ -82,8 +82,8 @@ importers:
   packages/db:
     dependencies:
       '@sequelize/core':
-        specifier: 7.0.0-alpha.27
-        version: 7.0.0-alpha.27(sqlite3@5.1.6)
+        specifier: 7.0.0-alpha.26
+        version: 7.0.0-alpha.26(sqlite3@5.1.6)
       lodash.shuffle:
         specifier: ^4.2.0
         version: 4.2.0
@@ -101,8 +101,8 @@ importers:
   packages/error:
     dependencies:
       '@sequelize/core':
-        specifier: 7.0.0-alpha.27
-        version: 7.0.0-alpha.27(sqlite3@5.1.6)
+        specifier: 7.0.0-alpha.26
+        version: 7.0.0-alpha.26(sqlite3@5.1.6)
 
   packages/eslint-config:
     dependencies:
@@ -185,8 +185,8 @@ importers:
         specifier: workspace:^
         version: link:../redis-dataloader
       '@sequelize/core':
-        specifier: 7.0.0-alpha.27
-        version: 7.0.0-alpha.27(sqlite3@5.1.6)
+        specifier: 7.0.0-alpha.26
+        version: 7.0.0-alpha.26(sqlite3@5.1.6)
       dataloader:
         specifier: ^2.2.2
         version: 2.2.2
@@ -200,8 +200,8 @@ importers:
         specifier: workspace:^
         version: link:../db
       '@sequelize/core':
-        specifier: 7.0.0-alpha.27
-        version: 7.0.0-alpha.27(sqlite3@5.1.6)
+        specifier: 7.0.0-alpha.26
+        version: 7.0.0-alpha.26(sqlite3@5.1.6)
       ioredis:
         specifier: ^5.3.2
         version: 5.3.2
@@ -744,9 +744,9 @@ packages:
     dev: false
     optional: true
 
-  /@sequelize/core@7.0.0-alpha.27(sqlite3@5.1.6):
-    resolution: {integrity: sha512-wtQWkmm2WjUgjxnMHb1oapfPQ2MCcCbC8DkOlSmq+vjNtuB0miKoRseXBwprA7wYwP9N4inNPJ+lwK10uO+bnQ==}
-    engines: {node: '>=16.0.0'}
+  /@sequelize/core@7.0.0-alpha.26(sqlite3@5.1.6):
+    resolution: {integrity: sha512-qSL6cW4wY9W5duW+VqhnEtMkw8/ugn+az8NmhwYX5sUyo8NvS9mDLKZEX83LWnkiq82Dx+OUoVBHdYPMVZoFiQ==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       ibm_db: '*'
       mariadb: '*'
@@ -790,7 +790,7 @@ packages:
       sequelize-pool: 8.0.0
       sqlite3: 5.1.6
       toposort-class: 1.0.1
-      type-fest: 3.12.0
+      type-fest: 2.19.0
       uuid: 9.0.0
       validator: 13.9.0
       wkx: 0.5.0
@@ -3108,9 +3108,9 @@ packages:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
 
-  /type-fest@3.12.0:
-    resolution: {integrity: sha512-qj9wWsnFvVEMUDbESiilKeXeHL7FwwiFcogfhfyjmvT968RXSvnl23f1JOClTHYItsi7o501C/7qVllscUP3oA==}
-    engines: {node: '>=14.16'}
+  /type-fest@2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
+    engines: {node: '>=12.20'}
     dev: false
 
   /typescript@5.1.5:
@@ -3398,9 +3398,9 @@ packages:
   file:packages/db:
     resolution: {directory: packages/db, type: directory}
     name: '@daryl-software/db'
-    version: 3.1.0
+    version: 3.1.1
     dependencies:
-      '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
+      '@sequelize/core': 7.0.0-alpha.26(sqlite3@5.1.6)
       lodash.shuffle: 4.2.0
     transitivePeerDependencies:
       - ibm_db
@@ -3417,9 +3417,9 @@ packages:
   file:packages/error:
     resolution: {directory: packages/error, type: directory}
     name: '@daryl-software/error'
-    version: 2.1.0
+    version: 2.1.1
     dependencies:
-      '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
+      '@sequelize/core': 7.0.0-alpha.26(sqlite3@5.1.6)
     transitivePeerDependencies:
       - ibm_db
       - mariadb
@@ -3436,7 +3436,7 @@ packages:
     resolution: {directory: packages/eslint-config, type: directory}
     id: file:packages/eslint-config
     name: '@daryl-software/eslint-config'
-    version: 1.1.1
+    version: 1.1.2
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.6.0
       '@typescript-eslint/parser': ^5.6.0
@@ -3461,26 +3461,24 @@ packages:
       eslint-plugin-vue: 9.15.1(eslint@8.43.0)
     dev: false
 
-  file:packages/graphql-helpers(graphql@16.7.1):
+  file:packages/graphql-helpers:
     resolution: {directory: packages/graphql-helpers, type: directory}
-    id: file:packages/graphql-helpers
     name: '@daryl-software/graphql-helpers'
-    version: 1.0.0
+    version: 1.0.2
     dependencies:
       '@apollo/subgraph': 2.4.8(graphql@16.7.1)
       '@graphql-tools/schema': 10.0.0(graphql@16.7.1)
       '@graphql-tools/utils': 10.0.1(graphql@16.7.1)
       deepmerge-ts: 5.1.0
       glob: 10.3.1
+      graphql: 16.7.1
       graphql-tag: 2.12.6(graphql@16.7.1)
-    transitivePeerDependencies:
-      - graphql
     dev: false
 
   file:packages/redis-dataloader:
     resolution: {directory: packages/redis-dataloader, type: directory}
     name: '@daryl-software/redis-dataloader'
-    version: 2.1.0
+    version: 2.1.1
     dependencies:
       '@daryl-software/error': link:packages/error
       dataloader: 2.2.2
@@ -3492,12 +3490,12 @@ packages:
   file:packages/sequelize-dataloader:
     resolution: {directory: packages/sequelize-dataloader, type: directory}
     name: '@daryl-software/sequelize-dataloader'
-    version: 3.1.0
+    version: 3.1.1
     dependencies:
       '@daryl-software/db': link:packages/db
       '@daryl-software/error': link:packages/error
       '@daryl-software/redis-dataloader': link:packages/redis-dataloader
-      '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
+      '@sequelize/core': 7.0.0-alpha.26(sqlite3@5.1.6)
       dataloader: 2.2.2
       ioredis: 5.3.2
     transitivePeerDependencies:
@@ -3515,10 +3513,10 @@ packages:
   file:packages/sequelize-redis-cache:
     resolution: {directory: packages/sequelize-redis-cache, type: directory}
     name: '@daryl-software/sequelize-redis-cache'
-    version: 3.1.0
+    version: 3.1.1
     dependencies:
       '@daryl-software/db': link:packages/db
-      '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
+      '@sequelize/core': 7.0.0-alpha.26(sqlite3@5.1.6)
       ioredis: 5.3.2
       lodash.clonedeep: 4.5.0
       md5: 2.3.0
@@ -3537,7 +3535,7 @@ packages:
   file:packages/ts-config-loader:
     resolution: {directory: packages/ts-config-loader, type: directory}
     name: '@daryl-software/ts-config-loader'
-    version: 2.1.0
+    version: 2.1.1
     dependencies:
       chokidar: 3.5.3
       deep-object-diff: 1.1.9
@@ -3547,7 +3545,7 @@ packages:
   file:packages/ts-helpers:
     resolution: {directory: packages/ts-helpers, type: directory}
     name: '@daryl-software/ts-helpers'
-    version: 1.1.0
+    version: 1.1.1
     dependencies:
       ts-toolbelt: 9.6.0
     dev: false

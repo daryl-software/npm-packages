@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/redis-dataloader",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Dataloader backed by redis",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
