@@ -19,15 +19,11 @@
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
-  "scripts": {
-    "lint": "eslint src",
-    "prettier": "prettier --check src"
-  },
   "dependencies": {
-    "@daryl-software/db": "workspace:^",
-    "@daryl-software/error": "workspace:^",
-    "@daryl-software/redis-dataloader": "workspace:^",
-    "@sequelize/core": "7.0.0-alpha.27",
+    "@daryl-software/db": "^3.1.0",
+    "@daryl-software/error": "^2.1.0",
+    "@daryl-software/redis-dataloader": "^2.1.0",
+    "@sequelize/core": "7.0.0-alpha.26",
     "dataloader": "^2.2.2",
     "ioredis": "^5.3.2"
   },

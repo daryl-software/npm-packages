@@ -23,7 +23,6 @@ describe('db', () => {
         dbB.close();
     });
 
-
     it('Helpers hydrate', async () => {
         await User.bulkCreate([
             { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },

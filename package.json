@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "github:daryl-software/npm-packages",
   "scripts": {
-    "lint": "pnpm -r --filter=!eslint-config run lint",
+    "lint": "npm exec -ws eslint -- src",
     "clean": "git clean -dfqX -- ./node_modules **/{dist,node_modules}/ **/tsconfig*tsbuildinfo",
     "cleanDist": "git clean -dfqX -- **/{dist}/ **/tsconfig*tsbuildinfo",
     "compile": "tsc --build tsconfig.build.json",
@@ -12,9 +12,9 @@
     "watch": "tsc --build tsconfig.build.json --watch",
     "coverage": "vitest run --coverage",
     "test": "vitest",
-    "prepublish": "pnpm run compile:clean && pnpm run compile",
-    "prettier": "pnpm -r --filter=!eslint-config run prettier",
-    "docker:mac-up-services": "export REDIS_CLUSTER_IP=0.0.0.0; pnpm run docker:up-services",
+    "prepublish": "npm run compile:clean && npm run compile",
+    "prettier-check": "npm exec -ws prettier -- --check src",
+    "docker:mac-up-services": "export REDIS_CLUSTER_IP=0.0.0.0; npm run docker:up-services",
     "docker:up-services": "docker compose up -d --remove-orphans redis-cluster"
   },
   "engines": {

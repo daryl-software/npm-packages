@@ -13,10 +13,6 @@
     "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/ts-helpers"
   },
-  "scripts": {
-    "lint": "eslint src",
-    "prettier": "prettier --check src"
-  },
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
