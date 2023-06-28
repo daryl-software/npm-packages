@@ -7,12 +7,12 @@ In your project .eslintrc.js file, you can use the following configuration:
 * For vue3 projects
 ```js
 {
-  "extends": ["@daryl-software/eslint-config/vue3"]
+    extends: ["@daryl-software/eslint-config/vue3"]
 }
 ```
 * For nodejs projects
 ```js
 {
-  "extends": ["@daryl-software/eslint-config/node"]
+    extends: ["@daryl-software/eslint-config/node"]
 }
 ```

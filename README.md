@@ -15,27 +15,27 @@ Open sourced node packages
 ```shell
 nvm install
 nvm use
-npm i
+pnpm i
 ```
 
 ### Tests
 ```shell
-npm run compile # Must compile before testing
-npm run test
+pnpm run compile # Must compile before testing
+pnpm run test
 ```
 
 ## Bump version
 ```shell
 npm version patch -ws
-npm version prerelease -ws
+pnpm version prerelease -ws
 ```
 
 ### Publish
 ```shell
 # all with patch version
-npm version patch -ws
-npm run prepublish
-npm publish -ws --access=public
+npm version minor -ws
+pnpm run -ws prepublish
+pnpm publish -r --access=public
 
 # publish just one ?
 ./publish.sh patch redis-dataloader

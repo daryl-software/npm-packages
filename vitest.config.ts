@@ -25,5 +25,6 @@ export default defineConfig({
     test: {
         deps: {},
         globals: true,
+        include: ['**/*.spec.ts'],
     },
 });

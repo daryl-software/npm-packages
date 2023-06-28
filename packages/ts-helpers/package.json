@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/ts-helpers",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "Typescript helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/daryl-software/npm-packages.git",
     "directory": "packages/ts-helpers"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "prettier": "prettier --check src"
   },
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"

@@ -1,12 +1,16 @@
 {
   "name": "@daryl-software/db",
-  "version": "3.0.3",
+  "version": "3.1.0",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
     "db",
     "sequelize",
     "loader"
   ],
+  "scripts": {
+    "lint": "eslint src",
+    "prettier": "prettier --check src"
+  },
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
   "license": "ISC",
@@ -18,13 +22,13 @@
     "directory": "packages/db"
   },
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.25",
+    "@sequelize/core": "7.0.0-alpha.27",
     "lodash.shuffle": "^4.2.0"
   },
   "devDependencies": {
-    "@types/lodash.shuffle": "^4.2.6",
-    "@types/validator": "^13.1.2",
-    "sqlite3": "^5.0.0"
+    "@types/lodash.shuffle": "^4.2.7",
+    "@types/validator": "^13.7.17",
+    "sqlite3": "^5.1.6"
   },
   "bugs": {
     "url": "https://github.com/daryl-software/npm-packages/issues"

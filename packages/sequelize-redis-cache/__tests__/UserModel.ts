@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model } from "@sequelize/core";
+import { Sequelize, DataTypes, Model } from '@sequelize/core';
 
 export class User extends Model {
     declare id: number;

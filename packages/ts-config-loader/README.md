@@ -6,7 +6,7 @@ JSON files loader & watcher
 
 ### Installation
 ```shell
-npm i @daryl-software/ts-config-loader
+pnpm i @daryl-software/ts-config-loader
 ```
 
 ### Usage
