@@ -26,16 +26,16 @@ pnpm run test
 
 ## Bump version
 ```shell
-pnpm version patch -ws
-pnpm version prerelease -ws
+pnpm version patch -r
+pnpm version prerelease -r
 ```
 
 ### Publish
 ```shell
 # all with patch version
-pnpm version patch -ws
+pnpm version patch -r
 pnpm run prepublish
-pnpm publish -ws --access=public
+pnpm publish -r --access=public
 
 # publish just one ?
 ./publish.sh patch redis-dataloader
