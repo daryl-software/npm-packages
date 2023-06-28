@@ -14,7 +14,6 @@ export const sequelize = new Sequelize(':memory:', {
 export let redisCluster: Cluster;
 
 beforeAll(() => {
-    console.log('beforeAll called');
     redisCluster = new Cluster(
         config.rediscluster.servers.map((server) => {
             if (process.env['USE_LOCALHOST'] === 'yes' || 1) {
