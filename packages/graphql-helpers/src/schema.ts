@@ -3,7 +3,7 @@ import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schem
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { readFileSync } from 'fs';
 import { deepmerge } from 'deepmerge-ts';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import { IResolvers } from '@graphql-tools/utils/typings/Interfaces';
 
 interface StandardEnum<T> {
