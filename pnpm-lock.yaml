@@ -3119,7 +3119,7 @@ packages:
   file:packages/db:
     resolution: {directory: packages/db, type: directory}
     name: '@daryl-software/db'
-    version: 3.0.3
+    version: 3.1.0
     dependencies:
       '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
       lodash.shuffle: 4.2.0
@@ -3138,7 +3138,7 @@ packages:
   file:packages/error:
     resolution: {directory: packages/error, type: directory}
     name: '@daryl-software/error'
-    version: 2.0.8
+    version: 2.1.0
     dependencies:
       '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
     transitivePeerDependencies:
@@ -3156,7 +3156,7 @@ packages:
   file:packages/redis-dataloader:
     resolution: {directory: packages/redis-dataloader, type: directory}
     name: '@daryl-software/redis-dataloader'
-    version: 2.0.11
+    version: 2.1.0
     dependencies:
       '@daryl-software/error': link:packages/error
       dataloader: 2.2.2
@@ -3168,7 +3168,7 @@ packages:
   file:packages/sequelize-dataloader:
     resolution: {directory: packages/sequelize-dataloader, type: directory}
     name: '@daryl-software/sequelize-dataloader'
-    version: 3.0.3
+    version: 3.1.0
     dependencies:
       '@daryl-software/db': link:packages/db
       '@daryl-software/error': link:packages/error
@@ -3191,7 +3191,7 @@ packages:
   file:packages/sequelize-redis-cache:
     resolution: {directory: packages/sequelize-redis-cache, type: directory}
     name: '@daryl-software/sequelize-redis-cache'
-    version: 3.0.3
+    version: 3.1.0
     dependencies:
       '@daryl-software/db': link:packages/db
       '@sequelize/core': 7.0.0-alpha.27(sqlite3@5.1.6)
@@ -3213,7 +3213,7 @@ packages:
   file:packages/ts-config-loader:
     resolution: {directory: packages/ts-config-loader, type: directory}
     name: '@daryl-software/ts-config-loader'
-    version: 2.0.10
+    version: 2.1.0
     dependencies:
       chokidar: 3.5.3
       deep-object-diff: 1.1.9
@@ -3223,7 +3223,7 @@ packages:
   file:packages/ts-helpers:
     resolution: {directory: packages/ts-helpers, type: directory}
     name: '@daryl-software/ts-helpers'
-    version: 1.0.12
+    version: 1.1.0
     dependencies:
       ts-toolbelt: 9.6.0
     dev: false

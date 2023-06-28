@@ -26,15 +26,15 @@ pnpm run test
 
 ## Bump version
 ```shell
-pnpm version patch -r
-pnpm version prerelease -r
+npm version patch -ws
+pnpm version prerelease -ws
 ```
 
 ### Publish
 ```shell
 # all with patch version
-pnpm version patch -r
-pnpm run prepublish
+npm version minor -ws
+pnpm run -ws prepublish
 pnpm publish -r --access=public
 
 # publish just one ?
