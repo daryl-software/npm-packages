@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   redis-cluster:
-    image: ghcr.io/daryl-software/redis-cluster
+    image: ghcr.io/daryl-software/redis-cluster:main
     environment:
       - IP=${REDIS_CLUSTER_IP}
     expose:

@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       redis-cluster:
-        image: ghcr.io/daryl-software/redis-cluster
+        image: ghcr.io/daryl-software/redis-cluster:main
         ports:
           - 7000-7005:7000-7005
     steps:
