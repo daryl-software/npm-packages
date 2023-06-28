@@ -5,7 +5,7 @@ import { hydrateModel } from '@daryl-software/db';
 describe('db', () => {
     let dbA: Sequelize;
     let dbB: Sequelize;
-    beforeAll(async () => {
+    beforeAll(() => {
         // eslint-disable-next-line no-console
         const logging = console.log;
         dbA = new Sequelize(':memory:',{
@@ -14,8 +14,6 @@ describe('db', () => {
             dialect: 'sqlite',
             logging,
         });
-        initModel(dbA);
-        await dbA.sync();
     });
 
     afterAll(() => {
@@ -23,6 +21,26 @@ describe('db', () => {
         dbB.close();
     });
 
+    it('Configuration change over time', async () => {
+        initModel(dbA);
+        await dbA.sync();
+        await User.bulkCreate([
+            { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
+            { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
+        ]);
+        const userDbA = await User.findByPk(1);
+        expect(userDbA?.name).to.eq('arsonik');
+
+        initModel(dbB);
+        await dbB.sync();
+
+        await User.bulkCreate([
+            { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
+            { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
+        ]);
+        const userDbB = await User.findByPk(1);
+        expect(userDbB?.name).to.eq('gregorette');
+    });
 
     it('Helpers hydrate', async () => {
         await User.bulkCreate([

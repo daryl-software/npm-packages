@@ -19,9 +19,5 @@
   "devDependencies": {
     "@types/lodash.merge": "^4.6.7"
   },
-  "scripts": {
-    "lint": "eslint src",
-    "prettier": "prettier --check src"
-  },
   "gitHead": "d77ce04a0881e2e40169c6eb5b4ac465382bcd9c"
 }
