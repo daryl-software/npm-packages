@@ -7,7 +7,7 @@
   "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "preferGlobal": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daryl-software/npm-packages.git",
