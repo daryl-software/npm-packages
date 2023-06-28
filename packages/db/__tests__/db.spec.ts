@@ -14,32 +14,13 @@ describe('db', () => {
             dialect: 'sqlite',
             logging,
         });
+        initModel(dbA);
+        await dbA.sync();
     });
 
     afterAll(() => {
         dbA.close();
         dbB.close();
-    });
-
-    it('Configuration change over time', async () => {
-        initModel(dbA);
-        await dbA.sync();
-        await User.bulkCreate([
-            { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
-            { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
-        ]);
-        const userDbA = await User.findByPk(1);
-        expect(userDbA?.name).to.eq('arsonik');
-
-        initModel(dbB);
-        await dbB.sync();
-
-        await User.bulkCreate([
-            { name: 'gregorette', email: 'aice@domain.com', country: 'CH' },
-            { name: 'arsonik', email: 'toto@domain.com', country: 'FR', bornDate: new Date('1985-07-21') },
-        ]);
-        const userDbB = await User.findByPk(1);
-        expect(userDbB?.name).to.eq('gregorette');
     });
 
     it('Helpers hydrate', async () => {

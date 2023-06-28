@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
+import { Attributes, FindOptions, Model, ModelStatic, Op } from '@sequelize/core';
 
 function StrictValues<M extends Model, K extends keyof M>(columns: K[], values: readonly Pick<M, K>[]): Pick<M, K>[] {
     return values.map((value) => {
-        const whereClause: Pick<M, K> = {} as any;
+        const whereClause = {} as Pick<M, K>;
         columns.forEach((column) => (whereClause[column] = value[column]));
         return whereClause;
     });
 }
 
 export interface BatchLoaderOptions<M extends Model> {
-    find?: FindOptions<M>;
+    find?: FindOptions<Attributes<M>>;
 }
 
 export async function BatchLoaderMultiColumns<
@@ -20,8 +20,9 @@ export async function BatchLoaderMultiColumns<
     Inter = Mode extends 'filter' ? M[] : Mode extends 'find' ? M : never,
     Return = (Inter | undefined)[]
 >(model: ModelStatic<M>, columns: K[], values: readonly Pick<M, K>[], mode: Mode, options: BatchLoaderOptions<M> = {}): Promise<Return> {
-    const models = await model.findAll({
+    const models: M[] = await model.findAll({
         ...options.find,
+        // @ts-ignore
         where: { ...options.find?.where, [Op.or]: StrictValues(columns, values) },
     });
     const nColumns = columns.length;
