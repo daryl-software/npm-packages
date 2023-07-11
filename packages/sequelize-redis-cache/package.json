@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/sequelize-redis-cache",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Sequelize Redis cache helpers",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages/packages/sequelize-redis-cache",
