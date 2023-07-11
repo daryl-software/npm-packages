@@ -15,15 +15,14 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
     "@vue/eslint-config-typescript": "^11.0.3",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-prettier-vue": "^4.2.0",
-    "eslint-plugin-unused-imports": "^2.0.0",
     "eslint-plugin-vue": "^9.15.1"
   }
 }
