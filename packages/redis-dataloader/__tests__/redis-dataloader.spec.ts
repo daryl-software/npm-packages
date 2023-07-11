@@ -90,8 +90,7 @@ describe('redis-dataloader', async () => {
         });
         expect(await loader.exist('FR')).to.eq(true);
         expect(await loader.exist('XXX')).to.eq(false);
-        expect(await loader.exist('FR')).to.eq(true);// cached
-        expect(await loader.exist('XXX')).to.eq(false);// cached
-
+        expect(await loader.exist('FR')).to.eq(true); // cached
+        expect(await loader.exist('XXX')).to.eq(false); // cached
     });
 });
