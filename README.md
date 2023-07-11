@@ -35,7 +35,7 @@ npm version prerelease -ws
 # all with patch version
 npm version minor -ws
 npm run -ws prepublish
-npm publish -r --access=public
+npm publish -ws --access=public
 
 # publish just one ?
 ./publish.sh patch redis-dataloader
