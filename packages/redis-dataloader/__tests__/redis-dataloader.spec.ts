@@ -32,7 +32,7 @@ describe('redis-dataloader', async () => {
                     logging: console.log.bind(console),
                     ttl: 5,
                     deserialize: (_, sum) => sum,
-                    serialize: (data) => data,
+                    serialize: (x) => x,
                 },
             }
         );
@@ -51,7 +51,7 @@ describe('redis-dataloader', async () => {
                 redis: {
                     client: redisCluster,
                     deserialize: (_, sum) => sum,
-                    serialize: (data) => data,
+                    serialize: (x) => x,
                 },
             }
         );
