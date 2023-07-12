@@ -3,7 +3,7 @@ const tsRules = require('./configs/ts-rules.js');
 
 module.exports = {
     extends: ['eslint:recommended', 'plugin:node/recommended', 'plugin:prettier/recommended'],
-    plugins: ['node', 'unused-imports'],
+    plugins: ['node', 'unused-imports', 'deprecation'],
     rules: {
         ...rules,
         'node/no-empty-function': 'off',
