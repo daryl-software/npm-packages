@@ -30,4 +30,5 @@ module.exports = {
     '@typescript-eslint/return-await': 'error',
     '@typescript-eslint/switch-exhaustiveness-check': 'error',
     'lines-between-class-members': 'off',
+    'deprecation/deprecation': 'warn',
 };

@@ -34,7 +34,6 @@ module.exports = {
     'require-atomic-updates': 'warn',
     'require-await': 'warn',
     'unused-imports/no-unused-imports': 'error',
-    'deprecation/deprecation': 'warn',
     complexity: 'error',
     curly: ['error', 'all'],
     eqeqeq: 'error',
