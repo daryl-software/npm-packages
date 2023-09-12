@@ -27,14 +27,14 @@ npm run test
 ## Bump version
 ```shell
 npm version patch -ws
-npm version prerelease -ws
+npm version prerelease --preid=alpha -ws
 ```
 
 ### Publish
 ```shell
 # all with patch version
 npm version minor -ws
-npm run -ws prepublish
+npm run prepublish
 npm publish -ws --access=public
 
 # publish just one ?

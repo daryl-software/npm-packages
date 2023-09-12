@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/sequelize-dataloader",
-  "version": "3.2.0",
+  "version": "3.2.1-alpha.0",
   "description": "Sequelize dataloader, memory and redis backends",
   "keywords": [
     "sequelize",
@@ -20,9 +20,9 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "dependencies": {
-    "@daryl-software/db": "^3.1.0",
-    "@daryl-software/error": "^2.1.0",
-    "@daryl-software/redis-dataloader": "^2.1.0",
+    "@daryl-software/db": "^3.2.1-alpha.0",
+    "@daryl-software/error": "^2.2.1-alpha.0",
+    "@daryl-software/redis-dataloader": "^2.2.1-alpha.0",
     "@sequelize/core": "7.0.0-alpha.28",
     "dataloader": "^2.2.2",
     "ioredis": "^5.3.2"
