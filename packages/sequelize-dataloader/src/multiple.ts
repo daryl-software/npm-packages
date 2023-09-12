@@ -21,7 +21,7 @@ export function MultipleDataloader<
     Options extends MinOptions | WithRedisOptions,
     TBatchLoader = KeyOrKeys extends MKey ? typeof BatchLoader<M, MKey, 'filter'> : typeof BatchLoaderMultiColumns<M, MKey, 'filter'>,
     RedisReturn = RedisDataLoader<KeyToLoad, M[], string>,
-    RegularReturn = DataLoader<KeyToLoad, M[], string>
+    RegularReturn = DataLoader<KeyToLoad, M[], string>,
 >(model: ModelStatic<M>, key: KeyOrKeys, options?: Options): Options extends WithRedisOptions ? RedisReturn : RegularReturn {
     let batchLoadFn: (keys: readonly KeyToLoad[]) => TBatchLoader;
     let cacheKeyFn: (keyToLoad: KeyToLoad) => string;
@@ -34,7 +34,8 @@ export function MultipleDataloader<
         cacheKeyFn = (ak) => JSON.stringify(ak);
     }
     if (options && 'redis' in options) {
-        const redisName = [model.name, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined, 'MULTI'].filter(Boolean).join('-');
+        const table = typeof model.getTableName() === 'string' ? model.getTableName() : [model.getTableName().schema, model.getTableName().tableName].filter(Boolean).join('.');
+        const redisName = [table, model.name, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined, 'MULTI'].filter(Boolean).join('-');
         // @ts-ignore
         return new RedisDataLoader<MKey, M[]>(redisName, batchLoadFn, {
             cacheKeyFn,

@@ -9,8 +9,6 @@ module.exports = {
     '@typescript-eslint/member-ordering': ['error', { default: ['signature', 'field', 'public-static-field', 'static-field', 'constructor', 'method'] }],
     '@typescript-eslint/no-confusing-non-null-assertion': 'error',
     '@typescript-eslint/no-confusing-void-expression': 'error',
-    'no-duplicate-imports': 'off',
-    '@typescript-eslint/no-duplicate-imports': ['error'],
     '@typescript-eslint/no-floating-promises': ['warn', { ignoreIIFE: true }],
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-shadow': 'error',
@@ -32,4 +30,5 @@ module.exports = {
     '@typescript-eslint/return-await': 'error',
     '@typescript-eslint/switch-exhaustiveness-check': 'error',
     'lines-between-class-members': 'off',
+    'deprecation/deprecation': 'warn',
 };
