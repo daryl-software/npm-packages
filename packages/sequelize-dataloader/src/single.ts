@@ -16,7 +16,7 @@ export function SingleDataloader<
     WithRedisOptions extends MinOptions & RedisDataloaderOptions<KeyToLoad, V>,
     Options extends MinOptions | WithRedisOptions,
     BatchFn = (keys: readonly KeyToLoad[]) => KeyToLoad extends V[K] ? typeof BatchLoader<V, K, 'filter'> : typeof BatchLoaderMultiColumns<V, K, 'filter'>,
-    Return = Options extends RedisDataloaderOptions<KeyToLoad, V> ? RedisDataLoader<KeyToLoad, V, string> : DataLoader<KeyToLoad, V, string>
+    Return = Options extends RedisDataloaderOptions<KeyToLoad, V> ? RedisDataLoader<KeyToLoad, V, string> : DataLoader<KeyToLoad, V, string>,
 >(model: ModelStatic<V>, key: Key, options?: Options): Return {
     let batchLoadFn: BatchFn;
     let cacheKeyFn: (keyToLoad: KeyToLoad) => string;
@@ -29,7 +29,8 @@ export function SingleDataloader<
         cacheKeyFn = (ak) => JSON.stringify(ak);
     }
     if (options && 'redis' in options) {
-        const redisName = [model.name, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined].filter(Boolean).join('-');
+        const table = typeof model.getTableName() === 'string' ? model.getTableName() : [model.getTableName().schema, model.getTableName().tableName].filter(Boolean).join('.');
+        const redisName = [table, key.toString(), options?.find ? JsonStringifyWithSymbols(options.find, true) : undefined].filter(Boolean).join('-').replace(/`/g, '');
         // @ts-ignore
         return new RedisDataLoader<K, V>(redisName, batchLoadFn, {
             cacheKeyFn,

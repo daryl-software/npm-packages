@@ -12,7 +12,10 @@ export class ConfigLoader {
     private nRef = 0;
     private watcher: FSWatcher;
 
-    constructor(private readonly configFiles: string[], private readonly options?: ConfigLoaderOptions) {
+    constructor(
+        private readonly configFiles: string[],
+        private readonly options?: ConfigLoaderOptions
+    ) {
         this.refresh();
 
         this.watcher = watch(configFiles).on('change', (path) => {

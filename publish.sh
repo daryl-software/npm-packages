@@ -9,6 +9,6 @@ then
 fi
 
 echo "🥸 Publishing $package@$version"
-pnpm version $version -w @daryl-software/$package;
-pnpm run prepublish;
-pnpm publish -w @daryl-software/$package --access=public;
+npm version $version -w @daryl-software/$package;
+npm run prepublish;
+npm publish -w @daryl-software/$package --access=public;

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function JsonStringifyWithSymbols(object: any, clean?: boolean): string {
     const str = JSON.stringify(object, (_, value) => {
         if (Array.isArray(value) || value === null || typeof value !== 'object') {

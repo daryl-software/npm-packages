@@ -59,10 +59,13 @@ global.notEmpty = function <T extends object>(obj: T | null | undefined): obj is
 };
 
 global.recordToStringRecord = function (record: Record<string, unknown>): Record<string, string> {
-    return Object.keys(record).reduce((value, key) => {
-        value[key] = String(record[key]);
-        return value;
-    }, {} as Record<string, string>);
+    return Object.keys(record).reduce(
+        (value, key) => {
+            value[key] = String(record[key]);
+            return value;
+        },
+        {} as Record<string, string>
+    );
 };
 
 global.flipCoin = function (): boolean {
