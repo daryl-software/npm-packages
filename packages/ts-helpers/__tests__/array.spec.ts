@@ -52,4 +52,39 @@ describe('Array prototype', async () => {
         expect(Array.range(-5, NaN)).to.eql([]);
         expect(Array.range(NaN, 10)).to.eql([]);
     });
+    describe('findAsyncSequential', () => {
+        it('should return undefined if array is empty', async () => {
+            const arr: number[] = [];
+            const result = await arr.findAsyncSequential(async (n) => n > 5);
+            expect(result).toBeUndefined();
+        });
+
+        it('should return undefined if no element satisfies the predicate', async () => {
+            const arr = [1, 2, 3, 4, 5];
+            const result = await arr.findAsyncSequential(async (n) => n > 5);
+            expect(result).toBeUndefined();
+        });
+
+        it('should return the first element that satisfies the predicate', async () => {
+            const arr = [1, 2, 3, 4, 5];
+            const result = await arr.findAsyncSequential(async (n) => n > 2);
+            expect(result).toBe(3);
+        });
+
+        it('should work with non-numeric arrays', async () => {
+            const arr = ['apple', 'banana', 'cherry'];
+            const result = await arr.findAsyncSequential(async (s) => s.startsWith('b'));
+            expect(result).toBe('banana');
+        });
+
+        it('should work with an array of objects', async () => {
+            const arr = [
+                { name: 'Alice', age: 25 },
+                { name: 'Bob', age: 30 },
+                { name: 'Charlie', age: 35 },
+            ];
+            const result = await arr.findAsyncSequential(async (person) => person.age > 30);
+            expect(result).toStrictEqual({ name: 'Charlie', age: 35 });
+        });
+    });
 });

@@ -26,6 +26,8 @@ declare global {
         // Swap 2 items based on their indexes
         swap(a: number, b: number): this;
 
+        findAsyncSequential<T>(this: T[], predicate: (t: T) => Promise<boolean>): Promise<T | undefined>;
+
         // ⚠️ Must copy all functions to ReadonlyArray below
     }
 
@@ -43,6 +45,7 @@ declare global {
         unique<T extends number | string>(this: T[]): T[];
         sample(): T;
         mapKey<Key extends keyof T>(key: Key): T[Key][];
+        findAsyncSequential<T>(this: T[], predicate: (t: T) => Promise<boolean>): Promise<T | undefined>;
     }
 
     interface ArrayConstructor {
@@ -112,6 +115,16 @@ Array.prototype.swap = function (a, b) {
     // eslint-disable-next-line prefer-destructuring
     this[a] = this.splice(b, 1, this[a])[0];
     return this;
+};
+
+Array.prototype.findAsyncSequential = async function (predicate) {
+    for (const t of this) {
+        // eslint-disable-next-line no-await-in-loop
+        if (await predicate(t)) {
+            return t;
+        }
+    }
+    return undefined;
 };
 
 export {};
