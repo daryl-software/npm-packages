@@ -27,6 +27,7 @@ npm run test
 ## Bump version
 ```shell
 npm version patch -ws
+# or
 npm version prerelease --preid=alpha -ws
 ```
 

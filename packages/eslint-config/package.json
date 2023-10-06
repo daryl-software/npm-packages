@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/eslint-config",
-  "version": "1.2.5-alpha.0",
+  "version": "1.2.5-alpha.1",
   "description": "ESLint Configs",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",

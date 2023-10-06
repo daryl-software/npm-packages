@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/db",
-  "version": "3.2.1-alpha.0",
+  "version": "3.2.1-alpha.1",
   "description": "Sequelize Database loader, helpers with config",
   "keywords": [
     "db",
