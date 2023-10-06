@@ -23,7 +23,7 @@
     "@daryl-software/db": "^3.2.1-alpha.0",
     "@daryl-software/error": "^2.2.1-alpha.0",
     "@daryl-software/redis-dataloader": "^2.2.1-alpha.0",
-    "@sequelize/core": "7.0.0-alpha.28",
+    "@sequelize/core": "7.0.0-alpha.32",
     "dataloader": "^2.2.2",
     "ioredis": "^5.3.2"
   },

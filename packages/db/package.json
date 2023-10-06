@@ -18,7 +18,7 @@
     "directory": "packages/db"
   },
   "dependencies": {
-    "@sequelize/core": "7.0.0-alpha.28",
+    "@sequelize/core": "7.0.0-alpha.32",
     "lodash.shuffle": "^4.2.0"
   },
   "devDependencies": {
