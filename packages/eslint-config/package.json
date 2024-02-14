@@ -1,6 +1,6 @@
 {
   "name": "@daryl-software/eslint-config",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "ESLint Configs",
   "author": "Florian Morello <arsonik@me.com>",
   "homepage": "https://github.com/daryl-software/npm-packages#readme",
@@ -15,8 +15,8 @@
     "url": "https://github.com/daryl-software/npm-packages/issues"
   },
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.3",
     "eslint": "^8.43.0",
     "eslint-plugin-deprecation": "^1.4.1",
